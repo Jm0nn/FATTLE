@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getMypage } from '../../services/mypage/api';
+import { useSelector } from 'react-redux';
 // Component 관련
 import Footer from '../../commons/Footer';
 import Calendar from '../../components/mypage/Calendar';
@@ -16,13 +17,14 @@ import ProfileImg from '../../assets/svg/mypage/ProfileImg.svg';
 import getCalendarList from '../../utils/mypage/getCalendarList.js';
 function MypageMain(props) {
   const navigate = useNavigate();
+  const userCode = useSelector((state) => state.userCode);
   const [data, setData] = useState({});
   const { dates, isDayInCurrentMonth } = getCalendarList();
   const [questSuccessDayList, setQuestSuccessDayList] = useState(null);
   useEffect(() => {
     (async () => {
       try {
-        const { data, status } = await getMypage(1);
+        const { data, status } = await getMypage(userCode);
         setData(data);
         setQuestSuccessDayList(
           getQuestSuccessDayList(data.dailyQuests, 'recordDate'),
@@ -81,7 +83,7 @@ function MypageMain(props) {
           {/* 프로필 정보 시작 */}
           <div className={styles.profileContainer}>
             <div>
-              <img src={ProfileImg} alt="프로필사진" />
+              <img src={`/images/${data.imgPath}`} alt="프로필사진" />
             </div>
             <div className={styles.followContainer}>
               <div className={styles.fDiv}>

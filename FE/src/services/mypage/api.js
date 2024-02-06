@@ -2,7 +2,7 @@ import axios from 'axios';
 import API from './URL';
 const {
   MYPAGE_GET,
-  MYAPGE_PATCH,
+  MYPAGE_PATCH,
   FOLLOWER_GET,
   FOLLOWING_GET,
   GOAL_GET,
@@ -13,8 +13,8 @@ const getMypage = async (userCode) => {
   const { data, status } = await axios(MYPAGE_GET + userCode);
   return { data, status };
 };
-const patchMypage = async (userCode, parameter) => {
-  const { status } = await axios.patch(MYAPGE_PATCH + userCode, parameter);
+const patchMypage = async (parameter) => {
+  const { status } = await axios.patch(MYPAGE_PATCH, parameter);
   return status;
 };
 
