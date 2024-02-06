@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from '../styles/commons/Footer.module.css'
-import home from '../assets/images/footer/home.png';
-import person from '../assets/images/footer/person.png';
-import battle from '../assets/images/footer/battle.png';
-import ranking from '../assets/images/footer/ranking.png';
-import home2 from '../assets/images/footer/home2.png';
-import person2 from '../assets/images/footer/person2.png';
-import battle2 from '../assets/images/footer/battle2.png';
-import ranking2 from '../assets/images/footer/ranking2.png'
+import home from '../assets/images/footer/home.svg';
+import person from '../assets/images/footer/person.svg';
+import battle from '../assets/images/footer/battle.svg';
+import ranking from '../assets/images/footer/ranking.svg';
+import home2 from '../assets/images/footer/home2.svg';
+import person2 from '../assets/images/footer/person2.svg';
+import battle2 from '../assets/images/footer/battle2.svg';
+import ranking2 from '../assets/images/footer/ranking2.svg'
 
 function Footer() {
   const location = useLocation()

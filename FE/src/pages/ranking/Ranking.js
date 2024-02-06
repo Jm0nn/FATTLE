@@ -2,9 +2,9 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import styles from '../../styles/ranking/ranking.module.css'
 import Footer from '../../commons/Footer';
-import rankingbg from '../../assets/images/ranking/rankingbg.png'
-import rankingbar from '../../assets/images/ranking/rankingbar.png'
-
+import rankingbg from '../../assets/images/ranking/rankingbg.svg'
+import rankingbar from '../../assets/images/ranking/rankingbar.svg'
+import { API } from '../../services/main/URL';
 
 function Ranking() {
   const [rank, setRank] = useState([])
@@ -19,7 +19,7 @@ function Ranking() {
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/rank`)
+    axios.get(`${API.RANK_GET}`)
       .then(response => {
         const top10 = response.data.top10;
         const myRankIndex = response.data.myRank - 1

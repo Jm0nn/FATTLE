@@ -11,6 +11,35 @@
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
+  position: relative;
+}
+
+.nicknameText {
+  position: absolute;
+  right: 10px; 
+  top: 10px; 
+  margin: 10px; 
+  font-size: 24px;
+  font-weight: bold; 
+  border-radius: 10px; 
+  padding: 5px 10px; 
+  background-color: rgba(92, 142, 201, 0.2);
+  color: #FFFFFF;
+}
+
+
+.shineImage {
+  filter: brightness(1.2) drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5)); /* 필요한대로 밝기 값을 조정하세요 */
+}
+
+.caloryinfo {
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.boldText {
+  font-weight: bold;
+  color: #F0BD01; 
 }
 
 .progressbar {
@@ -35,17 +64,23 @@
   transition: width 0.5s ease-in-out;
 }
 
+.centeredContainer {
+  display: flex;
+  justify-content: center; 
+}
+
+
 .infobar {
-  width: 100%;
-  height: 40px; /* 투명한 바의 높이 조절 */
-  background: #FFFFFF; /* 투명한 회색으로 설정 */
+  width: 300px;
+  height: 50px; 
+  background: rgba(255, 255, 255, 0.6); 
   border-radius: 10px;
   border: 2px solid #555;
-  position: relative; /* 자식 요소의 위치를 상대적으로 설정하기 위해 필요 */
-  margin-top: 20px; /* 바와 텍스트 사이의 간격 조절 */
-  display: flex; /* 가로 중앙 정렬을 위해 flex 사용 */
-  justify-content: center; /* 가로 중앙 정렬 설정 */
-  align-items: center; /* 세로 중앙 정렬 설정 */
+  position: relative; 
+  margin-top: 20px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
 }
 
 .infobar p {
@@ -60,7 +95,7 @@
 }
 
 .progressbar2 {
-  margin-top: 20px;
+  margin-top: 150px;
   margin-bottom: 20px;
   overflow: visible;
 }
@@ -73,8 +108,8 @@
 .filledcircle {
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
-  stroke-linecap: round; /* 원형 끝 부분을 라운드 처리 */
-  transition: stroke-dashoffset 0.3s ease, stroke 0.3s ease; /* stroke에도 transition 추가 */
+  stroke-linecap: round; 
+  transition: stroke-dashoffset 0.3s ease, stroke 0.3s ease; 
 }
 
 
@@ -84,12 +119,12 @@
 .nutrienticons {
   display: flex;
   margin-top: 30px;
-  justify-content: space-around; /* 가로 정렬 설정 */
+  justify-content: space-around; 
 }
 
 .nutrienticon {
   display: flex;
-  flex-direction: row; /* 세로 정렬 설정 */
+  flex-direction: row; 
   align-items: center;
 }
 
@@ -108,8 +143,19 @@
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-  border: 1px solid rgba(255, 255, 255, 0.5); 
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  
 }
+
+.nutrientContainer {
+  display: flex;
+  justify-content: space-around; 
+  margin-left: 15px;
+  font-size: 15px;
+  color: #6779D6;
+}
+
+
 
 .remainingbar2 {
   height: 100%;
@@ -130,12 +176,10 @@
   transition: width 0.3s ease;
 }
 
-
-.wrapper p:first-child {
-  /* position: relative; */
-  top: 5px;
-  left: 120px;
-  font-size: 20px;
+.foodRecommendIconWrapper {
+  position: absolute;
+  bottom: 60px; 
+  right: 30px;
 }
 
 
