@@ -10,16 +10,18 @@ import panda from '../../assets/images/main/panda.png';
 import carbon from '../../assets/images/main/carbon.svg';
 import protein from '../../assets/images/main/protein.svg';
 import fat from '../../assets/images/main/fat.svg';
-import { API } from '../../services/main/URL';
+import API from '../../services/main/URL';
+import { useSelector } from 'react-redux';
 // import BodyinfoModify from "./BodyinfoModify"
 
 function Character() {
   const [mainUserData, setMainUserData] = useState(null);
-
+  const userCode = useSelector((state) => {
+    return state.userCode;
+  });
   useEffect((usercode) => {
     axios
-      .get(`http://localhost:5000/mainuser`)
-      // axios.get(`${API.USER_GET}`)
+      .get(`${API.USER_GET}${userCode}`)
       .then((response) => {
         setMainUserData(response.data);
       })
