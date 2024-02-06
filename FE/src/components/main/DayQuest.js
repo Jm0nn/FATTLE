@@ -1,136 +1,107 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import styles from "../../styles/main/DayQuest.module.css";
-import { API } from '../../services/main/URL';
 
 function DayQuest() {
-  const [questComplete, setQuestComplete] = useState(false);
-  const [exercise, setExercise] = useState();
-  const [selectedExercises, setSelectedExercises] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(3);
-  const [showCloseButton, setShowCloseButton] = useState(false);
-  const [attendanceChecked, setAttendanceChecked] = useState(false);
-  const [foodquestChecked, setFoodquestChecked] = useState({
-    morning: false,
-    lunch: false,
-    dinner: false,
-  });
+  const [completedCount, setCompletedCount] = useState(0);
+  const [questList, setQuestList] = useState(Array(10).fill(false));
+  const [lastVisitedDate, setLastVisitedDate] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/quest`)
-      .then(response => {
-        const exerciseData = response.data.exercisequest;
-        setExercise(exerciseData);
-        setQuestComplete(true);
-      })
-      .catch(error => {
-        console.error('랭킹 데이터를 불러오는 중 에러 발생:', error);
-      });
+    // 로컬 스토리지에서 저장된 완료된 퀘스트 정보와 날짜 정보를 가져옴
+    const storedQuestList = JSON.parse(localStorage.getItem("questList")) || Array(10).fill(false);
+    const storedDate = localStorage.getItem("lastVisitedDate");
+
+    if (storedDate) {
+      setLastVisitedDate(new Date(storedDate));
+    } else {
+      // 날짜 정보가 없으면 초기화
+      setLastVisitedDate(new Date());
+      setQuestList(Array(10).fill(false));
+      setCompletedCount(0);
+      localStorage.setItem("questList", JSON.stringify(Array(10).fill(false)));
+      localStorage.setItem("lastVisitedDate", new Date().toString());
+    }
+
+    setQuestList(storedQuestList);
+    const newCompletedCount = storedQuestList.filter((quest) => quest).length;
+    setCompletedCount(newCompletedCount);
   }, []);
 
-  useEffect(() => {
-    setAttendanceChecked(exercise && exercise.attendance === 1);
+  const handleQuestClick = (index) => {
+    if (completedCount === 10) {
+      return; // 7개까지만 클릭 가능하도록 막음
+    }
 
-    setFoodquestChecked((prevFoodquestChecked) => ({
-      ...prevFoodquestChecked,
-      morning: exercise && exercise.foodquest && exercise.foodquest.morning === 1,
-      lunch: exercise && exercise.foodquest && exercise.foodquest.lunch === 1,
-      dinner: exercise && exercise.foodquest && exercise.foodquest.dinner === 1,
-    }));
-  }, [exercise]);
+    setQuestList((prevQuestList) => {
+      const newQuestList = [...prevQuestList];
+      newQuestList[index] = !newQuestList[index];
 
-  const handleAttendanceClick = () => {
-    setAttendanceChecked((prev) => !prev);
-  };
+      // 완료된 퀘스트 개수 계산
+      const newCompletedCount = newQuestList.filter((quest) => quest).length;
+      setCompletedCount(newCompletedCount);
 
-  const handleFoodquestClick = (key) => {
-    setFoodquestChecked((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-  };
+      // 로컬 스토리지에 완료된 퀘스트 정보와 날짜 정보 저장
+      localStorage.setItem("questList", JSON.stringify(newQuestList));
+      localStorage.setItem("lastVisitedDate", new Date().toString());
 
-  const handleExerciseClick = (key) => {
-    setSelectedExercises((prevSelectedExercises) => {
-      if (prevSelectedExercises.includes(key)) {
-        return prevSelectedExercises.filter(item => item !== key);
-      } else {
-        return [...prevSelectedExercises, key];
-      }
+      return newQuestList;
     });
   };
 
-  const handleShowMore = () => {
-    setVisibleCount((prevVisibleCount) => prevVisibleCount + 1);
-    setShowCloseButton(true);
-  };
+  const questNames = [
+    "출석",
+    "운동1", "운동2", "운동3", "운동4", "운동5", "운동6",
+    "아침식단", "점심식단", "저녁식단"
+  ];
 
+  // 자정에 퀘스트 초기화
   useEffect(() => {
-    if (selectedExercises.length === 7) {
-      axios.post(`${API.QUEST_COMPLETE}`, { completed: true })
-        .then(response => {
-          console.log('일일 퀘스트 완료:', response.data);
-        })
-        .catch(error => {
-          console.error('일일 퀘스트 완료 전송 중 에러 발생:', error);
-        });
-    }
-  }, [selectedExercises]);
+    const midnight = new Date();
+    midnight.setHours(24, 0, 0, 0);
+
+    const timeUntilMidnight = midnight - new Date();
+
+    const timeout = setTimeout(() => {
+      setLastVisitedDate(new Date());
+      setQuestList(Array(10).fill(false));
+      setCompletedCount(0);
+      localStorage.setItem("questList", JSON.stringify(Array(10).fill(false)));
+      localStorage.setItem("lastVisitedDate", new Date().toString());
+    }, timeUntilMidnight);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <div className={styles.dayQuestContainer}>
       <h3 className={styles.questTitle}>일일퀘스트</h3>
-  
+
       <div className={styles.exerciseListContainer}>
         <ul className={styles.exerciseList}>
-          {exercise && typeof exercise === 'object' && Object.keys(exercise).map((key, index) => (
+          {questNames.map((questName, index) => (
             <li
-              key={key}
-              onClick={() => handleExerciseClick(key)}
-              className={`${styles.exerciseItem} ${selectedExercises.includes(key) ? styles.exerciseItemSelected : styles.exerciseItemUnselected}`}
-              style={{ display: index < visibleCount ? "block" : "none" }}
+              key={index}
+              onClick={() => handleQuestClick(index)}
+              className={`${styles.exerciseItem} ${questList[index] ? styles.exerciseItemSelected : styles.exerciseItemUnselected}`}
             >
-              <span style={{ alignSelf: "center" }}>{key}</span>
+              <span style={{ alignSelf: "center" }}>{questName}</span>
             </li>
           ))}
-
-          {exercise && (
-            <>
-              <li
-                onClick={handleAttendanceClick}
-                className={`${styles.exerciseItem} ${attendanceChecked ? styles.exerciseItemSelected : styles.exerciseItemUnselected}`}
-              >
-                <span style={{ alignSelf: "center" }}>출석</span>
-              </li>
-
-              {exercise.foodquest && (
-                Object.entries(exercise.foodquest).map(([key]) => (
-                  <li
-                    key={key}
-                    onClick={() => handleFoodquestClick(key)}
-                    className={`${styles.exerciseItem} ${foodquestChecked[key] ? styles.exerciseItemSelected : styles.exerciseItemUnselected}`}
-                  >
-                    <span style={{ alignSelf: "center" }}>{key}</span>
-                  </li>
-                ))
-              )}
-            </>
-          )}
         </ul>
-  
-        {visibleCount < Object.keys(exercise || {}).length && (
-          <>
-            <button onClick={handleShowMore} className={styles.showMoreButton}>
-              더 보기
-            </button>
-          </>
-        )}
       </div>
+
+      {/* 완료된 퀘스트 개수가 7개까지만 표시 */}
+      {completedCount < 7 ? (
+        <p>{`${completedCount}/7`}</p>
+      ) : (
+        <p>오늘 퀘스트 완료</p>
+      )}
     </div>
   );
 }
 
 export default DayQuest;
+
 
 
 
