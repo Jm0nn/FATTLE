@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Frame2 from '../../assets/images/main/Frame2.svg';
-import { API } from '../../services/main/URL';
+import API from '../../services/main/URL';
 import styles from '../../styles/main/BodyinfoModify.module.css';
 
 const BodyinfoModify = () => {

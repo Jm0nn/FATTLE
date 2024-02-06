@@ -182,7 +182,6 @@ function Character() {
               <img src={Frame} alt="" />
               신장: {mainUserData.height}cm 체중: {mainUserData.weight}kg
               <BodyinfoModify />
-              <img src={Frame2} alt="" />
             </p>
           </div>
         </div>
