@@ -51,9 +51,10 @@ const BattleCreate = (props) => {
     const startDateStr = `${start.getMonth() + 1}.${start.getDate()}`;
     const end = new Date(endDate);
     const endDateStr = `${end.getMonth() + 1}.${end.getDate()}`;
-    const leftDate = Math.floor(
-      Math.abs((start.getTime() - end.getTime()) / (1000 * 60 * 60 * 24)),
-    );
+    const leftDate =
+      Math.floor(
+        Math.abs((start.getTime() - end.getTime()) / (1000 * 60 * 60 * 24)),
+      ) + 2;
     return startDateStr + ' ~ ' + endDateStr + '   ' + leftDate + '일간';
   };
   return (

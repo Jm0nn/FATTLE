@@ -6,16 +6,16 @@ const ModifyDate = () => {
   const dateInputEle = useRef(null);
   const nameInputEle = useRef(null);
   const { state } = useLocation();
-  const [date, setDate] = useState(null);
-  const [name, setName] = useState(null);
+  const [date, setDate] = useState('');
+  const [name, setName] = useState('');
   const navigate = useNavigate();
   useEffect(() => {
     console.log(state);
     if (state === null) {
       navigate('/main');
     } else {
-      setName(state.battleSetting.battleName);
-      setDate(state.battleSetting.endDate);
+      setName(state.battleSetting.battleName || '');
+      setDate(new Date().toISOString().split('T')[0]);
     }
     dateLimit();
   }, []);
