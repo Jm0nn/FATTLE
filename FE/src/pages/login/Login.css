@@ -26,17 +26,28 @@ div {
     text-align: center;
 }
 
+@font-face {
+    font-family: "Itim";
+    font-weight: 50;
+    src: url("./../../assets/fonts/Itim-Regular.ttf");
+}
+
 .title {
-    margin-top: 150px;
+    margin-top: 300px;
     text-align: center;
+    padding: 20px;
+}
+
+.title_font {
     font-size: 30px;
-    
+    font-weight: bold;
+    font-family: "Itim";
 }
 
 .kakao {
     margin-left: 13px;
     width: 200px;
-    margin-top: 30px;
+    margin-top: 10px;
     
 }
 

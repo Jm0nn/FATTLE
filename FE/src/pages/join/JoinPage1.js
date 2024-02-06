@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { API } from '../../services/login/URL';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 // 닉네임 중복 체크 컴포넌트
@@ -12,10 +11,9 @@ const JoinPage1 = () => {
   const [joinInfo, setJoinInfo] = useState({
     userCode: location.state.userCode,
     nickname: '',
-    age: '',
     sex: '',
     height: '',
-    weigh: '',
+    weight: '',
     goalWeight: '',
     goalCalory: '',
     goalCarbon: '',
@@ -89,15 +87,6 @@ const JoinPage1 = () => {
 
       <div className="myInfo">
         <input
-          placeholder="세"
-          onChange={(e) => {
-            setJoinInfo({
-              ...joinInfo,
-              age: e.target.value,
-            });
-          }}
-        ></input>
-        <input
           placeholder="CM"
           onChange={(e) => {
             setJoinInfo({
@@ -113,7 +102,7 @@ const JoinPage1 = () => {
           onChange={(e) => {
             setJoinInfo({
               ...joinInfo,
-              weigh: e.target.value,
+              weight: e.target.value,
             });
           }}
         ></input>
@@ -132,20 +121,20 @@ const JoinPage1 = () => {
         <button
           disabled={dupli}
           onClick={() => {
-            console.log('object변환');
             navigate('/join/page2', {
               state: {
+                userCode: joinInfo.userCode,
                 nickname: joinInfo.nickname,
-                age: joinInfo.age,
+                sex: joinInfo.sex,
+                height: joinInfo.height,
+                weight: joinInfo.weight,
+                goalWeight: joinInfo.goalWeight,
+                goalCalory: joinInfo.goalCalory,
+                goalCarbon: joinInfo.goalCarbon,
+                goalProtein: joinInfo.goalProtein,
+                goalFat: joinInfo.goalFat,
               },
             });
-            console.log(joinInfo.userCode);
-            // console.log(joinInfo.nickname);
-            // console.log(joinInfo.sex);
-            // console.log(joinInfo.age);
-            // console.log(joinInfo.height);
-            // console.log(joinInfo.weigh);
-            // console.log(joinInfo.goalWeight);
           }}
         >
           다음

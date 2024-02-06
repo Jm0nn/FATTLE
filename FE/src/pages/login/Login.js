@@ -7,10 +7,10 @@ const Login = () => {
   return (
     <div>
       <div className="background">
-        <p className="LoginText">로그인 화면입니다!!!</p>
+        <p className="LoginText">ㅤ</p>
         <div className="wrapper">
           <div className="title">
-            <div>FATTLE</div>
+            <div className="title_font">FATTLE</div>
           </div>
 
           <div className="kakao">
