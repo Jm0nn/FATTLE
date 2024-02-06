@@ -10,6 +10,7 @@
     "axios": "^1.6.7",
     "concurrently": "^8.2.2",
     "json-server": "^1.0.0-alpha.23",
+    "openvidu-browser": "^2.29.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.0",
     "react-dom": "^18.2.0",

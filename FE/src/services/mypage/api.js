@@ -10,8 +10,8 @@ const {
 } = API;
 
 const getMypage = async (userCode) => {
-  const { data } = await axios.get(MYPAGE_GET + userCode);
-  return data;
+  const { data, status } = await axios(MYPAGE_GET + userCode);
+  return { data, status };
 };
 const patchMypage = async (userCode, parameter) => {
   const { status } = await axios.patch(MYAPGE_PATCH + userCode, parameter);
@@ -19,10 +19,10 @@ const patchMypage = async (userCode, parameter) => {
 };
 
 const getCalendarDetail = async (month, userCode) => {
-  const { status } = await axios.get(
+  const { data, status } = await axios.get(
     MYPAGE_DETAIL_GET + `${month}/${userCode}`,
   );
-  return status;
+  return { data, status };
 };
 
 const getFollowingList = async (userCode) => {

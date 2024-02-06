@@ -1,11 +1,9 @@
 import React from 'react';
 import styles from '../../styles/mypage/Calendar.module.css';
-import { getClassName } from '../../utils/mypage/checkQuestSuccess';
-import dates from '../../utils/mypage/makeCalendarList';
 // svg import
 import CalendarSVG from '../../assets/svg/mypage/Calendar.svg';
 
-const Calendar = ({ calendar }) => {
+const Calendar = ({ children }) => {
   return (
     <div className={styles.wrapper}>
       <header>
@@ -32,16 +30,7 @@ const Calendar = ({ calendar }) => {
           <li className={styles.date}>금</li>
           <li className={styles.date}>토</li>
         </ul>
-        <ul className={styles.days}>
-          {dates.map((day, i) => {
-            const cl = getClassName(styles, calendar, day, i);
-            return (
-              <li key={i} className={cl}>
-                {day} <br />
-              </li>
-            );
-          })}
-        </ul>
+        <ul className={styles.days}>{children}</ul>
       </div>
     </div>
   );

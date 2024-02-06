@@ -10,16 +10,18 @@ import panda from '../../assets/images/main/panda.png';
 import carbon from '../../assets/images/main/carbon.svg';
 import protein from '../../assets/images/main/protein.svg';
 import fat from '../../assets/images/main/fat.svg';
-import { API } from '../../services/main/URL';
+import API from '../../services/main/URL';
+import { useSelector } from 'react-redux';
 import BodyinfoModify from './BodyinfoModify';
 
 function Character() {
   const [mainUserData, setMainUserData] = useState(null);
-
+  const userCode = useSelector((state) => {
+    return state.userCode;
+  });
   useEffect((usercode) => {
     axios
-      .get(`http://localhost:5000/mainuser`)
-      // axios.get(`${API.USER_GET}`)
+      .get(`${API.USER_GET}${userCode}`)
       .then((response) => {
         setMainUserData(response.data);
       })
@@ -132,7 +134,7 @@ function Character() {
                   className={styles.remainingbar2}
                   style={{
                     width: `${
-                      (mainUserData.carbo / mainUserData.goalcarbo) * 100
+                      (mainUserData.carbo / mainUserData.goalCarbo) * 100
                     }%`,
                   }}
                 ></div>
@@ -144,7 +146,7 @@ function Character() {
                   className={styles.remainingbar3}
                   style={{
                     width: `${
-                      (mainUserData.protein / mainUserData.goalprotein) * 100
+                      (mainUserData.protein / mainUserData.goalProtein) * 100
                     }%`,
                   }}
                 ></div>
@@ -156,7 +158,7 @@ function Character() {
                   className={styles.remainingbar4}
                   style={{
                     width: `${
-                      (mainUserData.fat / mainUserData.goalfat) * 100
+                      (mainUserData.fat / mainUserData.goalFat) * 100
                     }%`,
                   }}
                 ></div>
@@ -165,13 +167,13 @@ function Character() {
           </div>
           <div className={styles.nutrientContainer}>
             <p>
-              {mainUserData.carbo} / {mainUserData.goalcarbo}g
+              {mainUserData.carbo} / {mainUserData.goalCarbo}g
             </p>
             <p>
-              {mainUserData.protein} / {mainUserData.goalprotein}g
+              {mainUserData.protein} / {mainUserData.goalProtein}g
             </p>
             <p>
-              {mainUserData.fat} / {mainUserData.goalfat}g
+              {mainUserData.fat} / {mainUserData.goalFat}g
             </p>
           </div>
 
