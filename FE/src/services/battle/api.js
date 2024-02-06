@@ -14,3 +14,16 @@ const {
   BATTLE_START_GET,
   BATTLE_WEIGHT_PATCH,
 } = API;
+
+export const getBattleInfo = async (battleCode) => {
+  const res = await axios.get(BATTLE_INFO_GET + battleCode);
+  return res;
+};
+export const createBattle = async (userCode) => {
+  const res = await axios.post(BATTLE_CREATE_POST, { userCode });
+  return res;
+};
+export const modifySetting = async (parameter) => {
+  const res = await axios.patch(BATTLE_SETTING_PATCH, parameter);
+  return res;
+};

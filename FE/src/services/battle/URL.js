@@ -1,6 +1,6 @@
 import BASE_URL from '../../config';
 const API = {
-  BATTLE_CREATE_POST: `${BASE_URL}/battle/create/`,
+  BATTLE_CREATE_POST: `${BASE_URL}/battle/create`,
   BATTLE_FINISH_GET: `${BASE_URL}/battle/finish/`,
   BATTLE_INFO_GET: `${BASE_URL}/battle/info/`,
   BATTLE_LIST_GET: `${BASE_URL}/battle/list/`,
