@@ -4,6 +4,7 @@ import Main from './../pages/main/Main';
 import Login from './../pages/login/Login';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import API from './../services/auth/URL.js';
 
 const Auth = (props) => {
   const [page, setPage] = useState(false);
@@ -13,7 +14,8 @@ const Auth = (props) => {
   });
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/user/login/${userCode}`).then((res) => {
+    // axios.get(`http://localhost:8000/user/login/${userCode}`).then((res) => {
+    axios.get(`${API.LOGIN_STATUS_GET}${userCode}`).then((res) => {
       console.log(res.status);
       if (res.status === 200) {
         setPage(true);
