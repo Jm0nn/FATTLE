@@ -11,7 +11,7 @@ import carbon from '../../assets/images/main/carbon.svg';
 import protein from '../../assets/images/main/protein.svg';
 import fat from '../../assets/images/main/fat.svg';
 import { API } from '../../services/main/URL';
-// import BodyinfoModify from "./BodyinfoModify"
+import BodyinfoModify from './BodyinfoModify';
 
 function Character() {
   const [mainUserData, setMainUserData] = useState(null);
@@ -179,7 +179,7 @@ function Character() {
             <p className={styles.infobar}>
               <img src={Frame} alt="" />
               신장: {mainUserData.height}cm 체중: {mainUserData.weight}kg
-              {/* <BodyinfoModify/> */}
+              <BodyinfoModify />
               <img src={Frame2} alt="" />
             </p>
           </div>
