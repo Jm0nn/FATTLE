@@ -178,11 +178,11 @@ function Character() {
           </div>
 
           <div className={`${styles.centeredContainer}`}>
-            <p className={styles.infobar}>
+            <div className={styles.infobar}>
               <img src={Frame} alt="" />
               신장: {mainUserData.height}cm 체중: {mainUserData.weight}kg
               <BodyinfoModify />
-            </p>
+            </div>
           </div>
         </div>
       )}

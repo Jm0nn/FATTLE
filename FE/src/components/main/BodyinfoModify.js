@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Frame2 from '../../assets/images/main/Frame2.svg';
 import API from '../../services/main/URL';
 import styles from '../../styles/main/BodyinfoModify.module.css';
-
+import { useSelector } from 'react-redux';
 const BodyinfoModify = () => {
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const userCode = useSelector((state) => {
+    return state.userCode;
+  });
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -17,8 +20,14 @@ const BodyinfoModify = () => {
     setIsModalOpen(false);
   };
 
-  const handleFormSubmit = async (e) => {
+  const HandleFormSubmit = async (e) => {
     e.preventDefault();
+
+    useEffect(() => {
+      axios.get(`${API.USER_GET}${userCode}`).then((res) => {
+        console.log(userCode);
+      });
+    }, []);
 
     try {
       const apiUrl = `${API.USER_GET}`;
@@ -27,8 +36,17 @@ const BodyinfoModify = () => {
         weight: weight,
       };
 
-      const response = await axios.patch(apiUrl, data);
-      console.log(response.data);
+      // const response = await axios.patch(apiUrl, data);
+      // console.log(response.data);
+
+      // axios
+      //   .patch(apiUrl, data)
+      //   .then((res) => {
+      //     console.log(res);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
 
       closeModal();
     } catch (error) {
@@ -54,7 +72,7 @@ const BodyinfoModify = () => {
             <button className={styles.closebutton} onClick={closeModal}>
               &times;
             </button>
-            <form onSubmit={handleFormSubmit}>
+            <form onSubmit={HandleFormSubmit}>
               <div>
                 <label htmlFor="height">신장</label>
                 <input
