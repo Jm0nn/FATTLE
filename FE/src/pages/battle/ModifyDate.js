@@ -2,6 +2,7 @@ import React from 'react';
 import { useRef, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { modifySetting } from '../../services/battle/api.js';
+import BattleStyles from '../../styles/battle/Battle.module.css';
 const ModifyDate = () => {
   const dateInputEle = useRef(null);
   const nameInputEle = useRef(null);
@@ -33,6 +34,7 @@ const ModifyDate = () => {
       endDate: new Date(date),
       battleName: name,
     };
+    console.log(newSetting);
     (async () => {
       console.log(newSetting);
       await modifySetting(newSetting);
@@ -69,7 +71,9 @@ const ModifyDate = () => {
         value={date}
         onChange={onChangeHandler}
       />
-      <button onClick={onModifyComplete}>완료</button>
+      <button className={BattleStyles.btn} onClick={onModifyComplete}>
+        완료
+      </button>
     </>
   );
 };

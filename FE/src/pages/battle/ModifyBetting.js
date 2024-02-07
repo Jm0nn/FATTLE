@@ -1,21 +1,33 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+// styles
+
+import BattleStyles from '../../styles/battle/Battle.module.css';
 // SVG
 import bettingPlus from '../../assets/svg/battle/bettingPlus.svg';
 import bettingMinus from '../../assets/svg/battle/bettingMinus.svg';
 import { useLocation, useNavigate } from 'react-router';
+import { modifySetting } from '../../services/battle/api.js';
 const ModifyBetting = (props) => {
   const { state } = useLocation();
   const bettingEle = useRef(null);
   const navigate = useNavigate();
   const [bettingText, setBettingText] = useState('');
   const [bettingList, setBettingList] = useState([]);
+  const onModifyComplete = async () => {
+    const newSetting = {
+      ...state.battleSetting,
+      betting: bettingList,
+    };
+    (async () => {
+      await modifySetting(newSetting);
+      navigate(-1);
+    })();
+  };
   useEffect(() => {
     // 주소 바로 치고 들어올 때 리다이렉트 처리
     if (state === null) navigate('/battle');
-
-    console.log(state.battleSetting.bettings);
-    setBettingList(state.battleSetting.bettings || []);
+    setBettingList(state.battleSetting.betting || []);
   }, []);
   const onBettingPlusClick = () => {
     const newBettingList = [...bettingList];
@@ -23,8 +35,11 @@ const ModifyBetting = (props) => {
     setBettingList(newBettingList);
     setBettingText('');
   };
+  const onBettingMinusClick = (index) => {
+    const newBettingList = bettingList.filter((item, i) => index !== i);
+    setBettingList(newBettingList);
+  };
   const onChangeHandler = (e) => {
-    console.log(e.target);
     setBettingText(e.target.value);
   };
   return (
@@ -49,15 +64,15 @@ const ModifyBetting = (props) => {
         {bettingList.map((item, index) => (
           <li key={index}>
             {item}
-            <img src={bettingMinus} alt="bettingMinus" />
+            <img
+              onClick={() => onBettingMinusClick(index)}
+              src={bettingMinus}
+              alt="bettingMinus"
+            />
           </li>
         ))}
       </ul>
-      <button
-        onClick={() => {
-          navigate(-1);
-        }}
-      >
+      <button className={BattleStyles.btn} onClick={onModifyComplete}>
         완료
       </button>
     </div>

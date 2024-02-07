@@ -13,17 +13,62 @@ const {
   BATTLE_SETTING_PATCH,
   BATTLE_START_GET,
   BATTLE_WEIGHT_PATCH,
+  USER_INFO_GET,
 } = API;
 
 export const getBattleInfo = async (battleCode) => {
   const res = await axios.get(BATTLE_INFO_GET + battleCode);
   return res;
 };
+export const getBattleList = async (userCode) => {
+  const res = await axios.get(BATTLE_LIST_GET + userCode);
+  return res;
+};
 export const createBattle = async (userCode) => {
-  const res = await axios.post(BATTLE_CREATE_POST, { userCode });
+  const { data } = await axios.post(BATTLE_CREATE_POST, { userCode });
+  const battleCode = data.code;
+  const res = await registTrigger(userCode, battleCode);
+  return res;
+};
+export const registTrigger = async (userCode, battleCode) => {
+  const res = await axios.post(BATTLE_REGIST_TRIGGER_POST, {
+    userCode,
+    battleCode,
+  });
+  return res;
+};
+export const registPlayer = async (
+  userCode,
+  battleCode,
+  weight,
+  goalWeight,
+) => {
+  try {
+    await axios.delete(
+      BATTLE_DELETE_TRIGGER_DELETE + battleCode + '/' + userCode,
+    );
+  } catch (error) {
+    console.log(error);
+  }
+  const res = await axios.post(BATTLE_REGIST_PLAYER_POST, {
+    battleCode,
+    userCode,
+    beforeWeight: weight,
+    goalWeight,
+  });
   return res;
 };
 export const modifySetting = async (parameter) => {
   const res = await axios.patch(BATTLE_SETTING_PATCH, parameter);
+  return res;
+};
+
+export const getUserInfo = async (userCode) => {
+  const res = await axios.get(USER_INFO_GET + userCode);
+  return res;
+};
+
+export const startBattle = async (battleCode) => {
+  const res = await axios.get(BATTLE_START_GET + battleCode);
   return res;
 };

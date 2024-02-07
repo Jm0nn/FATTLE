@@ -12,5 +12,7 @@ const API = {
   BATTLE_START_GET: `${BASE_URL}/battle/start/`,
   BATTLE_DELETE_TRIGGER_DELETE: `${BASE_URL}/battle/trigger/`,
   BATTLE_WEIGHT_PATCH: `${BASE_URL}/battle/weight`,
+
+  USER_INFO_GET: `${BASE_URL}/user/userinfo/`,
 };
 export default API;

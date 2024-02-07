@@ -1,38 +1,71 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { createBattle } from '../../services/battle/api.js';
+import { createBattle, getBattleList } from '../../services/battle/api.js';
 
+import getDday from '../../utils/battle/calculateDday.js';
+import Footer from '../../commons/Footer';
+import { Link } from 'react-router-dom';
+import BackHeader from '../../components/commons/BackHeader.js';
+import BattleStyles from '../../styles/battle/Battle.module.css';
 const BattleList = (props) => {
   const userCode = useSelector((state) => state.userCode);
   const navigate = useNavigate();
   const [data, setData] = useState(null);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    (async () => {
+      console.log(userCode);
+      const res = await getBattleList(userCode);
+      if (res.status !== 200) navigate('/login');
+      console.log(res.data);
+      setData(res.data.list);
+    })();
+  }, []);
   // 1. 리스트 불러오기
 
+  //배틀방 생성하기 누르면 바로 생성
   const onCreateBattle = async () => {
     const res = await createBattle(userCode);
-    // setData(res);
-    navigate('create', { state: { battleCode: res.data.code } });
+    // setData(res.data);
+    // navigate('create', { state: { battleCode: res.data.code } });
   };
   return (
     <>
+      <BackHeader navigate={navigate} />
       <div>받은 초대 코드 입력하기 (분리하기) </div>
       <div>진행중 / 종료</div>
 
       <ul className="container">
-        <li>
-          <div>프로필사진</div>
-          <div>닉네임</div>
-          <div>상대방</div>
-          <div>남은일자</div>
-          <div>남은일자</div>
-          <div>자극자 수</div>
-          <div>라이브 진행상태</div>
-        </li>
+        {data &&
+          data.map((item, index) => (
+            <li>
+              <img src={`/images/${item.imgPath}`} alt="profileImg" />
+              <div>
+                <Link
+                  to="/battle/create"
+                  state={{
+                    battleCode: item.battleCode,
+                  }}
+                >
+                  <h3>{item.name}</h3>
+                </Link>
+                <span>
+                  {' '}
+                  D-day :
+                  {getDday(new Date(item.startDate), new Date(item.endDate))}
+                </span>
+              </div>
+              <div>{item.nickname}가 생성</div>
+              <div>자극자 수 : {item.triggerCnt}</div>
+              <div>배틀 상태는 {item.status === 1 ? '진행중' : '검토중'}</div>
+            </li>
+          ))}
       </ul>
 
-      <button onClick={onCreateBattle}>1 : 1배틀 만들기</button>
+      <button className={BattleStyles.btnRed} onClick={onCreateBattle}>
+        1 : 1배틀 만들기
+      </button>
+      <Footer />
     </>
   );
 };

@@ -1,10 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getBattleInfo } from '../../services/battle/api.js';
+import { getBattleInfo, startBattle } from '../../services/battle/api.js';
 import { useLocation, useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
+import BattleStyles from '../../styles/battle/Battle.module.css';
+
+import getDday from '../../utils/battle/calculateDday.js';
+import BackHeader from '../../components/commons/BackHeader.js';
 
 // svg
 import editBattle from '../../assets/svg/battle/editBattle.svg';
 import selectProfile from '../../assets/svg/battle/selectProfile.svg';
+import vsSVG from '../../assets/svg/battle/vs.svg';
 
 const BattleCreate = (props) => {
   const navigate = useNavigate();
@@ -17,14 +23,15 @@ const BattleCreate = (props) => {
     const battleCode = state.battleCode;
     (async () => {
       const res = await getBattleInfo(battleCode);
+      console.log(res.data);
       setData(res.data);
       setEndDate(res.data.endDate);
       setBattleSetting({
         battleCode: res.data.battleCode,
-        battleName: res.data.battleName,
+        battleName: res.data.battleName || '',
         startDate: res.data.startDate,
         endDate: res.data.endDate,
-        betting: res.data.battle || [], // undfined를 보내면 서버에서 오류 나서 []를 넣어줌
+        betting: res.data.betting || [], // undfined를 보내면 서버에서 오류 나서 []를 넣어줌
       });
     })();
   }, []);
@@ -51,77 +58,126 @@ const BattleCreate = (props) => {
     const startDateStr = `${start.getMonth() + 1}.${start.getDate()}`;
     const end = new Date(endDate);
     const endDateStr = `${end.getMonth() + 1}.${end.getDate()}`;
-    const leftDate =
-      Math.floor(
-        Math.abs((start.getTime() - end.getTime()) / (1000 * 60 * 60 * 24)),
-      ) + 2;
+    const leftDate = getDday(start, end);
     return startDateStr + ' ~ ' + endDateStr + '   ' + leftDate + '일간';
   };
+  const onBattleStart = async () => {
+    if (data.playerList.length !== 2) alert('내기자가 부족합니다.');
+    else {
+      try {
+        const res = await startBattle(data.battleCode);
+        if (res.status === 200) {
+          navigate('/battle');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   return (
+    // 밑의 스타일 수정 필요
     <>
-      {data && (
-        <>
-          <div>배틀계약서</div>
-          <h2>{data.battleName || '배틀방 이름'}</h2>
+      <BackHeader navigate={navigate} />
+      <div
+        style={{
+          backgroundColor: '#FF9A23',
+          height: '100%',
+        }}
+      >
+        {data && (
+          <>
+            <div>배틀계약서</div>
+            <h2>{data.battleName || '배틀방 이름'}</h2>
 
-          {/* 내기자로 등록된 사용자가 있다면 랜더링 하는 부분 */}
-          {data.playerList.length === 1 && (
-            <>
-              <img
-                src={`/images/profiles/${data.playerList[0].imgPath}`}
-                alt=""
-              />
-              <img src={selectProfile} alt="selectProfile" />
-            </>
-          )}
-          {data.playerList.length === 0 && (
-            <>
-              <div>
-                <img src={selectProfile} alt="selectProfile" />
-              </div>
-              <div>
-                <img src={selectProfile} alt="selectProfile" />
-              </div>
-            </>
-          )}
-          {data.playerList.length === 2 && (
-            <>
-              <div>
-                <img
-                  src={`/images/profiles/${data.playerList[0].imgPath}`}
-                  alt=""
-                />
-              </div>
-              <div>
-                <img
-                  src={`/images/profiles/${data.playerList[0].imgPath}`}
-                  alt=""
-                />
-              </div>
-            </>
-          )}
-          <div>
-            <div>기간</div>
+            {/* 내기자로 등록된 사용자가 있다면 랜더링 하는 부분 */}
+            {data.playerList.length === 1 && (
+              <>
+                <div>
+                  <img src={`/images/${data.playerList[0].imgPath}`} alt="" />
+                  <p>{data.playerList[0].nickname}</p>
+                  <p>시작 체중 : {data.playerList[0].beforeWeight}</p>
+                  <p>목표 체중 : {data.playerList[0].goalWeight}</p>
+                </div>
+                <div>
+                  <img src={vsSVG} alt="vsSVG" />
+                </div>
+                <Link
+                  to="/battle/goalSet"
+                  state={{
+                    battleCode: battleSetting.battleCode,
+                  }}
+                >
+                  <img src={selectProfile} alt="selectProfile" />
+                </Link>
+              </>
+            )}
+            {data.playerList.length === 0 && (
+              <>
+                <div>
+                  <Link
+                    to="/battle/goalSet"
+                    state={{
+                      battleCode: battleSetting.battleCode,
+                    }}
+                  >
+                    <img src={selectProfile} alt="selectProfile" />
+                  </Link>
+                </div>
+                <div>
+                  <Link
+                    to="/battle/goalSet"
+                    state={{
+                      battleCode: battleSetting.battleCode,
+                    }}
+                  >
+                    <img src={selectProfile} alt="selectProfile" />
+                  </Link>
+                </div>
+              </>
+            )}
+            {data.playerList.length === 2 && (
+              <>
+                <div>
+                  <img src={`/images/${data.playerList[0].imgPath}`} alt="" />
+                  <p>{data.playerList[0].nickname}</p>
+                  <p>시작 체중 : {data.playerList[0].beforeWeight}</p>
+                  <p>목표 체중 : {data.playerList[0].goalWeight}</p>
+                </div>
+                <img src={vsSVG} alt="vsSVG" />
+                <div>
+                  <img src={`/images/${data.playerList[1].imgPath}`} alt="" />
+                  <p>{data.playerList[1].nickname}</p>
+                  <p>시작 체중 : {data.playerList[1].beforeWeight}</p>
+                  <p>목표 체중 : {data.playerList[1].goalWeight}</p>
+                </div>
+              </>
+            )}
             <div>
-              {getBattleDate()}
-              <span onClick={onChangeDate}>
-                <img src={editBattle} alt="editBattle" />
-              </span>
+              <div>기간</div>
+              <div>
+                {getBattleDate()}
+                <span onClick={onChangeDate}>
+                  <img src={editBattle} alt="editBattle" />
+                </span>
+              </div>
             </div>
-          </div>
-          <div>
-            <div>벌칙</div>
             <div>
-              {data.betting.map((item) => (
-                <p>{item}</p>
-              ))}
-              <span onClick={onChangeBetting}>
-                <img src={editBattle} alt="editBattle" />
-              </span>
+              <div>벌칙</div>
+              <div>
+                {data.betting.map((item) => (
+                  <p>{item}</p>
+                ))}
+                <span onClick={onChangeBetting}>
+                  <img src={editBattle} alt="editBattle" />
+                </span>
+              </div>
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
+        <button className={BattleStyles.btn} onClick={onBattleStart}>
+          배틀 시작
+        </button>
+      </div>
     </>
   );
 };
