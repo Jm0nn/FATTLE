@@ -5,8 +5,8 @@ import API from '../../services/main/URL';
 import styles from '../../styles/main/BodyinfoModify.module.css';
 import { useSelector } from 'react-redux';
 const BodyinfoModify = () => {
-  const [height, setHeight] = useState('');
-  const [weight, setWeight] = useState('');
+  const [height, setHeight] = useState(0);
+  const [weight, setWeight] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const userCode = useSelector((state) => {
     return state.userCode;
@@ -30,7 +30,10 @@ const BodyinfoModify = () => {
     }, []);
 
     try {
-      const apiUrl = `${API.USER_GET}`;
+      const apiUrl = `${API.USER_GET}${userCode}`;
+      {
+        console.log('asd');
+      }
       const data = {
         height: height,
         weight: weight,
@@ -59,7 +62,15 @@ const BodyinfoModify = () => {
       <img
         src={Frame2}
         alt="Click to open modal"
-        onClick={openModal}
+        onClick={() => {
+          axios.get(`${API.USER_GET}${userCode}`).then((res) => {
+            console.log(res.data.height);
+            setHeight(res.data.height);
+            console.log(res.data.weight);
+            setWeight(res.data.weight);
+          });
+          openModal();
+        }}
         className={styles.imgStyle}
       />
 
