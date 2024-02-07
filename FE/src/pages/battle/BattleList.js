@@ -25,7 +25,11 @@ const BattleList = (props) => {
 
   //배틀방 생성하기 누르면 바로 생성
   const onCreateBattle = async () => {
-    const res = await createBattle(userCode);
+    await createBattle(userCode);
+    const res = await getBattleList(userCode);
+    if (res.status !== 200) navigate('/login');
+    console.log(res.data);
+    setData(res.data.list);
     // setData(res.data);
     // navigate('create', { state: { battleCode: res.data.code } });
   };
@@ -37,31 +41,61 @@ const BattleList = (props) => {
 
       <ul className="container">
         {data &&
-          data.map((item, index) => (
-            <li>
-              <img src={`/images/${item.imgPath}`} alt="profileImg" />
-              <div>
-                <Link
-                  to="/battle/create"
-                  state={{
-                    battleCode: item.battleCode,
-                  }}
-                >
-                  <h3>{item.name}</h3>
-                </Link>
-                <span>
-                  {' '}
-                  D-day :
-                  {getDday(new Date(item.startDate), new Date(item.endDate))}
-                </span>
-              </div>
-              <div>{item.nickname}가 생성</div>
-              <div>자극자 수 : {item.triggerCnt}</div>
-              <div>배틀 상태는 {item.status === 1 ? '진행중' : '검토중'}</div>
-            </li>
-          ))}
+          data
+            .filter((item) => item.status === 1)
+            .map((item, index) => (
+              <li>
+                <img src={`/images/${item.imgPath}`} alt="profileImg" />
+                <div>
+                  <Link
+                    to="/battle/detail"
+                    state={{
+                      battleCode: item.battleCode,
+                    }}
+                  >
+                    <h3>{item.name}</h3>
+                  </Link>
+                  <span>
+                    {' '}
+                    D-day :
+                    {getDday(new Date(item.startDate), new Date(item.endDate))}
+                  </span>
+                </div>
+                <div>{item.nickname}가 생성</div>
+                <div>자극자 수 : {item.triggerCnt}</div>
+                <div>배틀 상태는 진행중</div>
+              </li>
+            ))}
       </ul>
-
+      {/* 검토중인 배틀방들 */}
+      <ul className="container">
+        {data &&
+          data
+            .filter((item) => item.status === 0)
+            .map((item, index) => (
+              <li>
+                <img src={`/images/${item.imgPath}`} alt="profileImg" />
+                <div>
+                  <Link
+                    to="/battle/create"
+                    state={{
+                      battleCode: item.battleCode,
+                    }}
+                  >
+                    <h3>{item.name}</h3>
+                  </Link>
+                  <span>
+                    {' '}
+                    D-day :
+                    {getDday(new Date(item.startDate), new Date(item.endDate))}
+                  </span>
+                </div>
+                <div>{item.nickname}가 생성</div>
+                <div>자극자 수 : {item.triggerCnt}</div>
+                <div>배틀 상태는 검토중</div>
+              </li>
+            ))}
+      </ul>
       <button className={BattleStyles.btnRed} onClick={onCreateBattle}>
         1 : 1배틀 만들기
       </button>
