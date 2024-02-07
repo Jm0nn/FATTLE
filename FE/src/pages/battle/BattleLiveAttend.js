@@ -1,20 +1,18 @@
-// import React from 'react';
-
-// const BattleLive = (props) => {
-//   return <div></div>;
-// };
-
-// export default BattleLive;
 import { OpenVidu } from 'openvidu-browser';
 
 import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import UserVideoComponent from '../../components/battle/UserVideoComponent';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const APPLICATION_SERVER_URL = 'https://i10e106.p.ssafy.io/';
 
-const BattleLive = () => {
-  const [mySessionId, setMySessionId] = useState('SessionA');
+const BattleLiveAttend = () => {
+  // 커스텀 변수
+  const { state } = useLocation();
+  const navigate = useNavigate();
+  // 비디오 관련 변수
+  const [mySessionId, setMySessionId] = useState('');
   const [myUserName, setMyUserName] = useState(
     `Participant${Math.floor(Math.random() * 100)}`,
   );
@@ -23,6 +21,14 @@ const BattleLive = () => {
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState(null);
+
+  useEffect(() => {
+    if (state === null) {
+      navigate('/battle');
+      return;
+    }
+    setMySessionId(state.battleCode);
+  }, []);
 
   const OV = useRef(new OpenVidu());
 
@@ -326,4 +332,4 @@ const BattleLive = () => {
   );
 };
 
-export default BattleLive;
+export default BattleLiveAttend;
