@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import API from '../../services/join/URL';
 import axios from 'axios';
+import { changeCode } from '../../store/store';
 const JoinPage4 = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const [nutrient, setNutrient] = useState([
@@ -120,7 +123,8 @@ const JoinPage4 = () => {
               })
               .then((res) => {
                 alert('회원가입이 완료되었습니다.');
-                navigate('/login');
+                dispatch(changeCode(joinInfo.userCode));
+                navigate('/');
                 console.log(res);
               })
               .catch((err) => {
