@@ -10,11 +10,12 @@ import ExpHistory from './components/main/ExpHistory';
 import Main from './pages/main/Main';
 import mypageRoutes from './pages/mypage/mypageRoutes.js';
 import FoodRegister from './components/main/FoodRegister.js';
+import Battle from './pages/battle/Battle.js';
 
 //styles
 import styles from './styles/App.module.css';
 import Callback from './pages/login/SosialLogin/Login-callback';
-import BattleTest from './components/battle/BattleTest.js';
+import battleRoutes from './pages/battle/battleRoutes.js';
 
 function App() {
   let isLogged = false;
@@ -24,7 +25,9 @@ function App() {
         <Route path="/mypage" element={<Mypage />}>
           {mypageRoutes}
         </Route>
-        <Route path="/battle" element={<BattleTest />} />
+        <Route path="/battle" element={<Battle />}>
+          {battleRoutes}
+        </Route>
         <Route path="/" element={<Auth isLogged={isLogged} />} />
         <Route path="/login" element={<Auth isLogged={isLogged} />} />
         <Route path="/join/page1" element={<JoinPage1></JoinPage1>}></Route>

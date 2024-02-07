@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getFollowerList, getFollowingList } from '../../services/mypage/api';
-import BackHeader from '../../components/commons/BackHeader';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ProfileImg from '../../assets/svg/mypage/ProfileImg.svg';
+import BackHeader from '../../components/commons/BackHeader';
 
 // style import
 import styles from '../../styles/mypage/FolloweList.module.css';
 const FollowList = () => {
+  const userCode = useSelector((state) => state.userCode);
   const followerEle = useRef(null);
   const followingEle = useRef(null);
   const navigate = useNavigate();
@@ -25,9 +27,9 @@ const FollowList = () => {
   }, []);
   const first = async () => {
     if (state.who === 'follower') {
-      setData(await getFollowerList(1));
+      setData(await getFollowerList(userCode));
     } else if (state.who === 'following') {
-      setData(await getFollowingList(1));
+      setData(await getFollowingList(userCode));
     }
     selectAndClassNameAdd(state.who);
   };
@@ -43,9 +45,9 @@ const FollowList = () => {
   };
   const selectTab = async (select) => {
     if (select === 'follower') {
-      setData(await getFollowerList(1));
+      setData(await getFollowerList(userCode));
     } else {
-      setData(await getFollowingList(1));
+      setData(await getFollowingList(userCode));
     }
     selectAndClassNameAdd(select);
   };

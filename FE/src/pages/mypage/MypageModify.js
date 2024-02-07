@@ -2,11 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { patchMypage } from '../../services/mypage/api';
 import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // import styles
 import styles from '../../styles/mypage/MypageModify.module.css';
 import BackHeader from '../../components/commons/BackHeader';
 const MypageModify = () => {
+  const userCode = useSelector((state) => state.userCode);
   const { state } = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
@@ -28,9 +30,10 @@ const MypageModify = () => {
   // method
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(userCode);
     try {
-      const status = await patchMypage(1, {
-        // 1대신 리덕스의 유저code가 들어가야함
+      const status = await patchMypage({
+        userCode,
         nickname,
         introduction,
       });
