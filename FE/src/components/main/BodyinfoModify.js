@@ -20,41 +20,23 @@ const BodyinfoModify = () => {
     setIsModalOpen(false);
   };
 
-  const HandleFormSubmit = async (e) => {
-    e.preventDefault();
+  const HandleFormSubmit = (e) => {
+    axios
+      .patch(`${API.USER_MODIFY_PATCH}`, {
+        userCode,
+        height,
+        weight,
+      })
+      .then((res) => {
+        console.log(res);
 
-    useEffect(() => {
-      axios.get(`${API.USER_GET}${userCode}`).then((res) => {
-        console.log(userCode);
+        // navigate('/');
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    }, []);
-
-    try {
-      const apiUrl = `${API.USER_GET}${userCode}`;
-      {
-        console.log('asd');
-      }
-      const data = {
-        height: height,
-        weight: weight,
-      };
-
-      // const response = await axios.patch(apiUrl, data);
-      // console.log(response.data);
-
-      // axios
-      //   .patch(apiUrl, data)
-      //   .then((res) => {
-      //     console.log(res);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
-
-      closeModal();
-    } catch (error) {
-      console.error('체중 및 신장 업데이트 오류:', error.message);
-    }
+    e.preventDefault();
+    closeModal();
   };
 
   return (
@@ -64,9 +46,7 @@ const BodyinfoModify = () => {
         alt="Click to open modal"
         onClick={() => {
           axios.get(`${API.USER_GET}${userCode}`).then((res) => {
-            console.log(res.data.height);
             setHeight(res.data.height);
-            console.log(res.data.weight);
             setWeight(res.data.weight);
           });
           openModal();
@@ -90,7 +70,9 @@ const BodyinfoModify = () => {
                   type="text"
                   id="height"
                   value={height}
-                  onChange={(e) => setHeight(e.target.value)}
+                  onChange={(e) => {
+                    setHeight(e.target.value);
+                  }}
                   className={styles.inputstyle}
                 />
                 cm
@@ -101,12 +83,17 @@ const BodyinfoModify = () => {
                   type="text"
                   id="weight"
                   value={weight}
-                  onChange={(e) => setWeight(e.target.value)}
+                  onChange={(e) => {
+                    setWeight(e.target.value);
+                  }}
                   className={styles.inputstyle}
                 />
                 kg
               </div>
-              <button type="submit" className={styles.buttonstyle}>
+              <button
+                type="submit"
+                // className={styles.buttonstyle}
+              >
                 완료
               </button>
             </form>
