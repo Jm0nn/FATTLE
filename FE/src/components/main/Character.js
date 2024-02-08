@@ -33,6 +33,9 @@ function Character() {
         console.error('메인 데이터를 불러오는 중 에러 발생:', error);
       });
   }, []);
+  useEffect(() => {
+    console.log(1234);
+  }, [weight, height]);
 
   const maxGrowthExp = 200;
   const calculateCircumference = (radius) => 2 * Math.PI * radius;
@@ -185,7 +188,7 @@ function Character() {
             <div className={styles.infobar}>
               <img src={Frame} alt="" />
               신장: {height}cm 체중: {weight}kg
-              <BodyinfoModify />
+              <BodyinfoModify setWeight1={setWeight} setHeight1={setHeight} />
             </div>
           </div>
         </div>

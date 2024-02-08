@@ -4,9 +4,10 @@ import Frame2 from '../../assets/images/main/Frame2.svg';
 import API from '../../services/main/URL';
 import styles from '../../styles/main/BodyinfoModify.module.css';
 import { useSelector } from 'react-redux';
-const BodyinfoModify = () => {
+const BodyinfoModify = ({ setWeight1, setHeight1 }) => {
   const [height, setHeight] = useState(0);
   const [weight, setWeight] = useState(0);
+  const [isChange, setIsChange] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const userCode = useSelector((state) => {
     return state.userCode;
@@ -21,6 +22,7 @@ const BodyinfoModify = () => {
   };
 
   const HandleFormSubmit = (e) => {
+    console.log(8989);
     axios
       .patch(`${API.USER_MODIFY_PATCH}`, {
         userCode,
@@ -29,7 +31,16 @@ const BodyinfoModify = () => {
       })
       .then((res) => {
         console.log(res);
-
+        axios
+          .get(`${API.USER_GET}${userCode}`)
+          .then((res) => {
+            console.log(res);
+            setWeight1(res.data.weight);
+            setHeight1(res.data.height);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         // navigate('/');
       })
       .catch((err) => {
@@ -46,8 +57,7 @@ const BodyinfoModify = () => {
         alt="Click to open modal"
         onClick={() => {
           axios.get(`${API.USER_GET}${userCode}`).then((res) => {
-            setHeight(res.data.height);
-            setWeight(res.data.weight);
+            console.log(res);
           });
           openModal();
         }}
