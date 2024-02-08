@@ -15,20 +15,27 @@ import { useSelector } from 'react-redux';
 import BodyinfoModify from './BodyinfoModify';
 
 function Character() {
+  const [height, setHeight] = useState(0);
+  const [weight, setWeight] = useState(0);
   const [mainUserData, setMainUserData] = useState(null);
   const userCode = useSelector((state) => {
     return state.userCode;
   });
-  useEffect((usercode) => {
+  useEffect(() => {
     axios
       .get(`${API.USER_GET}${userCode}`)
       .then((response) => {
+        setHeight(response.data.height);
+        setWeight(response.data.weight);
         setMainUserData(response.data);
       })
       .catch((error) => {
         console.error('메인 데이터를 불러오는 중 에러 발생:', error);
       });
   }, []);
+  useEffect(() => {
+    console.log(1234);
+  }, [weight, height]);
 
   const maxGrowthExp = 200;
   const calculateCircumference = (radius) => 2 * Math.PI * radius;
@@ -178,12 +185,11 @@ function Character() {
           </div>
 
           <div className={`${styles.centeredContainer}`}>
-            <p className={styles.infobar}>
+            <div className={styles.infobar}>
               <img src={Frame} alt="" />
-              신장: {mainUserData.height}cm 체중: {mainUserData.weight}kg
-              <BodyinfoModify />
-              <img src={Frame2} alt="" />
-            </p>
+              신장: {height}cm 체중: {weight}kg
+              <BodyinfoModify setWeight1={setWeight} setHeight1={setHeight} />
+            </div>
           </div>
         </div>
       )}
