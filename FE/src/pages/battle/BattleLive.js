@@ -11,7 +11,8 @@ import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import UserVideoComponent from '../../components/battle/UserVideoComponent';
 
-const APPLICATION_SERVER_URL = 'https://i10e106.p.ssafy.io/';
+// const APPLICATION_SERVER_URL = 'https://i10e106.p.ssafy.io/';
+const APPLICATION_SERVER_URL = 'http://localhost:8000/';
 
 const BattleLive = () => {
   const [mySessionId, setMySessionId] = useState('SessionA');
@@ -48,6 +49,7 @@ const BattleLive = () => {
 
     mySession.on('streamCreated', (event) => {
       const subscriber = mySession.subscribe(event.stream, undefined);
+      // subscriber.stream.applyFilter(filter.type, filter.options)
       setSubscribers((subscribers) => [...subscribers, subscriber]);
     });
 
@@ -78,6 +80,12 @@ const BattleLive = () => {
             frameRate: 30,
             insertMode: 'APPEND',
             mirror: false,
+            filter: {
+              type: 'GStreamerFilter',
+              options: {
+                command: 'pitch pitch=2.3',
+              },
+            },
           });
 
           session.publish(publisher);

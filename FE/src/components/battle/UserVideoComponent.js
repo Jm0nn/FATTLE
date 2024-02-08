@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import OpenViduVideoComponent from './OvVideo';
 import './UserVideo.css';
 
@@ -14,7 +14,7 @@ export default function UserVideoComponent({ streamManager }) {
         <div className="streamcomponent">
           <OpenViduVideoComponent streamManager={streamManager} />
           <div>
-            <p>{getNicknameTag()}</p>
+            <p>{'asd'}</p>
           </div>
         </div>
       ) : null}
