@@ -11,24 +11,18 @@ const BattleLiveAttend = () => {
   // 커스텀 변수
   const { state } = useLocation();
   const navigate = useNavigate();
+  const chatInputEle = useRef(null);
+  const [chatText, setChatText] = useState('');
   // 비디오 관련 변수
   const [mySessionId, setMySessionId] = useState('');
   const [myUserName, setMyUserName] = useState(
-    `Participant${Math.floor(Math.random() * 100)}`,
+    `익명의 자극자 ${Math.floor(Math.random() * 100)}`,
   );
   const [session, setSession] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState(null);
-
-  useEffect(() => {
-    if (state === null) {
-      navigate('/battle');
-      return;
-    }
-    setMySessionId(state.battleCode);
-  }, []);
 
   const OV = useRef(new OpenVidu());
 
@@ -61,6 +55,16 @@ const BattleLiveAttend = () => {
       deleteSubscriber(event.stream.streamManager);
     });
 
+    // 방송을 킨 사람이 종료하면 자동으로 종료됨
+    mySession.on('signal:end-live', (event) => {
+      leaveSession();
+      alert('방송이 종료 되었습니다');
+    });
+    // 채팅 기능
+    mySession.on('signal:chat-live', (event) => {
+      console.log('채팅 : ', event.from, '으로부터', event.data, ' 라고 옴');
+    });
+
     mySession.on('exception', (exception) => {
       console.warn(exception);
     });
@@ -69,6 +73,11 @@ const BattleLiveAttend = () => {
   }, []);
 
   useEffect(() => {
+    if (state === null) {
+      navigate('/battle');
+      return;
+    }
+    setMySessionId(state.sessionId);
     if (session) {
       // Get a token from the OpenVidu deployment
       getToken().then(async (token) => {
@@ -84,6 +93,12 @@ const BattleLiveAttend = () => {
             frameRate: 30,
             insertMode: 'APPEND',
             mirror: false,
+            filter: {
+              type: 'GStreamerFilter',
+              options: {
+                command: 'pitch pitch=2.5',
+              },
+            },
           });
 
           session.publish(publisher);
@@ -116,9 +131,6 @@ const BattleLiveAttend = () => {
 
   const leaveSession = useCallback(() => {
     // Leave the session
-    if (session) {
-      session.disconnect();
-    }
 
     // Reset all states and OpenVidu object
     OV.current = new OpenVidu();
@@ -129,40 +141,6 @@ const BattleLiveAttend = () => {
     setMainStreamManager(undefined);
     setPublisher(undefined);
   }, [session]);
-
-  const switchCamera = useCallback(async () => {
-    try {
-      const devices = await OV.current.getDevices();
-      const videoDevices = devices.filter(
-        (device) => device.kind === 'videoinput',
-      );
-
-      if (videoDevices && videoDevices.length > 1) {
-        const newVideoDevice = videoDevices.filter(
-          (device) => device.deviceId !== currentVideoDevice.deviceId,
-        );
-
-        if (newVideoDevice.length > 0) {
-          const newPublisher = OV.current.initPublisher(undefined, {
-            videoSource: newVideoDevice[0].deviceId,
-            publishAudio: true,
-            publishVideo: true,
-            mirror: true,
-          });
-
-          if (session) {
-            await session.unpublish(mainStreamManager);
-            await session.publish(newPublisher);
-            setCurrentVideoDevice(newVideoDevice[0]);
-            setMainStreamManager(newPublisher);
-            setPublisher(newPublisher);
-          }
-        }
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }, [currentVideoDevice, session, mainStreamManager]);
 
   const deleteSubscriber = useCallback((streamManager) => {
     setSubscribers((prevSubscribers) => {
@@ -233,6 +211,21 @@ const BattleLiveAttend = () => {
     );
     return response.data; // The token
   };
+  const sendChatting = () => {
+    session
+      .signal({
+        data: chatText, // Any string (optional)
+        to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
+        type: 'chat-live', // The type of message (optional)
+      })
+      .then(() => {
+        console.log('Message successfully sent');
+        setChatText('');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <div className="container">
       {session === undefined ? (
@@ -292,13 +285,6 @@ const BattleLiveAttend = () => {
               onClick={leaveSession}
               value="Leave session"
             />
-            <input
-              className="btn btn-large btn-success"
-              type="button"
-              id="buttonSwitchCamera"
-              onClick={switchCamera}
-              value="Switch Camera"
-            />
           </div>
 
           {mainStreamManager !== undefined ? (
@@ -326,6 +312,14 @@ const BattleLiveAttend = () => {
               </div>
             ))}
           </div>
+
+          <input
+            type="text"
+            ref={chatInputEle}
+            value={chatText}
+            onChange={(e) => setChatText(e.target.value)}
+          />
+          <button onClick={sendChatting}>채팅보내기</button>
         </div>
       ) : null}
     </div>
