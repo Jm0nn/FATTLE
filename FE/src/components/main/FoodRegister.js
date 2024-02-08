@@ -10,10 +10,9 @@ function FoodRegister() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [relatedKeywords, setRelatedKeywords] = useState([]);
-  const [cameraStream, setCameraStream] = useState(null); 
+  const [cameraStream, setCameraStream] = useState(null);
   const [isCameraOn, setIsCameraOn] = useState(false);
 
-  
   useEffect(() => {
     try {
       axios.get(`http://localhost:5000/list`).then((response) => {
@@ -29,7 +28,9 @@ function FoodRegister() {
     setRelatedKeywords(
       foodList
         .map((food) => food.name)
-        .filter((name) => name.toLowerCase().includes(searchQuery.toLowerCase()))
+        .filter((name) =>
+          name.toLowerCase().includes(searchQuery.toLowerCase()),
+        ),
     );
   }, [searchQuery, foodList]);
 
@@ -39,7 +40,7 @@ function FoodRegister() {
 
   const handleSearchClick = () => {
     const filteredList = foodList.filter((food) =>
-      food.name.toLowerCase().includes(searchQuery.toLowerCase())
+      food.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
     setSearchResults(filteredList);
     setSearchQuery(''); // 검색 완료 후 검색창 비우기
@@ -53,7 +54,9 @@ function FoodRegister() {
   const handleCameraClick = async () => {
     try {
       if (!isCameraOn) {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+        });
         setCameraStream(stream);
       } else {
         // 카메라 끄기
@@ -63,7 +66,7 @@ function FoodRegister() {
       // 카메라 상태 업데이트
       setIsCameraOn((prev) => !prev);
     } catch (error) {
-      console.error("카메라에 접근하는 중 오류 발생:", error);
+      console.error('카메라에 접근하는 중 오류 발생:', error);
     }
   };
 
@@ -88,7 +91,6 @@ function FoodRegister() {
     }
   };
 
-
   return (
     <div className={styles.wrapper}>
       {/* 검색 창 */}
@@ -105,7 +107,10 @@ function FoodRegister() {
           <div className={styles.relatedKeywordsContainer}>
             <ul className={styles.relatedKeywords}>
               {relatedKeywords.map((keyword, index) => (
-                <li key={index} onClick={() => handleRelatedKeywordClick(keyword)}>
+                <li
+                  key={index}
+                  onClick={() => handleRelatedKeywordClick(keyword)}
+                >
                   {keyword}
                 </li>
               ))}
@@ -149,31 +154,31 @@ function FoodRegister() {
       </div>
 
       <div className={styles.cameraContainer}>
-        <img
-          src={cameratext}
-          alt=''
-          className={styles.cameratextImage}
-        />
+        <img src={cameratext} alt="" className={styles.cameratextImage} />
         <img
           src={camera}
-          alt=''
+          alt=""
           className={styles.cameraImage}
           onClick={handleCameraClick}
         />
 
-      <div className={styles.camera}>
-
+        <div className={styles.camera}>
           {cameraStream && (
             <video
-            autoPlay
-            playsInline
-            muted
-            className={styles.cameraPreview}
-            ref={(videoRef) => videoRef && (videoRef.srcObject = cameraStream)}
+              autoPlay
+              playsInline
+              muted
+              className={styles.cameraPreview}
+              ref={(videoRef) =>
+                videoRef && (videoRef.srcObject = cameraStream)
+              }
             />
           )}
           {isCameraOn && (
-            <button className={styles.takePhotoButton} onClick={handleTakePhoto}>
+            <button
+              className={styles.takePhotoButton}
+              onClick={handleTakePhoto}
+            >
               사진 찍기
             </button>
           )}
@@ -185,16 +190,3 @@ function FoodRegister() {
 }
 
 export default FoodRegister;
-
-
-
-
-
-
-
-
-
-
-
-
-

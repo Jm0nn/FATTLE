@@ -5,6 +5,7 @@ export const API = {
   QUEST_LISt_GET: `${BASE_URL}/quest/list/`,
   RANK_GET: `${BASE_URL}/rank/list/`,
   FOOD_REGIST_POST: `${BASE_URL}/food/regist/`,
+  USER_MODIFY_PATCH: `${BASE_URL}/user/userinfo/modify`,
 };
 
 export default API;

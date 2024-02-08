@@ -15,14 +15,18 @@ import { useSelector } from 'react-redux';
 import BodyinfoModify from './BodyinfoModify';
 
 function Character() {
+  const [height, setHeight] = useState(0);
+  const [weight, setWeight] = useState(0);
   const [mainUserData, setMainUserData] = useState(null);
   const userCode = useSelector((state) => {
     return state.userCode;
   });
-  useEffect((usercode) => {
+  useEffect(() => {
     axios
       .get(`${API.USER_GET}${userCode}`)
       .then((response) => {
+        setHeight(response.data.height);
+        setWeight(response.data.weight);
         setMainUserData(response.data);
       })
       .catch((error) => {
@@ -178,12 +182,11 @@ function Character() {
           </div>
 
           <div className={`${styles.centeredContainer}`}>
-            <p className={styles.infobar}>
+            <div className={styles.infobar}>
               <img src={Frame} alt="" />
-              신장: {mainUserData.height}cm 체중: {mainUserData.weight}kg
+              신장: {height}cm 체중: {weight}kg
               <BodyinfoModify />
-              <img src={Frame2} alt="" />
-            </p>
+            </div>
           </div>
         </div>
       )}
