@@ -14,7 +14,7 @@ export default function UserVideoComponent({ streamManager }) {
         <div className="streamcomponent">
           <OpenViduVideoComponent streamManager={streamManager} />
           <div>
-            <p>{'asd'}</p>
+            <p>{getNicknameTag()}</p>
           </div>
         </div>
       ) : null}

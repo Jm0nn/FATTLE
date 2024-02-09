@@ -4,8 +4,9 @@ import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import UserVideoComponent from '../../components/battle/UserVideoComponent';
 import { useLocation, useNavigate } from 'react-router-dom';
+import BASE_URL from '../../config.js';
 
-const APPLICATION_SERVER_URL = 'https://i10e106.p.ssafy.io/';
+const APPLICATION_SERVER_URL = BASE_URL;
 
 const BattleLiveAttend = () => {
   // 커스텀 변수
@@ -26,23 +27,6 @@ const BattleLiveAttend = () => {
 
   const OV = useRef(new OpenVidu());
 
-  const handleChangeSessionId = useCallback((e) => {
-    setMySessionId(e.target.value);
-  }, []);
-
-  const handleChangeUserName = useCallback((e) => {
-    setMyUserName(e.target.value);
-  }, []);
-
-  const handleMainVideoStream = useCallback(
-    (stream) => {
-      if (mainStreamManager !== stream) {
-        setMainStreamManager(stream);
-      }
-    },
-    [mainStreamManager],
-  );
-
   const joinSession = useCallback(() => {
     const mySession = OV.current.initSession();
 
@@ -60,16 +44,18 @@ const BattleLiveAttend = () => {
       leaveSession();
       alert('방송이 종료 되었습니다');
     });
-    // 채팅 기능
-    mySession.on('signal:chat-live', (event) => {
-      console.log('채팅 : ', event.from, '으로부터', event.data, ' 라고 옴');
-    });
 
     mySession.on('exception', (exception) => {
       console.warn(exception);
     });
-
+    // 채팅 기능
+    mySession.on('signal:chat-live', (event) => {
+      console.log('채팅 : ', event.from, '으로부터', event.data, ' 라고 옴');
+    });
     setSession(mySession);
+  }, []);
+  useEffect(() => {
+    // joinSession();
   }, []);
 
   useEffect(() => {
@@ -189,7 +175,7 @@ const BattleLiveAttend = () => {
 
   const createSession = async (sessionId) => {
     const response = await axios.post(
-      APPLICATION_SERVER_URL + 'api/openvidu/sessions',
+      APPLICATION_SERVER_URL + '/openvidu/sessions',
       { customSessionId: sessionId },
       {
         headers: { 'Content-Type': 'application/json' },
@@ -201,7 +187,7 @@ const BattleLiveAttend = () => {
   const createToken = async (sessionId) => {
     const response = await axios.post(
       APPLICATION_SERVER_URL +
-        'api/openvidu/sessions/' +
+        '/openvidu/sessions/' +
         sessionId +
         '/connections',
       {},
@@ -214,7 +200,10 @@ const BattleLiveAttend = () => {
   const sendChatting = () => {
     session
       .signal({
-        data: chatText, // Any string (optional)
+        data: {
+          chatText,
+          from: myUserName,
+        }, // Any string (optional)
         to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
         type: 'chat-live', // The type of message (optional)
       })
@@ -239,28 +228,6 @@ const BattleLiveAttend = () => {
           <div id="join-dialog" className="jumbotron vertical-center">
             <h1> Join a video session </h1>
             <form className="form-group" onSubmit={joinSession}>
-              <p>
-                <label>Participant: </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="userName"
-                  value={myUserName}
-                  onChange={handleChangeUserName}
-                  required
-                />
-              </p>
-              <p>
-                <label> Session: </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="sessionId"
-                  value={mySessionId}
-                  onChange={handleChangeSessionId}
-                  required
-                />
-              </p>
               <p className="text-center">
                 <input
                   className="btn btn-lg btn-success"
@@ -292,26 +259,6 @@ const BattleLiveAttend = () => {
               <UserVideoComponent streamManager={mainStreamManager} />
             </div>
           ) : null}
-          <div id="video-container" className="col-md-6">
-            {publisher !== undefined ? (
-              <div
-                className="stream-container col-md-6 col-xs-6"
-                onClick={() => handleMainVideoStream(publisher)}
-              >
-                <UserVideoComponent streamManager={publisher} />
-              </div>
-            ) : null}
-            {subscribers.map((sub, i) => (
-              <div
-                key={sub.id}
-                className="stream-container col-md-6 col-xs-6"
-                onClick={() => handleMainVideoStream(sub)}
-              >
-                <span>{sub.id}</span>
-                <UserVideoComponent streamManager={sub} />
-              </div>
-            ))}
-          </div>
 
           <input
             type="text"

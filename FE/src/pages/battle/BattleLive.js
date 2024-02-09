@@ -11,7 +11,7 @@ const APPLICATION_SERVER_URL = BASE_URL;
 const BattleLive = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [mySessionId, setMySessionId] = useState('SessionA');
+  const [mySessionId, setMySessionId] = useState(undefined);
   const [myUserName, setMyUserName] = useState('');
 
   const [session, setSession] = useState(undefined);
@@ -22,36 +22,14 @@ const BattleLive = () => {
 
   const OV = useRef(new OpenVidu());
 
-  const handleChangeSessionId = useCallback((e) => {
-    setMySessionId(e.target.value);
-  }, []);
-
-  const handleChangeUserName = useCallback((e) => {
-    setMyUserName(e.target.value);
-  }, []);
-
-  const handleMainVideoStream = useCallback(
-    (stream) => {
-      if (mainStreamManager !== stream) {
-        setMainStreamManager(stream);
-      }
-    },
-    [mainStreamManager],
-  );
-
   const joinSession = useCallback(() => {
     const mySession = OV.current.initSession();
 
     mySession.on('streamCreated', (event) => {
-      const subscriber = mySession.subscribe(event.stream, 'user_data');
-      // subscriber.stream.applyFilter(filter.type, filter.options)
-      console.log('USER DATA : ' + event.stream.connection.data);
+      const subscriber = mySession.subscribe(event.stream, undefined);
       setSubscribers((subscribers) => [...subscribers, subscriber]);
     });
-    // 채팅 기능
-    mySession.on('signal:chat-live', (event) => {
-      console.log('채팅 : ', event.from, '으로부터', event.data, ' 라고 옴');
-    });
+
     mySession.on('streamDestroyed', (event) => {
       deleteSubscriber(event.stream.streamManager);
     });
@@ -59,33 +37,35 @@ const BattleLive = () => {
     mySession.on('exception', (exception) => {
       console.warn(exception);
     });
-
+    // 채팅 기능
+    mySession.on('signal:chat-live', (event) => {
+      console.log('채팅 : ', event.from, '으로부터', event.data, ' 라고 옴');
+    });
     setSession(mySession);
   }, []);
-
+  useEffect(() => {
+    if (state === null) {
+      navigate('/main');
+      return;
+    }
+    setMySessionId(state.sessionId);
+    setMyUserName(state.nickname);
+  }, []);
   useEffect(() => {
     if (state === null) {
       navigate('/battle');
       return;
     }
-    setMySessionId(state.sessionId);
-    setMyUserName(state.nickname);
+    // joinSession();
+  }, []);
+
+  useEffect(() => {
     if (session) {
       // Get a token from the OpenVidu deployment
       getToken().then(async (token) => {
         try {
           await session.connect(token, { clientData: myUserName });
 
-          // 내기자가 방송하려는 경우 필터를 적용하지 않는다.
-          // let filter = null;
-          // if (!state.isStreamer) {
-          //   filter = {
-          //     type: 'GStreamerFilter',
-          //     options: {
-          //       command: 'pitch pitch=2.0',
-          //     },
-          //   };
-          // }
           let publisher = await OV.current.initPublisherAsync(undefined, {
             audioSource: undefined,
             videoSource: undefined,
@@ -124,7 +104,7 @@ const BattleLive = () => {
         }
       });
     }
-  }, [session, myUserName]);
+  }, [session]);
 
   const leaveSession = useCallback(() => {
     // Leave the session
@@ -152,40 +132,6 @@ const BattleLive = () => {
     setMainStreamManager(undefined);
     setPublisher(undefined);
   }, [session]);
-
-  // const switchCamera = useCallback(async () => {
-  //   try {
-  //     const devices = await OV.current.getDevices();
-  //     const videoDevices = devices.filter(
-  //       (device) => device.kind === 'videoinput',
-  //     );
-
-  //     if (videoDevices && videoDevices.length > 1) {
-  //       const newVideoDevice = videoDevices.filter(
-  //         (device) => device.deviceId !== currentVideoDevice.deviceId,
-  //       );
-
-  //       if (newVideoDevice.length > 0) {
-  //         const newPublisher = OV.current.initPublisher(undefined, {
-  //           videoSource: newVideoDevice[0].deviceId,
-  //           publishAudio: true,
-  //           publishVideo: true,
-  //           mirror: true,
-  //         });
-
-  //         if (session) {
-  //           await session.unpublish(mainStreamManager);
-  //           await session.publish(newPublisher);
-  //           setCurrentVideoDevice(newVideoDevice[0]);
-  //           setMainStreamManager(newPublisher);
-  //           setPublisher(newPublisher);
-  //         }
-  //       }
-  //     }
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // }, [currentVideoDevice, session, mainStreamManager]);
 
   const deleteSubscriber = useCallback((streamManager) => {
     setSubscribers((prevSubscribers) => {
@@ -240,13 +186,14 @@ const BattleLive = () => {
         headers: { 'Content-Type': 'application/json' },
       },
     );
+    console.log(response.data);
     return response.data; // The sessionId
   };
 
   const createToken = async (sessionId) => {
     const response = await axios.post(
       APPLICATION_SERVER_URL +
-        'api/openvidu/sessions/' +
+        '/openvidu/sessions/' +
         sessionId +
         '/connections',
       {},
@@ -269,28 +216,6 @@ const BattleLive = () => {
           <div id="join-dialog" className="jumbotron vertical-center">
             <h1> Join a video session </h1>
             <form className="form-group" onSubmit={joinSession}>
-              <p>
-                <label>Participant: </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="userName"
-                  value={myUserName}
-                  onChange={handleChangeUserName}
-                  required
-                />
-              </p>
-              <p>
-                <label> Session: </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="sessionId"
-                  value={mySessionId}
-                  onChange={handleChangeSessionId}
-                  required
-                />
-              </p>
               <p className="text-center">
                 <input
                   className="btn btn-lg btn-success"
@@ -329,7 +254,7 @@ const BattleLive = () => {
               <UserVideoComponent streamManager={mainStreamManager} />
             </div>
           ) : null}
-          <div id="video-container" className="col-md-6">
+          {/* <div id="video-container" className="col-md-6">
             {publisher !== undefined ? (
               <div
                 className="stream-container col-md-6 col-xs-6"
@@ -338,17 +263,7 @@ const BattleLive = () => {
                 <UserVideoComponent streamManager={publisher} />
               </div>
             ) : null}
-            {/* {subscribers.map((sub, i) => (
-              <div
-                key={sub.id}
-                className="stream-container col-md-6 col-xs-6"
-                onClick={() => handleMainVideoStream(sub)}
-              >
-                <span>{sub.id}</span>
-                <UserVideoComponent streamManager={sub} />
-              </div>
-            ))} */}
-          </div>
+          </div> */}
         </div>
       ) : null}
     </div>
