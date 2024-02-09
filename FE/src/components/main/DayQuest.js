@@ -51,7 +51,7 @@ function DayQuest() {
     // 퀘스트 클릭 시 해당 값을 서버에 업데이트
     axios
       .post(`${API.UPDATE_QUEST_POST}`, {
-        userCode: `${userCode}`,
+        userCode: userCode,
         exercise: 'RUN',
       })
       .then((response) => {

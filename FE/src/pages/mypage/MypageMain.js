@@ -15,6 +15,7 @@ import Configure from '../../assets/svg/mypage/Configure.svg';
 import Edit from '../../assets/svg/mypage/Edit.svg';
 import ProfileImg from '../../assets/svg/mypage/ProfileImg.svg';
 import getCalendarList from '../../utils/mypage/getCalendarList.js';
+import MyGoal from '../../components/mypage/MyGoal.js';
 function MypageMain(props) {
   const navigate = useNavigate();
   const userCode = useSelector((state) => state.userCode);
@@ -128,7 +129,11 @@ function MypageMain(props) {
           <div className={styles.introduction}>{data.introduction}</div>
           {/* 프로필 정보 끝 */}
           {/* 목표 부분 시작 */}
-          <div className={styles.headerText}>나의 목표&#32;&#62;</div>
+          <div className={styles.headerText}>
+            {/* 나의 목표&#32;&#62; */}
+            {/* 나의 목표 수정 버튼 */}
+            <MyGoal />
+          </div>
           <div className={styles.goalBox}>
             <div className={styles.goalContainer}>
               <div className={styles.gDiv}>
