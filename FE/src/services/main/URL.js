@@ -7,6 +7,7 @@ export const API = {
   FOOD_REGIST_POST: `${BASE_URL}/food/regist/`,
   USER_MODIFY_PATCH: `${BASE_URL}/user/userinfo/modify`,
   UPDATE_QUEST_POST: `${BASE_URL}/quest/record`,
+  GOAL_PATCH: `${BASE_URL}/user/mypage/modify-goal`,
 };
 
 export default API;
