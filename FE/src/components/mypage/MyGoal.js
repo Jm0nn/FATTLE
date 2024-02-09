@@ -66,6 +66,11 @@ const MyGoal = ({ setWeight1, setHeight1 }) => {
         onClick={() => {
           axios.get(`${API.USER_GET}${userCode}`).then((res) => {
             console.log(res);
+            setWeight(res.data.weight);
+            setKcal(res.data.goalCalory);
+            setCarbon(res.data.goalCarbo);
+            setProtein(res.data.goalProtein);
+            setFat(res.data.goalFat);
           });
           openModal();
         }}
@@ -82,24 +87,37 @@ const MyGoal = ({ setWeight1, setHeight1 }) => {
             </button>
             <form onSubmit={HandleFormSubmit}>
               <div>
-                <label htmlFor="height">목표 체중</label>
+                <label htmlFor="weight">목표 체중</label>
                 <input
                   type="text"
-                  id="height"
-                  value={height}
+                  id="weight"
+                  value={weight}
                   onChange={(e) => {
-                    setHeight(e.target.value);
+                    setWeight(e.target.value);
                   }}
                   className={styles.inputstyle}
                 />
                 cm
               </div>
               <div>
-                <label htmlFor="weight">칼로리</label>
+                <label htmlFor="kcal">칼로리</label>
                 <input
                   type="text"
-                  id="weight"
-                  value={weight}
+                  id="kcal"
+                  value={kcal}
+                  onChange={(e) => {
+                    setKcal(e.target.value);
+                  }}
+                  className={styles.inputstyle}
+                />
+                kg
+              </div>
+              <div>
+                <label htmlFor="carbon">탄수화물</label>
+                <input
+                  type="text"
+                  id="carbon"
+                  value={carbon}
                   onChange={(e) => {
                     setWeight(e.target.value);
                   }}
@@ -108,11 +126,11 @@ const MyGoal = ({ setWeight1, setHeight1 }) => {
                 kg
               </div>
               <div>
-                <label htmlFor="weight">탄수화물</label>
+                <label htmlFor="protein">단백질</label>
                 <input
                   type="text"
-                  id="weight"
-                  value={weight}
+                  id="protein"
+                  value={protein}
                   onChange={(e) => {
                     setWeight(e.target.value);
                   }}
@@ -121,24 +139,11 @@ const MyGoal = ({ setWeight1, setHeight1 }) => {
                 kg
               </div>
               <div>
-                <label htmlFor="weight">단백질</label>
+                <label htmlFor="fat">지방</label>
                 <input
                   type="text"
-                  id="weight"
-                  value={weight}
-                  onChange={(e) => {
-                    setWeight(e.target.value);
-                  }}
-                  className={styles.inputstyle}
-                />
-                kg
-              </div>
-              <div>
-                <label htmlFor="weight">지방</label>
-                <input
-                  type="text"
-                  id="weight"
-                  value={weight}
+                  id="fat"
+                  value={fat}
                   onChange={(e) => {
                     setWeight(e.target.value);
                   }}
