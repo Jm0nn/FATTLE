@@ -1,0 +1,60 @@
+/* DayQuestStyles.module.css */
+
+.dayQuestContainer {
+  background-color: #2EB089;
+  height: 500px;
+  padding: 30px;
+  color: #ffffff;
+}
+
+.questTitle {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+.exerciseListContainer {
+  align-items: center;
+  overflow-y: auto; /* 세로 스크롤 유지 */
+  overflow-x: hidden;
+  height: 300px;
+}
+
+.exerciseListContainer::-webkit-scrollbar {
+  width: 0;  /* 세로 스크롤 바 숨김 */
+}
+
+.exerciseItem {
+  cursor: pointer;
+  border-radius: 15px;
+  padding: 8px;
+  padding-left: 25px;
+  margin-bottom: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 85%;
+  font-size: 1.2em;
+  display: block;
+}
+
+.exerciseItemSelected {
+  background-color: #A4FF78;
+}
+
+.exerciseItemUnselected {
+  background-color: #A0D7FF;
+}
+
+.showMoreButton {
+  margin-left: 50px;
+  padding: 5px;
+  font-size: 20px;
+  border-radius: 10px;
+  border: 1px solid #ffffff;
+  background-color: #000000;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.showMoreButton:hover {
+  background-color: #ffffff;
+}
