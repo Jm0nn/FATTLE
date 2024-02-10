@@ -7,6 +7,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import BASE_URL from '../../config.js';
 import Chatting from './Chatting.js';
 
+import styles from '../../styles/battle/BattleLive.module.css';
+
 const APPLICATION_SERVER_URL = BASE_URL;
 
 const BattleLive = () => {
@@ -15,6 +17,8 @@ const BattleLive = () => {
   const navigate = useNavigate();
   const [mySessionId, setMySessionId] = useState(undefined);
   const [myUserName, setMyUserName] = useState('');
+  let sessionName = '';
+  let nickname = '';
 
   const [chatList, setChatList] = useState([]);
   const dataId = useRef(0);
@@ -31,6 +35,8 @@ const BattleLive = () => {
   const OV = useRef(null);
 
   const joinSession = useCallback(() => {
+    OV.current = new OpenVidu();
+    OV.current.enableProdMode();
     const mySession = OV.current.initSession();
 
     mySession.on('streamCreated', (event) => {
@@ -53,9 +59,11 @@ const BattleLive = () => {
       navigate('/main');
       return;
     }
-    OV.current = new OpenVidu();
-    setMySessionId(state.sessionId);
-    setMyUserName(state.nickname);
+    // setMySessionId(state.sessionId);
+    // setMyUserName(state.nickname);
+    sessionName = state.sessionId;
+    nickname = state.nickname;
+    joinSession();
   }, []);
 
   useEffect(() => {
@@ -63,7 +71,7 @@ const BattleLive = () => {
       // Get a token from the OpenVidu deployment
       getToken().then(async (token) => {
         try {
-          await session.connect(token, { clientData: myUserName });
+          await session.connect(token, { clientData: nickname });
 
           let publisher = await OV.current.initPublisherAsync(undefined, {
             audioSource: undefined,
@@ -117,9 +125,13 @@ const BattleLive = () => {
         .then(() => {
           console.log('Message successfully sent');
           session.disconnect();
+          // navigate('/battle');
         })
         .catch((err) => {
           console.err(err);
+        })
+        .finally(() => {
+          navigate('/battle');
         });
     }
     // Reset all states and OpenVidu object
@@ -172,15 +184,15 @@ const BattleLive = () => {
    * more about the integration of OpenVidu in your application server.
    */
   const getToken = useCallback(async () => {
-    return createSession(mySessionId).then((sessionId) =>
-      createToken(sessionId),
+    return createSession(sessionName).then((sessionName) =>
+      createToken(sessionName),
     );
   }, [mySessionId]);
 
-  const createSession = async (sessionId) => {
+  const createSession = async (sessionName) => {
     const response = await axios.post(
       APPLICATION_SERVER_URL + '/openvidu/sessions',
-      { customSessionId: sessionId },
+      { customSessionId: sessionName },
       {
         headers: { 'Content-Type': 'application/json' },
       },
@@ -189,11 +201,11 @@ const BattleLive = () => {
     return response.data; // The sessionId
   };
 
-  const createToken = async (sessionId) => {
+  const createToken = async (sessionName) => {
     const response = await axios.post(
       APPLICATION_SERVER_URL +
         '/openvidu/sessions/' +
-        sessionId +
+        sessionName +
         '/connections',
       {},
       {
@@ -203,35 +215,11 @@ const BattleLive = () => {
     return response.data; // The token
   };
   return (
-    <div className="container">
-      {session === undefined ? (
-        <div id="join">
-          <div id="img-div">
-            <img
-              src="resources/images/openvidu_grey_bg_transp_cropped.png"
-              alt="OpenVidu logo"
-            />
-          </div>
-          <div id="join-dialog" className="jumbotron vertical-center">
-            <h1> Join a video session </h1>
-            <form className="form-group" onSubmit={joinSession}>
-              <p className="text-center">
-                <input
-                  className="btn btn-lg btn-success"
-                  name="commit"
-                  type="submit"
-                  value="JOIN"
-                />
-              </p>
-            </form>
-          </div>
-        </div>
-      ) : null}
-
+    <div className={styles.container}>
       {session !== undefined ? (
         <div id="session">
           <div id="session-header">
-            <h1 id="session-title">{mySessionId}</h1>
+            <h1 id="session-title">{sessionName}</h1>
             <input
               className="btn btn-large btn-danger"
               type="button"

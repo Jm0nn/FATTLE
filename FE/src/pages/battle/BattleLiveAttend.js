@@ -23,6 +23,8 @@ const BattleLiveAttend = () => {
   const [myUserName, setMyUserName] = useState(
     `익명의 자극자 ${Math.floor(Math.random() * 100)}`,
   );
+  let sessionName = '';
+  const nickname = `익명의 자극자 ${Math.floor(Math.random() * 100)}`;
   const [session, setSession] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
@@ -33,6 +35,8 @@ const BattleLiveAttend = () => {
   const OV = useRef(null);
 
   const joinSession = useCallback(() => {
+    OV.current = new OpenVidu();
+    OV.current.enableProdMode();
     const mySession = OV.current.initSession();
 
     mySession.on('streamCreated', (event) => {
@@ -48,6 +52,7 @@ const BattleLiveAttend = () => {
     mySession.on('signal:end-live', (event) => {
       leaveSession();
       alert('방송이 종료 되었습니다');
+      navigate('/battle');
     });
 
     mySession.on('exception', (exception) => {
@@ -57,22 +62,21 @@ const BattleLiveAttend = () => {
     setSession(mySession);
   }, []);
   useEffect(() => {
-    // joinSession();
-    OV.current = new OpenVidu();
-  }, []);
-
-  useEffect(() => {
     if (state === null) {
       navigate('/battle');
       return;
     }
-    setMySessionId(state.sessionId);
+    sessionName = state.sessionId;
+    joinSession();
+    // OV.current = new OpenVidu();
+  }, []);
+
+  useEffect(() => {
     if (session) {
-      console.log('세션 관련');
       // Get a token from the OpenVidu deployment
       getToken().then(async (token) => {
         try {
-          await session.connect(token, { clientData: myUserName });
+          await session.connect(token, { clientData: nickname });
 
           let publisher = await OV.current.initPublisherAsync(undefined, {
             audioSource: undefined,
@@ -117,17 +121,18 @@ const BattleLiveAttend = () => {
         }
       });
     }
-  }, [session, myUserName]);
+  }, [session]);
 
   const leaveSession = useCallback(() => {
     // Leave the session
+    // session.disconnect();
 
     // Reset all states and OpenVidu object
     OV.current = new OpenVidu();
     setSession(undefined);
     setSubscribers([]);
-    setMySessionId('SessionA');
-    setMyUserName('Participant' + Math.floor(Math.random() * 100));
+    // setMySessionId('SessionA');
+    // setMyUserName('Participant' + Math.floor(Math.random() * 100));
     setMainStreamManager(undefined);
     setPublisher(undefined);
   }, [session]);
@@ -172,15 +177,15 @@ const BattleLiveAttend = () => {
    * more about the integration of OpenVidu in your application server.
    */
   const getToken = useCallback(async () => {
-    return createSession(mySessionId).then((sessionId) =>
-      createToken(sessionId),
+    return createSession(sessionName).then((sessionName) =>
+      createToken(sessionName),
     );
   }, [mySessionId]);
 
-  const createSession = async (sessionId) => {
+  const createSession = async (sessionName) => {
     const response = await axios.post(
       APPLICATION_SERVER_URL + '/openvidu/sessions',
-      { customSessionId: sessionId },
+      { customSessionId: sessionName },
       {
         headers: { 'Content-Type': 'application/json' },
       },
@@ -188,11 +193,11 @@ const BattleLiveAttend = () => {
     return response.data; // The sessionId
   };
 
-  const createToken = async (sessionId) => {
+  const createToken = async (sessionName) => {
     const response = await axios.post(
       APPLICATION_SERVER_URL +
         '/openvidu/sessions/' +
-        sessionId +
+        sessionName +
         '/connections',
       {},
       {
@@ -218,7 +223,7 @@ const BattleLiveAttend = () => {
   };
   return (
     <div className="container">
-      {session === undefined ? (
+      {/* {session === undefined ? (
         <div id="join">
           <div id="img-div">
             <img
@@ -240,7 +245,7 @@ const BattleLiveAttend = () => {
             </form>
           </div>
         </div>
-      ) : null}
+      ) : null} */}
 
       {session !== undefined ? (
         <div id="session">
