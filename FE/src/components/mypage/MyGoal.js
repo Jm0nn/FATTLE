@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Frame2 from '../../assets/images/main/Frame2.svg';
-import API from '../../services/main/URL';
-// import API from '../../services/mypage/URL';
+// import API from '../../services/main/URL';
+import API from '../../services/mypage/URL';
 import styles from '../../styles/mypage/MyGoal.module.css';
 // import styles from '../../styles/main/BodyinfoModify.module.css';
 import { useSelector } from 'react-redux';
-const MyGoal = () => {
+const MyGoal = ({
+  setGoalWeight1,
+  setGoalCalory1,
+  setGoalCarbo1,
+  setGoalProtein1,
+  setGoalFat1,
+}) => {
   // const [weight, setWeight] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -39,16 +45,18 @@ const MyGoal = () => {
         goalFat,
       })
       .then((res) => {
-        console.log('patch테스트');
-        console.log(res);
-        // axios
-        //   .get(`${API.GOAL_PATCH}`)
-        //   .then((res) => {
-        //     console.log(res);
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
+        axios
+          .get(`${API.USER_GET}${userCode}`)
+          .then((res) => {
+            setGoalWeight1(res.data.goalWeight);
+            setGoalCalory1(res.data.goalCalory);
+            setGoalCarbo1(res.data.goalCarbo);
+            setGoalProtein1(res.data.goalProtein);
+            setGoalFat1(res.data.goalFat);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         // navigate('/');
       })
       .catch((err) => {
@@ -66,7 +74,6 @@ const MyGoal = () => {
         alt="Click to open modal"
         onClick={() => {
           axios.get(`${API.USER_GET}${userCode}`).then((res) => {
-            console.log('get호출');
             setGoalWeight(res.data.goalWeight);
             setGoalCalory(res.data.goalCalory);
             setGoalCarbo(res.data.goalCarbo);

@@ -6,6 +6,7 @@ const API = {
   FOLLOWER_GET: `${BASE_URL}/user/mypage/follower/`,
   FOLLOWING_GET: `${BASE_URL}/user/mypage/following/`,
   GOAL_GET: `${BASE_URL}/user/mypage/getGoal/`,
+  USER_GET: `${BASE_URL}/user/userinfo/`,
   GOAL_PATCH: `${BASE_URL}/user/mypage/modify-goal`,
 };
 export default API;
