@@ -5,15 +5,19 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import UserVideoComponent from '../../components/battle/UserVideoComponent';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BASE_URL from '../../config.js';
+import Chatting from './Chatting.js';
 
 const APPLICATION_SERVER_URL = BASE_URL;
 
 const BattleLiveAttend = () => {
+  console.log('asdfghj');
   // 커스텀 변수
   const { state } = useLocation();
   const navigate = useNavigate();
   const chatInputEle = useRef(null);
-  const [chatText, setChatText] = useState('');
+
+  const [chatList, setChatList] = useState([]);
+  const dataId = useRef(0);
   // 비디오 관련 변수
   const [mySessionId, setMySessionId] = useState('');
   const [myUserName, setMyUserName] = useState(
@@ -25,7 +29,8 @@ const BattleLiveAttend = () => {
   const [subscribers, setSubscribers] = useState([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState(null);
 
-  const OV = useRef(new OpenVidu());
+  // const OV = useRef(new OpenVidu());
+  const OV = useRef(null);
 
   const joinSession = useCallback(() => {
     const mySession = OV.current.initSession();
@@ -48,14 +53,12 @@ const BattleLiveAttend = () => {
     mySession.on('exception', (exception) => {
       console.warn(exception);
     });
-    // 채팅 기능
-    mySession.on('signal:chat-live', (event) => {
-      console.log('채팅 : ', event.from, '으로부터', event.data, ' 라고 옴');
-    });
+
     setSession(mySession);
   }, []);
   useEffect(() => {
     // joinSession();
+    OV.current = new OpenVidu();
   }, []);
 
   useEffect(() => {
@@ -65,6 +68,7 @@ const BattleLiveAttend = () => {
     }
     setMySessionId(state.sessionId);
     if (session) {
+      console.log('세션 관련');
       // Get a token from the OpenVidu deployment
       getToken().then(async (token) => {
         try {
@@ -200,16 +204,13 @@ const BattleLiveAttend = () => {
   const sendChatting = () => {
     session
       .signal({
-        data: {
-          chatText,
-          from: myUserName,
-        }, // Any string (optional)
+        data: `${myUserName}:${chatInputEle.current.value}`, // Any string (optional)
         to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
         type: 'chat-live', // The type of message (optional)
       })
       .then(() => {
         console.log('Message successfully sent');
-        setChatText('');
+        chatInputEle.current.value = '';
       })
       .catch((error) => {
         console.error(error);
@@ -260,13 +261,17 @@ const BattleLiveAttend = () => {
             </div>
           ) : null}
 
-          <input
-            type="text"
-            ref={chatInputEle}
-            value={chatText}
-            onChange={(e) => setChatText(e.target.value)}
-          />
+          <input type="text" ref={chatInputEle} />
           <button onClick={sendChatting}>채팅보내기</button>
+          <ul className="chatList">
+            {/* {chatList.map((item, index) => (
+              <li key={dataId.current++}>
+                {item.from} : {item.text}
+                {item}
+              </li>
+            ))} */}
+            <Chatting session={session} />
+          </ul>
         </div>
       ) : null}
     </div>

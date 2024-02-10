@@ -5,14 +5,21 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import UserVideoComponent from '../../components/battle/UserVideoComponent';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BASE_URL from '../../config.js';
+import Chatting from './Chatting.js';
 
 const APPLICATION_SERVER_URL = BASE_URL;
 
 const BattleLive = () => {
+  // 커스텀 변수
   const { state } = useLocation();
   const navigate = useNavigate();
   const [mySessionId, setMySessionId] = useState(undefined);
   const [myUserName, setMyUserName] = useState('');
+
+  const [chatList, setChatList] = useState([]);
+  const dataId = useRef(0);
+
+  // 비디오 관련 변수
 
   const [session, setSession] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
@@ -20,7 +27,8 @@ const BattleLive = () => {
   const [subscribers, setSubscribers] = useState([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState(null);
 
-  const OV = useRef(new OpenVidu());
+  // const OV = useRef(new OpenVidu());
+  const OV = useRef(null);
 
   const joinSession = useCallback(() => {
     const mySession = OV.current.initSession();
@@ -37,10 +45,7 @@ const BattleLive = () => {
     mySession.on('exception', (exception) => {
       console.warn(exception);
     });
-    // 채팅 기능
-    mySession.on('signal:chat-live', (event) => {
-      console.log('채팅 : ', event.from, '으로부터', event.data, ' 라고 옴');
-    });
+
     setSession(mySession);
   }, []);
   useEffect(() => {
@@ -48,15 +53,9 @@ const BattleLive = () => {
       navigate('/main');
       return;
     }
+    OV.current = new OpenVidu();
     setMySessionId(state.sessionId);
     setMyUserName(state.nickname);
-  }, []);
-  useEffect(() => {
-    if (state === null) {
-      navigate('/battle');
-      return;
-    }
-    // joinSession();
   }, []);
 
   useEffect(() => {
@@ -240,13 +239,6 @@ const BattleLive = () => {
               onClick={leaveSession}
               value="Leave session"
             />
-            {/* <input
-              className="btn btn-large btn-success"
-              type="button"
-              id="buttonSwitchCamera"
-              onClick={switchCamera}
-              value="Switch Camera"
-            /> */}
           </div>
 
           {mainStreamManager !== undefined ? (
@@ -254,16 +246,7 @@ const BattleLive = () => {
               <UserVideoComponent streamManager={mainStreamManager} />
             </div>
           ) : null}
-          {/* <div id="video-container" className="col-md-6">
-            {publisher !== undefined ? (
-              <div
-                className="stream-container col-md-6 col-xs-6"
-                onClick={() => handleMainVideoStream(publisher)}
-              >
-                <UserVideoComponent streamManager={publisher} />
-              </div>
-            ) : null}
-          </div> */}
+          <Chatting session={session} />
         </div>
       ) : null}
     </div>
