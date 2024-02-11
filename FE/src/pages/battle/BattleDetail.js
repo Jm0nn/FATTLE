@@ -52,6 +52,8 @@ const BattleDetail = (props) => {
                 to="/battle/attend"
                 state={{
                   sessionId: data.battleCode + '_' + item.userCode,
+                  liveUserCode: item.userCode,
+                  streamerName: item.nickname,
                 }}
               >
                 라이브 방송보기

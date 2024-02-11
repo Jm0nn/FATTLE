@@ -6,15 +6,21 @@ import UserVideoComponent from '../../components/battle/UserVideoComponent';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BASE_URL from '../../config.js';
 import Chatting from './Chatting.js';
+import { useSelector } from 'react-redux';
+import styles from '../../styles/battle/BattleLive.module.css';
 
+import ProfileImg from '../../assets/svg/mypage/ProfileImg.svg';
+import OvVideo from '../../components/battle/OvVideo.js';
 const APPLICATION_SERVER_URL = BASE_URL;
 
 const BattleLiveAttend = () => {
-  console.log('asdfghj');
   // 커스텀 변수
   const { state } = useLocation();
+  const userCode = useSelector((state) => state.userCode);
   const navigate = useNavigate();
   const chatInputEle = useRef(null);
+  const [profileImg, setProfileImg] = useState('');
+  const [streamerName, setStreamerName] = useState('');
 
   const [chatList, setChatList] = useState([]);
   const dataId = useRef(0);
@@ -63,12 +69,13 @@ const BattleLiveAttend = () => {
   }, []);
   useEffect(() => {
     if (state === null) {
-      navigate('/battle');
+      navigate('/main');
       return;
     }
     sessionName = state.sessionId;
+    console.log(state);
+    setStreamerName(state.streamerName);
     joinSession();
-    // OV.current = new OpenVidu();
   }, []);
 
   useEffect(() => {
@@ -125,16 +132,17 @@ const BattleLiveAttend = () => {
 
   const leaveSession = useCallback(() => {
     // Leave the session
-    // session.disconnect();
-
+    if (session) {
+      session.disconnect();
+    }
     // Reset all states and OpenVidu object
-    OV.current = new OpenVidu();
-    setSession(undefined);
-    setSubscribers([]);
+    // OV.current = new OpenVidu();
+    // setSession(undefined);
+    // setSubscribers([]);
     // setMySessionId('SessionA');
     // setMyUserName('Participant' + Math.floor(Math.random() * 100));
-    setMainStreamManager(undefined);
-    setPublisher(undefined);
+    // setMainStreamManager(undefined);
+    // setPublisher(undefined);
   }, [session]);
 
   const deleteSubscriber = useCallback((streamManager) => {
@@ -222,47 +230,45 @@ const BattleLiveAttend = () => {
       });
   };
   return (
-    <div className="container">
-      {/* {session === undefined ? (
-        <div id="join">
-          <div id="img-div">
-            <img
-              src="resources/images/openvidu_grey_bg_transp_cropped.png"
-              alt="OpenVidu logo"
-            />
-          </div>
-          <div id="join-dialog" className="jumbotron vertical-center">
-            <h1> Join a video session </h1>
-            <form className="form-group" onSubmit={joinSession}>
-              <p className="text-center">
-                <input
-                  className="btn btn-lg btn-success"
-                  name="commit"
-                  type="submit"
-                  value="JOIN"
-                />
-              </p>
-            </form>
-          </div>
-        </div>
-      ) : null} */}
-
+    <>
       {session !== undefined ? (
-        <div id="session">
-          <div id="session-header">
-            <h1 id="session-title">{mySessionId}</h1>
-            <input
-              className="btn btn-large btn-danger"
-              type="button"
-              id="buttonLeaveSession"
-              onClick={leaveSession}
-              value="Leave session"
-            />
+        <div id="session" className={styles.container}>
+          <div id="session-header" className={styles.header}>
+            <div id="session-title" className={styles.sessionTitle}>
+              <div className={styles.img}>
+                <img src={ProfileImg} alt="P" />
+                {/* 임시로 가져온것이므로 나중에 밑에로 변경해주어야함 */}
+                {/* <img src={profileImg} alt="P" /> */}
+              </div>
+              <div>{streamerName}</div>
+            </div>
+            <div className={styles.headerRight}>
+              <div className={styles.liveText}>라이브 방송</div>
+              <div className={styles.watchers}>
+                <svg
+                  style={{ color: 'white' }}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="13"
+                  height="13"
+                  fill="currentColor"
+                  class="bi bi-eye-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                </svg>
+                &nbsp;{subscribers.length - 1}
+              </div>
+              <button
+                onClick={leaveSession}
+                className={`btn-close btn-close-white ${styles.closeBtn}`}
+              ></button>
+            </div>
           </div>
 
           {mainStreamManager !== undefined ? (
-            <div id="main-video" className="col-md-6">
-              <UserVideoComponent streamManager={mainStreamManager} />
+            <div id="main-video" className={styles.video}>
+              <OvVideo streamManager={mainStreamManager} />
             </div>
           ) : null}
 
@@ -279,7 +285,7 @@ const BattleLiveAttend = () => {
           </ul>
         </div>
       ) : null}
-    </div>
+    </>
   );
 };
 

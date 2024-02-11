@@ -1,0 +1,91 @@
+.container {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.header {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* width: 100%; */
+  display: flex;
+  justify-content: space-between;
+  /* background-color: red; */
+  padding: 0.7rem;
+  z-index: 30;
+  /* padding: 10px; */
+  align-items: center;
+}
+.video {
+  /* position: fixed;
+  right: 0;
+  bottom: 0; */
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1;
+}
+.video video {
+  /* width: 100vw; */
+  /* height: 100vh; */
+  width: 412px;
+  height: 100vh;
+  object-fit: cover;
+  /* overflow: hidden; */
+}
+.sessionTitle {
+  display: flex;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  /* padding-left: 1rem; */
+  padding-right: 1rem;
+  color: white;
+  align-items: center;
+}
+.sessionTitle > div:first-child > img {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 0.7rem;
+}
+/* .img {
+  width: 10px;
+  height: 10px;
+  background-color: purple;
+} */
+.headerRight {
+  color: white;
+  display: flex;
+}
+.closeBtn {
+  right: 0;
+}
+.liveText {
+  background: linear-gradient(
+    180deg,
+    #d1306b,
+    #ff0000
+  ); /* 아래에서 위로 그라데이션: 보라색에서 빨간색으로 */
+
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  color: #ffffff; /* 텍스트 색상 예시: 흰색 */
+  /* padding: 0.2rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem; */
+  border-radius: 5px;
+  font-size: 0.7rem;
+}
+.watchers {
+  box-sizing: border-box;
+  background-color: rgba(17, 16, 16, 0.222);
+  border-radius: 0.5rem;
+  text-align: center;
+  padding: 0.5rem;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
