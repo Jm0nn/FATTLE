@@ -4,6 +4,7 @@ import Footer from '../../commons/Footer';
 import styles from '../../styles/main/FoodRegister.module.css';
 import camera from '../../assets/images/main/camera.svg';
 import cameratext from '../../assets/images/main/cameratext.svg';
+import API from '../../services/main/URL';
 
 function FoodRegister() {
   const [foodList, setFoodList] = useState([]);
@@ -15,8 +16,8 @@ function FoodRegister() {
 
   useEffect(() => {
     try {
-      axios.get(`http://localhost:5000/list`).then((response) => {
-        setFoodList(response.data);
+      axios.get(`${API.FOOD_SEARCH}${searchQuery}`).then((response) => {
+        setFoodList(response.data.list);
       });
     } catch (error) {
       console.error('음식 데이터 불러오기 중 오류:', error.message);
@@ -43,7 +44,7 @@ function FoodRegister() {
       food.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
     setSearchResults(filteredList);
-    setSearchQuery(''); // 검색 완료 후 검색창 비우기
+    // setSearchQuery(''); // 검색 완료 후 검색창 비우기
   };
 
   const handleRelatedKeywordClick = (keyword) => {
@@ -125,13 +126,13 @@ function FoodRegister() {
 
       <div>
         {/* 검색 결과 표시 */}
-        {/* <div className={styles.horizontalListContainer}>
+        <div className={styles.horizontalListContainer}>
           <ul className={styles.horizontalList}>
-            {searchResults.map((food) => (
-              <li key={food.foodCd}>
+            {searchResults.map((food, i) => (
+              <li key={i}>
                 <img src={food.imgPath} alt={food.name} />
                 <div className={styles.foodlist}>
-                  <p>
+                  {/* <p>
                     {' '}
                     {food.type === 1
                       ? '아침'
@@ -140,7 +141,7 @@ function FoodRegister() {
                       : food.type === 3
                       ? '저녁'
                       : '간식'}
-                  </p>
+                  </p> */}
                   <h3>{food.name}</h3>
                   <p>탄: {food.carbo} g</p>
                   <p>단: {food.protein} g</p>
@@ -150,7 +151,7 @@ function FoodRegister() {
               </li>
             ))}
           </ul>
-        </div> */}
+        </div>
       </div>
 
       <div className={styles.cameraContainer}>
