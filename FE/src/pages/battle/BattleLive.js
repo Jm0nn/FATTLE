@@ -275,7 +275,7 @@ const BattleLive = () => {
               <OvVideo streamManager={mainStreamManager} />
             </div>
           ) : null}
-          <Chatting session={session} />
+          <Chatting session={session} myUserName={myUserName} />
         </div>
       ) : null}
     </>

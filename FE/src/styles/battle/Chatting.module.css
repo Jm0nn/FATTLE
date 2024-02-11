@@ -1,0 +1,70 @@
+.chatContainer {
+  position: absolute;
+  bottom: 1rem;
+  right: 0;
+  left: 0;
+}
+
+/* 인스타 채팅창 */
+.instagram-live-chat {
+  background-color: rgba(4, 4, 4, 0.034); /* 채팅창 배경색 (투명도 추가) */
+  /* border: 1px solid #e0e0e0; */
+  border-radius: 5px; /* 채팅창 테두리 모서리 둥글게 */
+  padding: 0.7rem; /* 채팅창 안쪽 여백 */
+  max-height: 10rem; /* 채팅창 최대 높이 */
+  overflow-y: auto; /* 채팅창이 넘칠 경우 스크롤 표시 */
+  /* position: absolute; */
+  bottom: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.instagram-live-chat .message {
+  background-color: transparent; /* 메시지 배경을 투명하게 설정 */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* 메시지 간 구분선 (투명도 추가) */
+  padding: 8px; /* 메시지 안쪽 여백 */
+  margin-bottom: 5px; /* 메시지 간격 */
+}
+
+.instagram-live-chat .username {
+  font-weight: lighter;
+  color: #ffffff; /* 사용자 이름 색상 */
+  font-size: 0.9rem;
+}
+
+.instagram-live-chat .message .text {
+  color: #ffffff; /* 메시지 텍스트 색상 */
+}
+.chatFooter {
+  display: flex;
+}
+.input {
+  /* width: 100%; */
+  all: unset;
+  border: 1.5px solid #fff;
+  border-radius: 10px;
+  color: #fff;
+  flex-grow: 1;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  margin-left: 0.5rem;
+}
+.score {
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+.sendBtn,
+.score {
+  color: white;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.sendBtn {
+  margin-left: 1.3rem;
+}
+.score {
+  margin-left: 1.3rem;
+  margin-right: 1.3rem;
+}

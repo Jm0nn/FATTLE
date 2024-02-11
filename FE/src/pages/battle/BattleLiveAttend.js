@@ -134,6 +134,7 @@ const BattleLiveAttend = () => {
     // Leave the session
     if (session) {
       session.disconnect();
+      navigate('/battle');
     }
     // Reset all states and OpenVidu object
     // OV.current = new OpenVidu();
@@ -214,21 +215,7 @@ const BattleLiveAttend = () => {
     );
     return response.data; // The token
   };
-  const sendChatting = () => {
-    session
-      .signal({
-        data: `${myUserName}:${chatInputEle.current.value}`, // Any string (optional)
-        to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
-        type: 'chat-live', // The type of message (optional)
-      })
-      .then(() => {
-        console.log('Message successfully sent');
-        chatInputEle.current.value = '';
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+
   return (
     <>
       {session !== undefined ? (
@@ -272,17 +259,7 @@ const BattleLiveAttend = () => {
             </div>
           ) : null}
 
-          <input type="text" ref={chatInputEle} />
-          <button onClick={sendChatting}>채팅보내기</button>
-          <ul className="chatList">
-            {/* {chatList.map((item, index) => (
-              <li key={dataId.current++}>
-                {item.from} : {item.text}
-                {item}
-              </li>
-            ))} */}
-            <Chatting session={session} />
-          </ul>
+          <Chatting session={session} myUserName={myUserName} />
         </div>
       ) : null}
     </>
