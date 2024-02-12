@@ -43,4 +43,7 @@ public class BattlePlayer extends BattleUser {
     @Column(name = "goal_pt")
     private int goalPt;
 
+    @Column(name = "live_status")
+    private int liveStatus;
+
 }

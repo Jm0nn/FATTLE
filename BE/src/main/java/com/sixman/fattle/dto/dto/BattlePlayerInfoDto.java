@@ -33,6 +33,8 @@ public class BattlePlayerInfoDto {
 
     private int goalPoint;
 
+    private int liveStatus;
+
     private String imgPath;
 
     private String profileImgPath;

@@ -55,16 +55,4 @@ public class BattlePointController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "내기자 라이브 점수 제공",
-            description = "내기자 라이브 방송 시 1일 1회 라이브 점수 제공")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "반영 성공"),
-            @ApiResponse(responseCode = "202", description = "반영 불가")
-    })
-    @GetMapping("/live-on/{battleCode}/{userCode}")
-    public ResponseEntity<?> liveOn(@PathVariable String battleCode, @PathVariable long userCode) {
-        HttpStatus status = battlePointService.liveOn(battleCode, userCode);
-        return ResponseEntity.status(status).build();
-    }
-
 }

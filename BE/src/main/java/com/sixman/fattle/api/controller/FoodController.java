@@ -37,7 +37,11 @@ public class FoodController {
     }
 
     @Operation(summary = "음식 사진 업로드 & 음식 정보 얻기",
-            description = "음식 사진을 업로드해 음식 정보 얻기")
+            description = "음식 사진을 업로드해 음식 정보 얻기<br/><br/>" +
+                    "<b>type 코드</b><br/>" +
+                    "1: 아침<br/>" +
+                    "2: 점심<br/>" +
+                    "3: 저녁")
     @ApiResponse(responseCode = "200", description = "음식 정보 응답")
     @PostMapping("/img-upload/{userCode}/{type}")
     public ResponseEntity<FoodInfoResponse> imgUpload(@PathVariable long userCode, @PathVariable int type, MultipartFile uploadFile)

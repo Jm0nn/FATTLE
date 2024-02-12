@@ -67,14 +67,11 @@ public class BattlePointService {
                 .build();
     }
 
-    public HttpStatus liveOn(String battleCode, long userCode) {
+    public void liveOn(String battleCode, long userCode) {
         int cnt = battleRepository.getLivePoint(battleCode, userCode);
 
         if (cnt == 0) {
             battleRepository.setPoint(battleCode, userCode, TYPE_LIVE_BASIC_POINT, LIVE_BASIC_POINT);
-            return HttpStatus.OK;
-        } else {
-            return HttpStatus.ACCEPTED;
         }
     }
 

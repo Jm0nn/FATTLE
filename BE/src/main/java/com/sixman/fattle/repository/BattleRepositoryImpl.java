@@ -98,12 +98,13 @@ public class BattleRepositoryImpl implements BattleRepositoryCustom {
                             Projections.constructor(
                                     SimpleBattlePlayerInfoDto.class,
                                     quser.userCd,
-                                    quser.nickname))
+                                    quser.nickname,
+                                    qplayer.liveStatus))
                     .from(quser)
-                    .where(quser.userCd.in(
-                            JPAExpressions.select(qplayer.userCd)
-                                    .from(qplayer)
-                                    .where(qplayer.battleCd.eq(tuple.get(qbattle.battleCd)))))
+                    .join(qplayer)
+                    .on(quser.userCd.eq(qplayer.userCd))
+                    .join(qbattle)
+                    .on(qplayer.battleCd.eq(qbattle.battleCd))
                     .fetch();
 
             int triggerCnt
@@ -280,6 +281,7 @@ public class BattleRepositoryImpl implements BattleRepositoryCustom {
                                 qplayer.foodUserPt,
                                 qplayer.questPt,
                                 qplayer.goalPt,
+                                qplayer.liveStatus,
                                 qavatar.imgPath,
                                 qavatar.profileImgPath))
                 .from(qplayer)
@@ -662,5 +664,24 @@ public class BattleRepositoryImpl implements BattleRepositoryCustom {
                 .fetch();
     }
 
+    @Override
+    public void liveOn(String battleCode, long userCode) {
+        queryFactory
+                .update(qplayer)
+                .set(qplayer.liveStatus, LIVE_STATUS_ON)
+                .where(qplayer.userCd.eq(userCode),
+                        qplayer.battleCd.eq(battleCode))
+                .execute();
+    }
+
+    @Override
+    public void liveOff(String battleCode, long userCode) {
+        queryFactory
+                .update(qplayer)
+                .set(qplayer.liveStatus, LIVE_STATUS_OFF)
+                .where(qplayer.userCd.eq(userCode),
+                        qplayer.battleCd.eq(battleCode))
+                .execute();
+    }
 
 }
