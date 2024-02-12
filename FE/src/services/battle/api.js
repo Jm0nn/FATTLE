@@ -13,6 +13,10 @@ const {
   BATTLE_SETTING_PATCH,
   BATTLE_START_GET,
   BATTLE_WEIGHT_PATCH,
+  BATTLE_GIVE_POINT_PATCH,
+  BATTLE_HISTORY_POINT_GET,
+  BATTLE_LEFT_LIVE_POINT_GET,
+  BATTLE_LIVE_POINT_BASIC_GET,
   USER_INFO_GET,
 } = API;
 
@@ -70,5 +74,15 @@ export const getUserInfo = async (userCode) => {
 
 export const startBattle = async (battleCode) => {
   const res = await axios.get(BATTLE_START_GET + battleCode);
+  return res;
+};
+export const getLeftLivePoint = async (battleCode, userCode) => {
+  const res = await axios.get(
+    BATTLE_LEFT_LIVE_POINT_GET + battleCode + '/' + userCode,
+  );
+  return res;
+};
+export const giveLivePoint = async (parameter) => {
+  const res = await axios.patch(BATTLE_GIVE_POINT_PATCH, parameter);
   return res;
 };

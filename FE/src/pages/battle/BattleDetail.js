@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getBattleInfo } from '../../services/battle/api.js';
 import { useSelector } from 'react-redux';
 import BattleStyles from '../../styles/battle/Battle.module.css';
+import { Fragment } from 'react';
 
 const BattleDetail = (props) => {
   const { state } = useLocation();
@@ -24,11 +25,11 @@ const BattleDetail = (props) => {
     })();
   }, []);
   return (
-    <div>
+    <>
       배틀 디테일 페이지 <br />
       {playerList &&
-        playerList.map((item) => (
-          <>
+        playerList.map((item, index) => (
+          <Fragment key={index}>
             <div>
               <img src={item.imgPath} alt="profile" />
             </div>
@@ -42,6 +43,7 @@ const BattleDetail = (props) => {
                 state={{
                   sessionId: data.battleCode + '_' + userCode,
                   nickname: item.nickname,
+                  battleCode: state.battleCode,
                 }}
               >
                 라이브 방송 하기
@@ -52,16 +54,17 @@ const BattleDetail = (props) => {
                 to="/battle/attend"
                 state={{
                   sessionId: data.battleCode + '_' + item.userCode,
-                  liveUserCode: item.userCode,
+                  playerUserCode: item.userCode,
                   streamerName: item.nickname,
+                  battleCode: state.battleCode,
                 }}
               >
                 라이브 방송보기
               </Link>
             )}
-          </>
+          </Fragment>
         ))}
-    </div>
+    </>
   );
 };
 

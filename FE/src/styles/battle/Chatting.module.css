@@ -34,6 +34,9 @@
 .instagram-live-chat .message .text {
   color: #ffffff; /* 메시지 텍스트 색상 */
 }
+.pointMsg {
+  color: blue;
+}
 .chatFooter {
   display: flex;
 }
@@ -60,11 +63,32 @@
   color: white;
   width: 1.5rem;
   height: 1.5rem;
+  box-sizing: content-box;
 }
 .sendBtn {
   margin-left: 1.3rem;
+  align-self: center;
+  background-color: #0000001a;
+  padding: 0.3rem;
+  border-radius: 5px;
 }
 .score {
   margin-left: 1.3rem;
   margin-right: 1.3rem;
+  align-self: center;
+  background-color: #0000001a;
+  padding: 0.3rem;
+  border-radius: 5px;
+}
+
+.modal {
+  width: 300px;
+}
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.modalTitle {
+  font-size: 1rem;
 }

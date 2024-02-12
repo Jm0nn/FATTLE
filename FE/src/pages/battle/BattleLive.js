@@ -2,16 +2,17 @@ import { OpenVidu } from 'openvidu-browser';
 
 import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import UserVideoComponent from '../../components/battle/UserVideoComponent';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import BASE_URL from '../../config.js';
 import Chatting from './Chatting.js';
 import OvVideo from '../../components/battle/OvVideo.js';
+import OvAudio from '../../components/battle/OvAudio.js';
 
 import API from '../../services/main/URL.js';
 
 import styles from '../../styles/battle/BattleLive.module.css';
 import ProfileImg from '../../assets/svg/mypage/ProfileImg.svg';
+import Loading from '../../components/commons/Loading.js';
 import { useSelector } from 'react-redux';
 
 const APPLICATION_SERVER_URL = BASE_URL;
@@ -24,6 +25,7 @@ const BattleLive = () => {
   const [mySessionId, setMySessionId] = useState(undefined);
   const [myUserName, setMyUserName] = useState('');
   const [profileImg, setProfileImg] = useState('');
+  const [loading, setLoading] = useState(true);
   let sessionName = '';
   let nickname = '';
 
@@ -52,8 +54,6 @@ const BattleLive = () => {
     });
 
     mySession.on('streamDestroyed', (event) => {
-      console.log('streamDestroyed');
-      console.log(subscribers);
       deleteSubscriber(event.stream.streamManager);
     });
 
@@ -62,7 +62,7 @@ const BattleLive = () => {
     });
 
     setSession(mySession);
-  }, []);
+  }, [session]);
 
   // useEffect 초기 실행
   useEffect(() => {
@@ -85,7 +85,6 @@ const BattleLive = () => {
 
   useEffect(() => {
     if (session) {
-      console.log('session');
       // Get a token from the OpenVidu deployment
       getToken().then(async (token) => {
         try {
@@ -120,6 +119,8 @@ const BattleLive = () => {
           setMainStreamManager(publisher);
           setPublisher(publisher);
           setCurrentVideoDevice(currentVideoDevice);
+
+          setLoading(false);
         } catch (error) {
           console.log(
             'There was an error connecting to the session:',
@@ -234,8 +235,8 @@ const BattleLive = () => {
   };
   return (
     <>
-      {/* <button onClick={() => console.log(subscribers)}>asd</button> */}
-      {session !== undefined ? (
+      {/* <button onClick={() => console.log(session)}>asd</button> */}
+      {!loading ? (
         <div id="session" className={styles.container}>
           <div id="session-header" className={styles.header}>
             <div id="session-title" className={styles.sessionTitle}>
@@ -261,7 +262,8 @@ const BattleLive = () => {
                   <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
                   <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                 </svg>
-                &nbsp;{subscribers.length - 1}
+                {/* &nbsp;{subscribers.length - 1 < 1 ? 0 : subscribers.length} */}
+                &nbsp;{subscribers.length === 1 ? 0 : subscribers.length - 1}
               </div>
               <button
                 onClick={leaveSession}
@@ -275,9 +277,23 @@ const BattleLive = () => {
               <OvVideo streamManager={mainStreamManager} />
             </div>
           ) : null}
-          <Chatting session={session} myUserName={myUserName} />
+          {subscribers.map((sub, i) => (
+            <OvAudio streamManager={sub} />
+          ))}
+          <Chatting
+            session={session}
+            myUserName={myUserName}
+            battleCode={state.battleCode}
+            triggerUserCode={userCode}
+            playerUserCode={userCode}
+          />
+          {/* {subscribers.map((sub, i) => (
+            <audio style={{ display: 'none' }} streamManager={sub} />
+          ))} */}
         </div>
-      ) : null}
+      ) : (
+        <Loading />
+      )}
     </>
   );
 };

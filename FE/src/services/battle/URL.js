@@ -13,6 +13,12 @@ const API = {
   BATTLE_DELETE_TRIGGER_DELETE: `${BASE_URL}/battle/trigger/`,
   BATTLE_WEIGHT_PATCH: `${BASE_URL}/battle/weight`,
 
+  // 점수관련
+  BATTLE_LEFT_LIVE_POINT_GET: `${BASE_URL}/battle/point/`,
+  BATTLE_GIVE_POINT_PATCH: `${BASE_URL}/battle/point/give`,
+  BATTLE_HISTORY_POINT_GET: `${BASE_URL}/battle/point/history/`,
+  BATTLE_LIVE_POINT_BASIC_GET: `${BASE_URL}/battle/point/live-on/`,
+
   USER_INFO_GET: `${BASE_URL}/user/userinfo/`,
 };
 export default API;

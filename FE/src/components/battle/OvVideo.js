@@ -6,6 +6,7 @@ export default function OpenViduVideoComponent({ streamManager }) {
   useEffect(() => {
     if (streamManager && videoRef.current) {
       streamManager.addVideoElement(videoRef.current);
+      console.log('streamanger: ', streamManager);
     }
   }, [streamManager]);
 

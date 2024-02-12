@@ -1,19 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from '../../styles/battle/Chatting.module.css';
+import { Modal, Button, Form } from 'react-bootstrap';
+import { getLeftLivePoint, giveLivePoint } from '../../services/battle/api.js';
+import { useNavigate } from 'react-router-dom';
 
-const Chatting = ({ session, myUserName }) => {
+const Chatting = ({
+  session,
+  myUserName,
+  battleCode,
+  triggerUserCode,
+  playerUserCode,
+}) => {
+  const navigate = useNavigate();
   const [chatList, setChatList] = useState({
     messageList: [],
     message: '',
   });
   const [isTyping, setIsTyping] = useState(true);
   const scrollRef = useRef();
+  const pointRef = useRef();
   const chatInputEle = useRef(null);
-  console.log(12345);
+  const [show, setShow] = useState(false);
+  const [leftLivePoint, setLeftLivePoint] = useState(0);
   const { messageList, message } = chatList;
 
   useEffect(() => {
-    console.log('Hellow');
     if (session) {
       session.on('signal:chat-live', (event) => {
         const data = event.data.split(':');
@@ -26,8 +37,27 @@ const Chatting = ({ session, myUserName }) => {
         setChatList((prev) => ({ ...prev, messageList }));
         setIsTyping((prev) => !prev);
       });
+      session.on('signal:chat-point', (event) => {
+        const data = event.data.split(':');
+        const from = data[0];
+        const text = data[1];
+        const isPoint = true;
+        messageList.push({
+          from,
+          text,
+          isPoint,
+        });
+        setChatList((prev) => ({ ...prev, messageList }));
+        setIsTyping((prev) => !prev);
+      });
     }
-  }, []);
+  }, [session]);
+  useEffect(() => {
+    (async () => {
+      const res = await getLeftLivePoint(battleCode, triggerUserCode);
+      setLeftLivePoint(res.data.remainPoint);
+    })();
+  }, [leftLivePoint]);
   useEffect(() => {
     scrollToBottom();
   }, [isTyping]);
@@ -51,13 +81,74 @@ const Chatting = ({ session, myUserName }) => {
         console.error(error);
       });
   };
+  // 점수주기 관련 부분
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const givePoint = () => {
+    try {
+      if (pointRef.current.value > leftLivePoint) {
+        alert('남은 라이브점수보다 더 많은 점수를 줄 수 없습니다.');
+        return;
+      }
+      if (pointRef.current.value == 0) {
+        alert('0점 보다 높은점수를 입력해주세요.');
+        return;
+      }
+      if (pointRef.current.value === '') {
+        alert('점수를 입력해주세요.');
+        return;
+      }
+      (async () => {
+        const res = await giveLivePoint({
+          battleCode,
+          playerUserCode,
+          triggerUserCode,
+          type: 1,
+          point: pointRef.current.value,
+        });
+        if (res.status === 200) {
+          session
+            .signal({
+              data: `🎁 ${myUserName}:님이 ${pointRef.current.value} 점을 후원하셨습니다. 🎁`, // Any string (optional)
+              to: [], // Array of Connection objects (optional. Broadcast to everyone if empty)
+              type: 'chat-point', // The type of message (optional)
+            })
+            .then(() => {
+              console.log('Point successfully sent');
+              handleClose();
+              setLeftLivePoint(0);
+              pointRef.current.value = 0;
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        } else {
+          alert('점수를 주지 못했습니다.');
+          handleClose();
+        }
+      })();
+    } catch (error) {
+      console.error(error);
+      navigate('/main');
+    }
+  };
   return (
     <div className={styles['chatContainer']}>
       <ul ref={scrollRef} className={styles['instagram-live-chat']}>
         {messageList.map((item, index) => (
           <li className={styles['message']} key={index}>
-            <div className={styles['username']}>{item.from}</div>
-            <div className={styles['text']}>{item.text}</div>
+            {item.isPoint ? (
+              <>
+                <div
+                  className={styles.pointMsg}
+                >{`${item.from}${item.text}`}</div>
+              </>
+            ) : (
+              <>
+                <div className={styles['username']}>{item.from}</div>
+                <div className={styles['text']}>{item.text}</div>
+              </>
+            )}
           </li>
         ))}
       </ul>
@@ -75,7 +166,7 @@ const Chatting = ({ session, myUserName }) => {
             <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
           </svg>
         </button>
-        <button className={styles.score}>
+        <button onClick={handleShow} className={styles.score}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"
@@ -87,6 +178,36 @@ const Chatting = ({ session, myUserName }) => {
           </svg>
         </button>
       </div>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        dialogClassName={styles.modal}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title as={styles.modalTitle}>
+            보유 라이브 점수 : {leftLivePoint}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>후원할 점수</Form.Label>
+              <Form.Control
+                ref={pointRef}
+                type="number"
+                placeholder="0"
+                autoFocus
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={givePoint} variant="secondary">
+            후원하기
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

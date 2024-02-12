@@ -11,6 +11,8 @@ import styles from '../../styles/battle/BattleLive.module.css';
 
 import ProfileImg from '../../assets/svg/mypage/ProfileImg.svg';
 import OvVideo from '../../components/battle/OvVideo.js';
+import Loading from '../../components/commons/Loading.js';
+import OvAudio from '../../components/battle/OvAudio.js';
 const APPLICATION_SERVER_URL = BASE_URL;
 
 const BattleLiveAttend = () => {
@@ -21,6 +23,7 @@ const BattleLiveAttend = () => {
   const chatInputEle = useRef(null);
   const [profileImg, setProfileImg] = useState('');
   const [streamerName, setStreamerName] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const [chatList, setChatList] = useState([]);
   const dataId = useRef(0);
@@ -30,7 +33,7 @@ const BattleLiveAttend = () => {
     `익명의 자극자 ${Math.floor(Math.random() * 100)}`,
   );
   let sessionName = '';
-  const nickname = `익명의 자극자 ${Math.floor(Math.random() * 100)}`;
+  const nickname = `익명의 자극자${Math.floor(Math.random() * 100)}`;
   const [session, setSession] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
@@ -73,7 +76,6 @@ const BattleLiveAttend = () => {
       return;
     }
     sessionName = state.sessionId;
-    console.log(state);
     setStreamerName(state.streamerName);
     joinSession();
   }, []);
@@ -89,7 +91,7 @@ const BattleLiveAttend = () => {
             audioSource: undefined,
             videoSource: undefined,
             publishAudio: true,
-            publishVideo: true,
+            publishVideo: false,
             resolution: '640x480',
             frameRate: 30,
             insertMode: 'APPEND',
@@ -97,12 +99,13 @@ const BattleLiveAttend = () => {
             filter: {
               type: 'GStreamerFilter',
               options: {
-                command: 'pitch pitch=2.5',
+                command: 'pitch pitch=2.0',
               },
             },
           });
 
           session.publish(publisher);
+          let playerSession = null;
 
           const devices = await OV.current.getDevices();
           const videoDevices = devices.filter(
@@ -116,9 +119,10 @@ const BattleLiveAttend = () => {
             (device) => device.deviceId === currentVideoDeviceId,
           );
 
-          setMainStreamManager(publisher);
+          // setMainStreamManager(publisher);
           setPublisher(publisher);
-          setCurrentVideoDevice(currentVideoDevice);
+          // setCurrentVideoDevice(currentVideoDevice);
+          setLoading(false);
         } catch (error) {
           console.log(
             'There was an error connecting to the session:',
@@ -218,7 +222,9 @@ const BattleLiveAttend = () => {
 
   return (
     <>
-      {session !== undefined ? (
+      {/* <button onClick={() => console.log(subscribers)}>fff</button>
+      <button onClick={() => publisher.publishAudio(false)}>뮤트</button> */}
+      {!loading ? (
         <div id="session" className={styles.container}>
           <div id="session-header" className={styles.header}>
             <div id="session-title" className={styles.sessionTitle}>
@@ -244,7 +250,8 @@ const BattleLiveAttend = () => {
                   <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
                   <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                 </svg>
-                &nbsp;{subscribers.length - 1}
+                {/* &nbsp;{subscribers.length - 1 < 1 ? 0 : subscribers.length - 1} */}
+                &nbsp;{subscribers.length}
               </div>
               <button
                 onClick={leaveSession}
@@ -253,15 +260,33 @@ const BattleLiveAttend = () => {
             </div>
           </div>
 
-          {mainStreamManager !== undefined ? (
+          {/* {mainStreamManager !== undefined ? (
             <div id="main-video" className={styles.video}>
               <OvVideo streamManager={mainStreamManager} />
             </div>
-          ) : null}
-
-          <Chatting session={session} myUserName={myUserName} />
+          ) : null} */}
+          {subscribers.map((sub, i) => {
+            if (sub.stream.videoActive) {
+              return (
+                <div id="main-video" className={styles.video}>
+                  <OvVideo streamManager={sub} />
+                </div>
+              );
+            } else {
+              return <OvAudio streamManager={sub} />;
+            }
+          })}
+          <Chatting
+            session={session}
+            myUserName={myUserName}
+            battleCode={state.battleCode}
+            playerUserCode={state.playerUserCode}
+            triggerUserCode={userCode}
+          />
         </div>
-      ) : null}
+      ) : (
+        <Loading />
+      )}
     </>
   );
 };
