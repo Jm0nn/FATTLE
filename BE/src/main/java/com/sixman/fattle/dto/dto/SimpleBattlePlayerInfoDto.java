@@ -15,4 +15,6 @@ public class SimpleBattlePlayerInfoDto {
 
     private String nickname;
 
+    private int liveStatus;
+
 }

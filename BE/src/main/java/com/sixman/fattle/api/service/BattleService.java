@@ -200,4 +200,13 @@ public class BattleService {
         }
     }
 
+    public void liveOn(String battleCode, long userCode) {
+        battleRepository.liveOn(battleCode, userCode);
+        battlePointService.liveOn(battleCode, userCode);
+    }
+
+    public void liveOff(String battleCode, long userCode) {
+        battleRepository.liveOff(battleCode, userCode);
+    }
+
 }

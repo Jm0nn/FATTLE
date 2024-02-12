@@ -75,4 +75,9 @@ public interface BattleRepositoryCustom {
     int getLivePoint(String battleCode, long userCode);
 
     List<String> getBattleCodeListAsPlayer(long userCode);
+
+    void liveOn(String battleCode, long userCode);
+
+    void liveOff(String battleCode, long userCode);
+
 }

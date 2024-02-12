@@ -157,4 +157,22 @@ public class BattleController {
         return ResponseEntity.status(status).build();
     }
 
+    @Operation(summary = "내기자 라이브 시작",
+            description = "내기자 라이브 방송 시작, 1일 1회 라이브 점수 제공")
+    @ApiResponse(responseCode = "200", description = "반영 성공")
+    @GetMapping("live-on/{battleCode}/{userCode}")
+    public ResponseEntity<?> liveOn(@PathVariable String battleCode, @PathVariable long userCode) {
+        battleService.liveOn(battleCode, userCode);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "내기자 라이브 종료",
+            description = "내기자 라이브 방송 종료")
+    @ApiResponse(responseCode = "200", description = "반영 성공")
+    @GetMapping("live-off/{battleCode}/{userCode}")
+    public ResponseEntity<?> liveOff(@PathVariable String battleCode, @PathVariable long userCode) {
+        battleService.liveOff(battleCode, userCode);
+        return ResponseEntity.ok().build();
+    }
+
 }

@@ -14,6 +14,10 @@ public class Const {
 
     public static final int BATTLE_STATUS_END = 2;
 
+    public static final int LIVE_STATUS_OFF = 0;
+
+    public static final int LIVE_STATUS_ON = 1;
+
     public static final int MAX_LIVE_USER_POINT = 100;
 
     public static final int MAX_FOOD_USER_POINT = 30;
