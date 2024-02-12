@@ -1,0 +1,14 @@
+.footer {
+    position: fixed;
+    bottom: 0;
+    background: #fff;
+    padding: 10px 0px;
+    width: 412px;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .footericon {
+    width: 30px;
+    height: 30px;
+  }

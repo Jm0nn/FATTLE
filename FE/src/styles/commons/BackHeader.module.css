@@ -1,0 +1,16 @@
+.container {
+  height: 46px;
+  text-align: center;
+  margin-top: 22px;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+}
+
+.img {
+  display: block;
+  position: absolute;
+  top: 5px;
+  left: 12px;
+  cursor: pointer;
+}
