@@ -7,6 +7,7 @@ import checkImg from '../../assets/images/main/check.svg';
 import notCheckImg from '../../assets/images/main/notcheck.svg';
 
 // 각 운동 코드와 설명을 매핑하는 객체
+
 const exerciseDescriptions = {
   run: '러닝 30분',
   pus: '팔굽혀 펴기 50회',
@@ -17,6 +18,7 @@ const exerciseDescriptions = {
 };
 
 function DayQuest() {
+  const [type, setType] = useState(['pus', 'bur', 'pul', 'squ', 'pla', 'run']);
   const [completedCount, setCompletedCount] = useState(1);
   const [questList, setQuestList] = useState([]);
   const [lastVisitedDate, setLastVisitedDate] = useState(null);
@@ -36,7 +38,7 @@ function DayQuest() {
       });
   }, []);
 
-  const handleQuestClick = (index, value) => {
+  const handleQuestClick = (index, value, excerciseType) => {
     const isSelected = selectedBars.includes(index);
     const newValue = isSelected ? -value : value;
 
@@ -52,7 +54,7 @@ function DayQuest() {
     axios
       .post(`${API.UPDATE_QUEST_POST}`, {
         userCode: userCode,
-        exercise: 'RUN',
+        exercise: excerciseType,
       })
       .then((response) => {
         // 성공적으로 업데이트된 경우에만 로컬 상태 업데이트
@@ -108,7 +110,9 @@ function DayQuest() {
                   ? styles.exerciseItemSelected
                   : styles.exerciseItemUnselected
               }`}
-              onClick={() => handleQuestClick(index, value)}
+              onClick={() => {
+                handleQuestClick(index, value, type[index]);
+              }}
             >
               <p>
                 {exerciseDescriptions[key]}: {value}

@@ -5,9 +5,11 @@ import styles from '../../styles/main/FoodRegister.module.css';
 import camera from '../../assets/images/main/camera.svg';
 import cameratext from '../../assets/images/main/cameratext.svg';
 import API from '../../services/main/URL';
+import FoodRegist from './FoodRegist';
 
-function FoodRegister() {
+function FoodRegister({ type }) {
   const [foodList, setFoodList] = useState([]);
+  const [foodRegist, setFoodRegist] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [relatedKeywords, setRelatedKeywords] = useState([]);
@@ -104,24 +106,34 @@ function FoodRegister() {
           className={styles.searchInput}
         />
         {/* 연관 검색어 표시 */}
-        {searchQuery && (
+        {/* {searchQuery && (
           <div className={styles.relatedKeywordsContainer}>
             <ul className={styles.relatedKeywords}>
               {relatedKeywords.map((keyword, index) => (
                 <li
                   key={index}
-                  onClick={() => handleRelatedKeywordClick(keyword)}
+                  onClick={() => {
+                    handleRelatedKeywordClick(keyword);
+                  }}
                 >
                   {keyword}
                 </li>
               ))}
             </ul>
           </div>
-        )}
+        )} */}
 
         <button className={styles.searchButton} onClick={handleSearchClick}>
           검색
         </button>
+        <button
+          onClick={() => {
+            console.log(type);
+          }}
+        >
+          하이
+        </button>
+        <FoodRegist foodRegist={foodRegist}></FoodRegist>
       </div>
 
       <div>
@@ -131,7 +143,15 @@ function FoodRegister() {
             {searchResults.map((food, i) => (
               <li key={i}>
                 <img src={food.imgPath} alt={food.name} />
-                <div className={styles.foodlist}>
+                <div
+                  className={styles.foodlist}
+                  onClick={() => {
+                    let copy = [...foodRegist];
+                    copy.push(food);
+                    setFoodRegist(copy);
+                    alert(`${food.name}이 등록되었습니다.`);
+                  }}
+                >
                   {/* <p>
                     {' '}
                     {food.type === 1
