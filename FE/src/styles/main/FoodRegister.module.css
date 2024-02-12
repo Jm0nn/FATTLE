@@ -1,0 +1,139 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  position: relative;
+  width: 412px;
+  height: 915px; 
+  background-color: #FFC38C; 
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.searchInput {
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  width: 200px;
+  height: 30px;
+}
+
+.searchButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  height: 30px;
+  padding: 10px;
+  margin-left: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;  
+  align-items: center;
+}
+
+  .relatedKeywordsContainer {
+    position: absolute;
+    width: 200px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1;
+    margin-top: 115px;
+    border-radius: 20px;
+  }
+
+
+
+  .relatedKeywords {
+    list-style: none;
+    padding: 0;
+    /* margin: 10px 0 0; */
+    border-radius: 5px;
+  }
+  
+  .relatedKeywords li {
+    background-color: #f8f8f8;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .relatedKeywords li:hover {
+    background-color: #e0e0e0;
+  }
+
+  /* 선택 식단 리스트 */
+  .horizontalListContainer {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto; 
+    
+  }
+  
+.foodlist {
+  display: flex;
+}
+
+  .horizontalList {
+    list-style: none;
+    /* display: flex; */
+    flex-wrap: nowrap; 
+    padding: 0; 
+  }
+  
+  .horizontalList li {
+    margin-right: 30px; 
+    max-width: 412px; 
+    background-color: #ffffff;
+    border-radius: 10px; 
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    /* display: flex; */
+  }
+ 
+
+  .cameraContainer {
+    position: absolute;
+
+    bottom: 300px;
+    right: 30px;
+   
+  }
+  
+  .cameratextImage {
+    margin-top: 40px;
+  }
+  
+  .cameraImage {
+    cursor: pointer;
+  }
+
+  .camera {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .cameraPreview {
+    width: 400px;
+    max-width: 100%; 
+    max-height: 100%; 
+    border-radius: 10px; 
+    margin-top: 10px;
+    object-fit: cover;
+    
+  }

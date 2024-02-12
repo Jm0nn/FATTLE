@@ -1,0 +1,23 @@
+* {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+:root {
+  /* color */
+  --color-basic: #d9d9d9;
+  --color-box: #f1f1f1;
+}
+#root {
+  height: 100%;
+  width: 100%;
+}
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
