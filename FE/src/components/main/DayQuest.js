@@ -18,7 +18,7 @@ const exerciseDescriptions = {
 };
 
 function DayQuest() {
-  const [type, setType] = useState(['pus', 'bur', 'pul', 'squ', 'pla', 'run']);
+  const [type, setType] = useState(['bur', 'pus', 'squ', 'pul', 'pla', 'run']);
   const [completedCount, setCompletedCount] = useState(1);
   const [questList, setQuestList] = useState([]);
   const [lastVisitedDate, setLastVisitedDate] = useState(null);
@@ -57,6 +57,15 @@ function DayQuest() {
         exercise: excerciseType,
       })
       .then((response) => {
+        console.log(excerciseType);
+        axios.get(`${API.QUEST_LIST_GET}${userCode}`).then((response) => {
+          let copy = { ...questList.exercise };
+          copy[excerciseType] = 1;
+          let copy2 = { ...questList };
+          copy2.exercise = copy;
+          console.log(copy2);
+          setQuestList(copy2);
+        });
         // 성공적으로 업데이트된 경우에만 로컬 상태 업데이트
         setCompletedCount((prevCount) => prevCount + newValue);
       })

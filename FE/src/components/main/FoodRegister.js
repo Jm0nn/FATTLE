@@ -133,7 +133,10 @@ function FoodRegister({ type }) {
         >
           하이
         </button>
-        <FoodRegist foodRegist={foodRegist}></FoodRegist>
+        <FoodRegist
+          foodRegist={foodRegist}
+          setFoodRegist={setFoodRegist}
+        ></FoodRegist>
       </div>
 
       <div>
