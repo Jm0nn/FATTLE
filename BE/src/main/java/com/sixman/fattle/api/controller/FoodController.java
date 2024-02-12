@@ -58,11 +58,7 @@ public class FoodController {
     }
 
     @Operation(summary = "식단 업로드",
-            description = "식단을 업로드 해 서버에 저장<br/><br/>" +
-                    "<b>type 코드</b><br/>" +
-                    "1: 아침<br/>" +
-                    "2: 점심<br/>" +
-                    "3: 저녁")
+            description = "식단을 업로드 해 서버에 저장<br/>type 1: 아침<br/>type 2: 점심<br/>type 3: 저녁")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "식단 업로드 성공"),
             @ApiResponse(responseCode = "400", description = "식단 중복 업로드")

@@ -32,10 +32,7 @@ public class BattlePointController {
     }
 
     @Operation(summary = "자극자 점수 부여",
-            description = "배틀 중 자극자 점수 부여<br/><br/>" +
-                    "<b>type 코드</b><br/>" +
-                    "1: 라이브 점수<br/>" +
-                    "2: 식단 점수")
+            description = "배틀 중 자극자 점수 부여<br/>type 1: 라이브 점수<br/>type 2: 식단 점수")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "점수 부여 성공"),
             @ApiResponse(responseCode = "400", description = "점수 부여 실패")
