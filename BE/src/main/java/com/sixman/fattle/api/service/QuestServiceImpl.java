@@ -77,7 +77,7 @@ public class QuestServiceImpl implements QuestService {
     public void exerciseRecord(QuestRequest request) {
         Exercise exercise = Exercise.builder()
                 .userCd(request.getUserCode())
-                .typeCd(request.getExercise())
+                .typeCd(request.getExercise().toUpperCase())
                 .build();
 
         exerciseRepository.save(exercise);
