@@ -13,7 +13,7 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
 
   const location = useLocation();
 
-  console.log('------------------------');
+  // console.log('------------------------');
   // console.log(userCode);
   // console.log(location.state.type);
   // console.log(foodRegist[0].name);
@@ -22,7 +22,7 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
   // console.log(foodRegist[0].protein);
   // console.log(foodRegist[0].fat);
   // console.log(foodRegist[0].imgName);
-  console.log('------------------------');
+  // console.log('------------------------');
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -36,13 +36,13 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
     axios
       .post('http://localhost:8000/api/food/upload', {
         userCode: userCode,
-        type: 1,
-        name: '돌솥비빔밥',
-        calory: 100,
-        carbo: 5,
-        protein: 15,
-        fat: 2,
-        imgName: 'test',
+        type: location.state.type,
+        name: foodRegist[0].name,
+        calory: foodRegist[0].calory,
+        carbo: foodRegist[0].carbo,
+        protein: foodRegist[0].protein,
+        fat: foodRegist[0].fat,
+        imgName: foodRegist[0].imgName,
       })
       .then((res) => {
         alert('저장되었습니다.');
