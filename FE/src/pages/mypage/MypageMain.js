@@ -15,7 +15,14 @@ import Configure from '../../assets/svg/mypage/Configure.svg';
 import Edit from '../../assets/svg/mypage/Edit.svg';
 import ProfileImg from '../../assets/svg/mypage/ProfileImg.svg';
 import getCalendarList from '../../utils/mypage/getCalendarList.js';
+import MyGoal from '../../components/mypage/MyGoal.js';
 function MypageMain(props) {
+  const [goalWeight, setGoalWeight] = useState(0);
+  const [goalCalory, setGoalCalory] = useState(0);
+  const [goalCarbo, setGoalCarbo] = useState(0);
+  const [goalProtein, setGoalProtein] = useState(0);
+  const [goalFat, setGoalFat] = useState(0);
+
   const navigate = useNavigate();
   const userCode = useSelector((state) => state.userCode);
   const [data, setData] = useState({});
@@ -25,6 +32,11 @@ function MypageMain(props) {
     (async () => {
       try {
         const { data, status } = await getMypage(userCode);
+        setGoalWeight(data.goalWeight);
+        setGoalCalory(data.goalCalory);
+        setGoalCarbo(data.goalCarbo);
+        setGoalProtein(data.goalProtein);
+        setGoalFat(data.goalFat);
         setData(data);
         setQuestSuccessDayList(
           getQuestSuccessDayList(data.dailyQuests, 'recordDate'),
@@ -128,28 +140,38 @@ function MypageMain(props) {
           <div className={styles.introduction}>{data.introduction}</div>
           {/* 프로필 정보 끝 */}
           {/* 목표 부분 시작 */}
-          <div className={styles.headerText}>나의 목표&#32;&#62;</div>
+          <div className={styles.headerText}>
+            {/* 나의 목표&#32;&#62; */}
+            {/* 나의 목표 수정 버튼 */}
+            <MyGoal
+              setGoalWeight1={setGoalWeight}
+              setGoalCalory1={setGoalCalory}
+              setGoalCarbo1={setGoalCarbo}
+              setGoalProtein1={setGoalProtein}
+              setGoalFat1={setGoalFat}
+            />
+          </div>
           <div className={styles.goalBox}>
             <div className={styles.goalContainer}>
               <div className={styles.gDiv}>
                 <div>목표 체중</div>
-                <div className={styles.gText}>{data.goalWeight}kg</div>
+                <div className={styles.gText}>{goalWeight}kg</div>
               </div>
               <div className={styles.gDiv}>
                 <div>칼로리</div>
-                <div className={styles.gText}>{data.goalCalory}</div>
+                <div className={styles.gText}>{goalCalory}</div>
               </div>
               <div className={styles.gDiv}>
                 <div>탄수화물</div>
-                <div className={styles.gText}>{data.goalCarbo}</div>
+                <div className={styles.gText}>{goalCarbo}</div>
               </div>
               <div className={styles.gDiv}>
                 <div>단백질</div>
-                <div className={styles.gText}>{data.goalProtein}</div>
+                <div className={styles.gText}>{goalProtein}</div>
               </div>
               <div className={styles.gDiv}>
                 <div>지방</div>
-                <div className={styles.gText}>{data.goalFat}</div>
+                <div className={styles.gText}>{goalFat}</div>
               </div>
             </div>
           </div>

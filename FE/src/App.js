@@ -16,11 +16,15 @@ import Battle from './pages/battle/Battle.js';
 import styles from './styles/App.module.css';
 import Callback from './pages/login/SosialLogin/Login-callback';
 import battleRoutes from './pages/battle/battleRoutes.js';
+import { changeCode } from './store/store.js';
+import { useDispatch } from 'react-redux';
 
 function App() {
   let isLogged = false;
+  const dispatch = useDispatch();
   return (
     <div className={styles.wrapper}>
+      <button onClick={() => dispatch(changeCode(1))}>임시 로그인</button>
       <Routes>
         <Route path="/mypage" element={<Mypage />}>
           {mypageRoutes}

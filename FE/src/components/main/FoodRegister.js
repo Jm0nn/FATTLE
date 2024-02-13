@@ -4,19 +4,57 @@ import Footer from '../../commons/Footer';
 import styles from '../../styles/main/FoodRegister.module.css';
 import camera from '../../assets/images/main/camera.svg';
 import cameratext from '../../assets/images/main/cameratext.svg';
+import API from '../../services/main/URL';
+import FoodRegist from './FoodRegist';
+// import { useLocation } from 'react-router-dom';
 
-function FoodRegister() {
+function FoodRegister({ type }) {
   const [foodList, setFoodList] = useState([]);
+  const [foodRegist, setFoodRegist] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [relatedKeywords, setRelatedKeywords] = useState([]);
   const [cameraStream, setCameraStream] = useState(null);
   const [isCameraOn, setIsCameraOn] = useState(false);
+  const [uploadImgUrl, setUploadImgUrl] = useState('');
+  const [file, setFile] = useState(null);
+
+  // const location = useLocation();
+
+  // console.log(location);
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  const handleSubmit = () => {
+    const formData = new FormData();
+    formData.append('uploadFile', file);
+    axios
+      .post(
+        'https://i10e106.p.ssafy.io/api/food/img-upload/3319955502/1',
+        formData,
+      )
+      .then((res) => {
+        console.log(res);
+        let copy = [...foodRegist];
+        copy.push(res.data);
+        setFoodRegist(copy);
+        alert(`${res.data.name}이 등록되었습니다.`);
+        // setFoodRegist(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // 여기에서 axios.post로 formData를 서버에 전송
+  };
 
   useEffect(() => {
     try {
-      axios.get(`http://localhost:5000/list`).then((response) => {
-        setFoodList(response.data);
+      axios.get(`${API.FOOD_SEARCH}${searchQuery}`).then((response) => {
+        setFoodList(response.data.list);
       });
     } catch (error) {
       console.error('음식 데이터 불러오기 중 오류:', error.message);
@@ -43,7 +81,7 @@ function FoodRegister() {
       food.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
     setSearchResults(filteredList);
-    setSearchQuery(''); // 검색 완료 후 검색창 비우기
+    // setSearchQuery(''); // 검색 완료 후 검색창 비우기
   };
 
   const handleRelatedKeywordClick = (keyword) => {
@@ -103,35 +141,49 @@ function FoodRegister() {
           className={styles.searchInput}
         />
         {/* 연관 검색어 표시 */}
-        {searchQuery && (
+        {/* {searchQuery && (
           <div className={styles.relatedKeywordsContainer}>
             <ul className={styles.relatedKeywords}>
               {relatedKeywords.map((keyword, index) => (
                 <li
                   key={index}
-                  onClick={() => handleRelatedKeywordClick(keyword)}
+                  onClick={() => {
+                    handleRelatedKeywordClick(keyword);
+                  }}
                 >
                   {keyword}
                 </li>
               ))}
             </ul>
           </div>
-        )}
+        )} */}
 
         <button className={styles.searchButton} onClick={handleSearchClick}>
           검색
         </button>
+        <FoodRegist
+          foodRegist={foodRegist}
+          setFoodRegist={setFoodRegist}
+        ></FoodRegist>
       </div>
 
       <div>
         {/* 검색 결과 표시 */}
-        {/* <div className={styles.horizontalListContainer}>
+        <div className={styles.horizontalListContainer}>
           <ul className={styles.horizontalList}>
-            {searchResults.map((food) => (
-              <li key={food.foodCd}>
+            {searchResults.map((food, i) => (
+              <li key={i}>
                 <img src={food.imgPath} alt={food.name} />
-                <div className={styles.foodlist}>
-                  <p>
+                <div
+                  className={styles.foodlist}
+                  onClick={() => {
+                    let copy = [...foodRegist];
+                    copy.push(food);
+                    setFoodRegist(copy);
+                    alert(`${food.name}이 등록되었습니다.`);
+                  }}
+                >
+                  {/* <p>
                     {' '}
                     {food.type === 1
                       ? '아침'
@@ -140,7 +192,7 @@ function FoodRegister() {
                       : food.type === 3
                       ? '저녁'
                       : '간식'}
-                  </p>
+                  </p> */}
                   <h3>{food.name}</h3>
                   <p>탄: {food.carbo} g</p>
                   <p>단: {food.protein} g</p>
@@ -150,7 +202,7 @@ function FoodRegister() {
               </li>
             ))}
           </ul>
-        </div> */}
+        </div>
       </div>
 
       <div className={styles.cameraContainer}>
@@ -161,7 +213,6 @@ function FoodRegister() {
           className={styles.cameraImage}
           onClick={handleCameraClick}
         />
-
         <div className={styles.camera}>
           {cameraStream && (
             <video
@@ -182,6 +233,11 @@ function FoodRegister() {
               사진 찍기
             </button>
           )}
+        </div>
+        {/* <img src={uploadImgUrl} img="img" /> */}
+        <div>
+          <input type="file" onChange={handleFileChange} />
+          <button onClick={handleSubmit}>Upload</button>
         </div>
       </div>
       <Footer />

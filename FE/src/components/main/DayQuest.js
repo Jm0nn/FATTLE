@@ -7,6 +7,7 @@ import checkImg from '../../assets/images/main/check.svg';
 import notCheckImg from '../../assets/images/main/notcheck.svg';
 
 // 각 운동 코드와 설명을 매핑하는 객체
+
 const exerciseDescriptions = {
   run: '러닝 30분',
   pus: '팔굽혀 펴기 50회',
@@ -17,6 +18,7 @@ const exerciseDescriptions = {
 };
 
 function DayQuest() {
+  const [type, setType] = useState(['bur', 'pus', 'squ', 'pul', 'pla', 'run']);
   const [completedCount, setCompletedCount] = useState(1);
   const [questList, setQuestList] = useState([]);
   const [lastVisitedDate, setLastVisitedDate] = useState(null);
@@ -36,7 +38,7 @@ function DayQuest() {
       });
   }, []);
 
-  const handleQuestClick = (index, value) => {
+  const handleQuestClick = (index, value, excerciseType) => {
     const isSelected = selectedBars.includes(index);
     const newValue = isSelected ? -value : value;
 
@@ -51,10 +53,19 @@ function DayQuest() {
     // 퀘스트 클릭 시 해당 값을 서버에 업데이트
     axios
       .post(`${API.UPDATE_QUEST_POST}`, {
-        userCode: `${userCode}`,
-        exercise: 'RUN',
+        userCode: userCode,
+        exercise: excerciseType,
       })
       .then((response) => {
+        console.log(excerciseType);
+        axios.get(`${API.QUEST_LIST_GET}${userCode}`).then((response) => {
+          let copy = { ...questList.exercise };
+          copy[excerciseType] = 1;
+          let copy2 = { ...questList };
+          copy2.exercise = copy;
+          console.log(copy2);
+          setQuestList(copy2);
+        });
         // 성공적으로 업데이트된 경우에만 로컬 상태 업데이트
         setCompletedCount((prevCount) => prevCount + newValue);
       })
@@ -108,7 +119,9 @@ function DayQuest() {
                   ? styles.exerciseItemSelected
                   : styles.exerciseItemUnselected
               }`}
-              onClick={() => handleQuestClick(index, value)}
+              onClick={() => {
+                handleQuestClick(index, value, type[index]);
+              }}
             >
               <p>
                 {exerciseDescriptions[key]}: {value}

@@ -22,7 +22,6 @@ const BodyinfoModify = ({ setWeight1, setHeight1 }) => {
   };
 
   const HandleFormSubmit = (e) => {
-    console.log(8989);
     axios
       .patch(`${API.USER_MODIFY_PATCH}`, {
         userCode,
@@ -57,6 +56,8 @@ const BodyinfoModify = ({ setWeight1, setHeight1 }) => {
         alt="Click to open modal"
         onClick={() => {
           axios.get(`${API.USER_GET}${userCode}`).then((res) => {
+            setHeight(res.data.height);
+            setWeight(res.data.weight);
             console.log(res);
           });
           openModal();

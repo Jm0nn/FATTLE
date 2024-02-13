@@ -4,52 +4,48 @@ import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import UserVideoComponent from '../../components/battle/UserVideoComponent';
 import { useLocation, useNavigate } from 'react-router-dom';
+import BASE_URL from '../../config.js';
+import Chatting from './Chatting.js';
+import { useSelector } from 'react-redux';
+import styles from '../../styles/battle/BattleLive.module.css';
 
-const APPLICATION_SERVER_URL = 'https://i10e106.p.ssafy.io/';
+import ProfileImg from '../../assets/svg/mypage/ProfileImg.svg';
+import OvVideo from '../../components/battle/OvVideo.js';
+import Loading from '../../components/commons/Loading.js';
+import OvAudio from '../../components/battle/OvAudio.js';
+const APPLICATION_SERVER_URL = BASE_URL;
 
 const BattleLiveAttend = () => {
   // 커스텀 변수
   const { state } = useLocation();
+  const userCode = useSelector((state) => state.userCode);
   const navigate = useNavigate();
+  const chatInputEle = useRef(null);
+  const [profileImg, setProfileImg] = useState('');
+  const [streamerName, setStreamerName] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  const [chatList, setChatList] = useState([]);
+  const dataId = useRef(0);
   // 비디오 관련 변수
   const [mySessionId, setMySessionId] = useState('');
   const [myUserName, setMyUserName] = useState(
-    `Participant${Math.floor(Math.random() * 100)}`,
+    `익명의 자극자 ${Math.floor(Math.random() * 100)}`,
   );
+  let sessionName = '';
+  const nickname = `익명의 자극자${Math.floor(Math.random() * 100)}`;
   const [session, setSession] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState(null);
 
-  useEffect(() => {
-    if (state === null) {
-      navigate('/battle');
-      return;
-    }
-    setMySessionId(state.battleCode);
-  }, []);
-
-  const OV = useRef(new OpenVidu());
-
-  const handleChangeSessionId = useCallback((e) => {
-    setMySessionId(e.target.value);
-  }, []);
-
-  const handleChangeUserName = useCallback((e) => {
-    setMyUserName(e.target.value);
-  }, []);
-
-  const handleMainVideoStream = useCallback(
-    (stream) => {
-      if (mainStreamManager !== stream) {
-        setMainStreamManager(stream);
-      }
-    },
-    [mainStreamManager],
-  );
+  // const OV = useRef(new OpenVidu());
+  const OV = useRef(null);
 
   const joinSession = useCallback(() => {
+    OV.current = new OpenVidu();
+    OV.current.enableProdMode();
     const mySession = OV.current.initSession();
 
     mySession.on('streamCreated', (event) => {
@@ -61,11 +57,27 @@ const BattleLiveAttend = () => {
       deleteSubscriber(event.stream.streamManager);
     });
 
+    // 방송을 킨 사람이 종료하면 자동으로 종료됨
+    mySession.on('signal:end-live', (event) => {
+      leaveSession();
+      alert('방송이 종료 되었습니다');
+      navigate('/battle');
+    });
+
     mySession.on('exception', (exception) => {
       console.warn(exception);
     });
 
     setSession(mySession);
+  }, []);
+  useEffect(() => {
+    if (state === null) {
+      navigate('/main');
+      return;
+    }
+    sessionName = state.sessionId;
+    setStreamerName(state.streamerName);
+    joinSession();
   }, []);
 
   useEffect(() => {
@@ -73,20 +85,27 @@ const BattleLiveAttend = () => {
       // Get a token from the OpenVidu deployment
       getToken().then(async (token) => {
         try {
-          await session.connect(token, { clientData: myUserName });
+          await session.connect(token, { clientData: nickname });
 
           let publisher = await OV.current.initPublisherAsync(undefined, {
             audioSource: undefined,
             videoSource: undefined,
             publishAudio: true,
-            publishVideo: true,
+            publishVideo: false,
             resolution: '640x480',
             frameRate: 30,
             insertMode: 'APPEND',
             mirror: false,
+            filter: {
+              type: 'GStreamerFilter',
+              options: {
+                command: 'pitch pitch=2.0',
+              },
+            },
           });
 
           session.publish(publisher);
+          let playerSession = null;
 
           const devices = await OV.current.getDevices();
           const videoDevices = devices.filter(
@@ -100,9 +119,10 @@ const BattleLiveAttend = () => {
             (device) => device.deviceId === currentVideoDeviceId,
           );
 
-          setMainStreamManager(publisher);
+          // setMainStreamManager(publisher);
           setPublisher(publisher);
-          setCurrentVideoDevice(currentVideoDevice);
+          // setCurrentVideoDevice(currentVideoDevice);
+          setLoading(false);
         } catch (error) {
           console.log(
             'There was an error connecting to the session:',
@@ -112,57 +132,23 @@ const BattleLiveAttend = () => {
         }
       });
     }
-  }, [session, myUserName]);
+  }, [session]);
 
   const leaveSession = useCallback(() => {
     // Leave the session
     if (session) {
       session.disconnect();
+      navigate('/battle');
     }
-
     // Reset all states and OpenVidu object
-    OV.current = new OpenVidu();
-    setSession(undefined);
-    setSubscribers([]);
-    setMySessionId('SessionA');
-    setMyUserName('Participant' + Math.floor(Math.random() * 100));
-    setMainStreamManager(undefined);
-    setPublisher(undefined);
+    // OV.current = new OpenVidu();
+    // setSession(undefined);
+    // setSubscribers([]);
+    // setMySessionId('SessionA');
+    // setMyUserName('Participant' + Math.floor(Math.random() * 100));
+    // setMainStreamManager(undefined);
+    // setPublisher(undefined);
   }, [session]);
-
-  const switchCamera = useCallback(async () => {
-    try {
-      const devices = await OV.current.getDevices();
-      const videoDevices = devices.filter(
-        (device) => device.kind === 'videoinput',
-      );
-
-      if (videoDevices && videoDevices.length > 1) {
-        const newVideoDevice = videoDevices.filter(
-          (device) => device.deviceId !== currentVideoDevice.deviceId,
-        );
-
-        if (newVideoDevice.length > 0) {
-          const newPublisher = OV.current.initPublisher(undefined, {
-            videoSource: newVideoDevice[0].deviceId,
-            publishAudio: true,
-            publishVideo: true,
-            mirror: true,
-          });
-
-          if (session) {
-            await session.unpublish(mainStreamManager);
-            await session.publish(newPublisher);
-            setCurrentVideoDevice(newVideoDevice[0]);
-            setMainStreamManager(newPublisher);
-            setPublisher(newPublisher);
-          }
-        }
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }, [currentVideoDevice, session, mainStreamManager]);
 
   const deleteSubscriber = useCallback((streamManager) => {
     setSubscribers((prevSubscribers) => {
@@ -204,15 +190,15 @@ const BattleLiveAttend = () => {
    * more about the integration of OpenVidu in your application server.
    */
   const getToken = useCallback(async () => {
-    return createSession(mySessionId).then((sessionId) =>
-      createToken(sessionId),
+    return createSession(sessionName).then((sessionName) =>
+      createToken(sessionName),
     );
   }, [mySessionId]);
 
-  const createSession = async (sessionId) => {
+  const createSession = async (sessionName) => {
     const response = await axios.post(
-      APPLICATION_SERVER_URL + 'api/openvidu/sessions',
-      { customSessionId: sessionId },
+      APPLICATION_SERVER_URL + '/openvidu/sessions',
+      { customSessionId: sessionName },
       {
         headers: { 'Content-Type': 'application/json' },
       },
@@ -220,11 +206,11 @@ const BattleLiveAttend = () => {
     return response.data; // The sessionId
   };
 
-  const createToken = async (sessionId) => {
+  const createToken = async (sessionName) => {
     const response = await axios.post(
       APPLICATION_SERVER_URL +
-        'api/openvidu/sessions/' +
-        sessionId +
+        '/openvidu/sessions/' +
+        sessionName +
         '/connections',
       {},
       {
@@ -233,102 +219,75 @@ const BattleLiveAttend = () => {
     );
     return response.data; // The token
   };
+
   return (
-    <div className="container">
-      {session === undefined ? (
-        <div id="join">
-          <div id="img-div">
-            <img
-              src="resources/images/openvidu_grey_bg_transp_cropped.png"
-              alt="OpenVidu logo"
-            />
-          </div>
-          <div id="join-dialog" className="jumbotron vertical-center">
-            <h1> Join a video session </h1>
-            <form className="form-group" onSubmit={joinSession}>
-              <p>
-                <label>Participant: </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="userName"
-                  value={myUserName}
-                  onChange={handleChangeUserName}
-                  required
-                />
-              </p>
-              <p>
-                <label> Session: </label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="sessionId"
-                  value={mySessionId}
-                  onChange={handleChangeSessionId}
-                  required
-                />
-              </p>
-              <p className="text-center">
-                <input
-                  className="btn btn-lg btn-success"
-                  name="commit"
-                  type="submit"
-                  value="JOIN"
-                />
-              </p>
-            </form>
-          </div>
-        </div>
-      ) : null}
-
-      {session !== undefined ? (
-        <div id="session">
-          <div id="session-header">
-            <h1 id="session-title">{mySessionId}</h1>
-            <input
-              className="btn btn-large btn-danger"
-              type="button"
-              id="buttonLeaveSession"
-              onClick={leaveSession}
-              value="Leave session"
-            />
-            <input
-              className="btn btn-large btn-success"
-              type="button"
-              id="buttonSwitchCamera"
-              onClick={switchCamera}
-              value="Switch Camera"
-            />
-          </div>
-
-          {mainStreamManager !== undefined ? (
-            <div id="main-video" className="col-md-6">
-              <UserVideoComponent streamManager={mainStreamManager} />
+    <>
+      {/* <button onClick={() => console.log(subscribers)}>fff</button>
+      <button onClick={() => publisher.publishAudio(false)}>뮤트</button> */}
+      {!loading ? (
+        <div id="session" className={styles.container}>
+          <div id="session-header" className={styles.header}>
+            <div id="session-title" className={styles.sessionTitle}>
+              <div className={styles.img}>
+                <img src={ProfileImg} alt="P" />
+                {/* 임시로 가져온것이므로 나중에 밑에로 변경해주어야함 */}
+                {/* <img src={profileImg} alt="P" /> */}
+              </div>
+              <div>{streamerName}</div>
             </div>
-          ) : null}
-          <div id="video-container" className="col-md-6">
-            {publisher !== undefined ? (
-              <div
-                className="stream-container col-md-6 col-xs-6"
-                onClick={() => handleMainVideoStream(publisher)}
-              >
-                <UserVideoComponent streamManager={publisher} />
+            <div className={styles.headerRight}>
+              <div className={styles.liveText}>라이브 방송</div>
+              <div className={styles.watchers}>
+                <svg
+                  style={{ color: 'white' }}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="13"
+                  height="13"
+                  fill="currentColor"
+                  class="bi bi-eye-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                </svg>
+                {/* &nbsp;{subscribers.length - 1 < 1 ? 0 : subscribers.length - 1} */}
+                &nbsp;{subscribers.length}
               </div>
-            ) : null}
-            {subscribers.map((sub, i) => (
-              <div
-                key={sub.id}
-                className="stream-container col-md-6 col-xs-6"
-                onClick={() => handleMainVideoStream(sub)}
-              >
-                <span>{sub.id}</span>
-                <UserVideoComponent streamManager={sub} />
-              </div>
-            ))}
+              <button
+                onClick={leaveSession}
+                className={`btn-close btn-close-white ${styles.closeBtn}`}
+              ></button>
+            </div>
           </div>
+
+          {/* {mainStreamManager !== undefined ? (
+            <div id="main-video" className={styles.video}>
+              <OvVideo streamManager={mainStreamManager} />
+            </div>
+          ) : null} */}
+          {subscribers.map((sub, i) => {
+            if (sub.stream.videoActive) {
+              return (
+                <div id="main-video" className={styles.video}>
+                  <OvVideo streamManager={sub} />
+                </div>
+              );
+            } else {
+              return <OvAudio streamManager={sub} />;
+            }
+          })}
+          <Chatting
+            session={session}
+            myUserName={myUserName}
+            battleCode={state.battleCode}
+            playerUserCode={state.playerUserCode}
+            triggerUserCode={userCode}
+          />
         </div>
-      ) : null}
-    </div>
+      ) : (
+        <Loading />
+      )}
+    </>
   );
 };
 

@@ -1,0 +1,107 @@
+ul {
+  list-style: none;
+}
+div,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+/* 그래프 */
+.graphWrap {
+  position: relative;
+  width: 300px;
+  height: 400px;
+  margin: 20px auto 0;
+  border: 1px solid #aaa;
+  border-radius: 20px;
+}
+.graph {
+  position: absolute;
+  bottom: 50px;
+  width: 30px;
+}
+
+.compareTitle {
+  text-align: center; /* 열량 비교 글자를 중앙으로 정렬 */
+  margin: 10px;
+}
+
+.graph .label1 {
+  text-align: center;
+  margin-left: 50px;
+  position: absolute;
+}
+
+.graph .label2 {
+  text-align: center;
+  margin-left: 150px;
+  position: absolute;
+}
+
+.graph .label3 {
+  text-align: center;
+  margin-left: 250px;
+  position: absolute;
+}
+
+.graph-item {
+  width: 100%;
+  border-radius: 50px;
+  position: absolute;
+  bottom: 0;
+  background: #ddd;
+}
+.graph-item.skyblue {
+  background: #00a6da;
+}
+.graph-item.lime {
+  background: #00a911;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.circle1 {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #00a6da;
+  margin: 0 10px;
+}
+
+.circle2 {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #00a911;
+  margin: 0 10px;
+}
+
+/* 애니메이션 */
+.graph-item.p-100 {
+  animation: p-100 2s;
+}
+.graph-item.p-50 {
+  animation: p-50 2s;
+}
+
+@keyframes p-100 {
+  from {
+    height: 0px;
+  }
+  to {
+    height: 300px;
+  }
+}
+@keyframes p-50 {
+  from {
+    height: 0px;
+  }
+  to {
+    height: 150px;
+  }
+}
