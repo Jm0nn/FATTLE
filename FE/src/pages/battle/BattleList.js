@@ -48,13 +48,26 @@ const BattleList = (props) => {
   };
 
   const handleBattleItemClick = (item) => {
-    // 현재 사용자의 userCode가 item.playlist에 포함되는지 확인
-    const isUserInPlaylist = item.playerList.some(
-      (player) => player.userCode === userCode,
-    );
+    // item이 유효한지 확인
+    if (!item) {
+      console.error('Item is not valid');
+      return;
+    }
+
+    // item.playerList가 정의되어 있고 유효한 경우에만 사용자 확인
+    const isUserInPlaylist =
+      item.playerList &&
+      item.playerList.some((player) => player.userCode === userCode);
+    // item.triggerList가 정의되어 있고 유효한 경우에만 사용자 확인
+    const isUserInTriggerList =
+      item.triggerList &&
+      item.triggerList.some((player) => player.userCode === userCode);
 
     // 사용자의 userCode가 포함되어 있으면 battle/detail 페이지로 이동, 아니면 battle/code 페이지로 이동
-    const destination = isUserInPlaylist ? '/battle/detail' : '/battle/code';
+    let destination = '/battle/code'; // 기본적으로는 코드 페이지로 이동
+    if (isUserInPlaylist || isUserInTriggerList) {
+      destination = '/battle/code'; // 사용자가 플레이어 목록이나 트리거 목록에 포함된 경우 디테일 페이지로 이동
+    }
 
     navigate(destination, { state: { battleCode: item.battleCode } });
   };
@@ -103,7 +116,7 @@ const BattleList = (props) => {
           data
             .filter((item) => item.status === 0)
             .map((item, index) => (
-              <li>
+              <li key={index}>
                 <img src={`/images/${item.imgPath}`} alt="profileImg" />
                 <div>
                   <Link
