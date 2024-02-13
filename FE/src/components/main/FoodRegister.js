@@ -15,6 +15,35 @@ function FoodRegister({ type }) {
   const [relatedKeywords, setRelatedKeywords] = useState([]);
   const [cameraStream, setCameraStream] = useState(null);
   const [isCameraOn, setIsCameraOn] = useState(false);
+  const [uploadImgUrl, setUploadImgUrl] = useState('');
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  const handleSubmit = () => {
+    const formData = new FormData();
+    formData.append('uploadFile', file);
+    axios
+      .post(
+        'https://i10e106.p.ssafy.io/api/food/img-upload/3319955502/1',
+        formData,
+      )
+      .then((res) => {
+        let copy = [...foodRegist];
+        copy.push(res.data);
+        setFoodRegist(copy);
+        alert(`${res.data.name}이 등록되었습니다.`);
+        // setFoodRegist(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // 여기에서 axios.post로 formData를 서버에 전송
+  };
 
   useEffect(() => {
     try {
@@ -185,7 +214,6 @@ function FoodRegister({ type }) {
           className={styles.cameraImage}
           onClick={handleCameraClick}
         />
-
         <div className={styles.camera}>
           {cameraStream && (
             <video
@@ -206,6 +234,11 @@ function FoodRegister({ type }) {
               사진 찍기
             </button>
           )}
+        </div>
+        {/* <img src={uploadImgUrl} img="img" /> */}
+        <div>
+          <input type="file" onChange={handleFileChange} />
+          <button onClick={handleSubmit}>Upload</button>
         </div>
       </div>
       <Footer />
