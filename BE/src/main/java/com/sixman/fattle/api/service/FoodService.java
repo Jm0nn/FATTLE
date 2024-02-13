@@ -12,6 +12,7 @@ import com.sixman.fattle.exceptions.NoFileException;
 import com.sixman.fattle.exceptions.NoImageExceptoin;
 import com.sixman.fattle.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,8 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -125,6 +127,11 @@ public class FoodService {
         return FoodSearchResponse.builder()
                 .list(list)
                 .build();
+    }
+
+    public byte[] getImage(String name) throws IOException {
+        InputStream in = new FileInputStream(UPLOAD_PATH + "/" + name);
+        return IOUtils.toByteArray(in);
     }
 
 }
