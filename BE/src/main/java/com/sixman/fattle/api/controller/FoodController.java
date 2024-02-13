@@ -96,10 +96,21 @@ public class FoodController {
     @Operation(summary = "음식 이미지",
             description = "음식 이미지 불러오기")
     @ApiResponse(responseCode = "200", description = "음식 이미지 응답")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "음식 이미지 응답"),
+            @ApiResponse(responseCode = "404", description = "음식 이미지 존재하지 않음"),
+            @ApiResponse(responseCode = "500", description = "서버 에러")
+    })
     @GetMapping(value = "/img/{name}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> getImage(@PathVariable String name) throws IOException {
-        byte[] response = foodService.getImage(name);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<byte[]> getImage(@PathVariable String name) {
+        try {
+            byte[] response = foodService.getImage(name);
+            return ResponseEntity.ok(response);
+        } catch (FileNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
 }
