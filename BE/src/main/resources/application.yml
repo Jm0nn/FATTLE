@@ -24,22 +24,13 @@ spring:
       idle-timeout: 600000
       max-lifetime: 1800000
       auto-commit: true
- # File Upload size Setting
-  servlet:
-   multipart:
-     max-file-size: 25MB
-     max-request-size: 25MB
-#  # swagger setting >> Failed to start bean 'documentationPluginsBootstrapper'; error
-#  mvc:
-#    pathmatch:
-#      matching-strategy=ANT_PATH_MATCHER
 
-# File upload path : window
-#file:
-#  path:
-#    nodeValue: C:/board/upload/
-#    upload-images: C:/board/upload/imageUpload
-#    upload-files: C:/board/upload/fileUpload/
+
+# Multipart File Upload Setting
+file:
+  multipart:
+    maxUploadSize: 100
+    maxUploadSizePerFile: 100
 
 
 ## Swagger setting
