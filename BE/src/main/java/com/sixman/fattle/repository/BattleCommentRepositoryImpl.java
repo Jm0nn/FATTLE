@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BattleCommentRepositoryImpl implements BattleCommentRepositoryCustom{
 
-    JPAQueryFactory queryFactory;
+    private final JPAQueryFactory queryFactory;
 
     private final QFoodComment qcomment = QFoodComment.foodComment;
     private final QFoodBoard qboard = QFoodBoard.foodBoard;

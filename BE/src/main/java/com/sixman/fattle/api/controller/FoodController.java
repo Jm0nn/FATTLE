@@ -14,10 +14,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.imageio.ImageIO;
+import java.io.*;
 
 @RestController
 @RequestMapping("/food")
@@ -84,6 +89,16 @@ public class FoodController {
     public ResponseEntity<FoodSearchResponse> foodSearch(@RequestParam String word) {
         FoodSearchResponse response = foodService.foodSearch(word);
         return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "음식 이미지",
+            description = "음식 이미지 불러오기")
+    @ApiResponse(responseCode = "200", description = "음식 이미지 응답")
+    @GetMapping(value = "/img", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getImage(@RequestParam String path) throws IOException {
+        InputStream in = new FileInputStream(path);
+        byte[] imageByteArray = IOUtils.toByteArray(in);
+        return ResponseEntity.ok(imageByteArray);
     }
 
 }
