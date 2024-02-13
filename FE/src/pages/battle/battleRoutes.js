@@ -6,6 +6,7 @@ import ModifyBetting from './ModifyBetting.js';
 import ModifyGoal from './ModifyGoal.js';
 import BattleDetail from './BattleDetail.js';
 import BattleLive from './BattleLive.js';
+import BattleCodeInput from './BattleCodeInput.js';
 
 export default [
   <Route path="" element={<BattleList />} key="main" />,
@@ -13,6 +14,7 @@ export default [
   <Route path="bettingSet" element={<ModifyBetting />} key="betting" />,
   <Route path="dateSet" element={<ModifyDate />} key="date" />,
   <Route path="goalSet" element={<ModifyGoal />} key="goal" />,
-  <Route path="detail" element={<BattleDetail />} key="goal" />,
+  <Route path="detail" element={<BattleDetail />} key="detail" />,
   <Route path="live" element={<BattleLive />} key="live" />,
+  <Route path="code" element={<BattleCodeInput />} key="code" />,
 ];

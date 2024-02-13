@@ -74,6 +74,12 @@ const BattleCreate = (props) => {
       }
     }
   };
+  // 배틀 코드 보기
+  const [showBattleCode, setShowBattleCode] = useState(false);
+  const handleToggleCodeView = () => {
+    setShowBattleCode(!showBattleCode);
+  };
+
   return (
     // 밑의 스타일 수정 필요
     <>
@@ -87,6 +93,13 @@ const BattleCreate = (props) => {
         {data && (
           <>
             <div>배틀계약서</div>
+            <p style={{ border: '2px solid black' }}>
+              {showBattleCode ? (
+                <>배틀 코드: {data.battleCode}</>
+              ) : (
+                <button onClick={handleToggleCodeView}>배틀 코드</button>
+              )}
+            </p>
             <h2>{data.battleName || '배틀방 이름'}</h2>
 
             {/* 내기자로 등록된 사용자가 있다면 랜더링 하는 부분 */}
