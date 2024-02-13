@@ -22,7 +22,6 @@ const BodyinfoModify = ({ setWeight1, setHeight1 }) => {
   };
 
   const HandleFormSubmit = (e) => {
-    console.log(8989);
     axios
       .patch(`${API.USER_MODIFY_PATCH}`, {
         userCode,
