@@ -62,6 +62,31 @@ public class BattlePointService {
 
     public PointHistoryResponse getPointHistory(String battleCode) {
         List<PointHistoryDto> pointHistoryDtoList = battleRepository.getPointHistory(battleCode);
+
+        for (PointHistoryDto dto : pointHistoryDtoList) {
+            int typeCode = dto.getTypeCode();
+
+            switch (typeCode) {
+                case TYPE_LIVE_USER_POINT:
+                case TYPE_LIVE_BASIC_POINT:
+                    dto.setType("라이브");
+                    break;
+
+                case TYPE_FOOD_USER_POINT:
+                case TYPE_FOOD_BASIC_POINT:
+                    dto.setType("식단");
+                    break;
+
+                case TYPE_QUEST_POINT:
+                    dto.setType("일일퀘스트");
+                    break;
+
+                case TYPE_GOAL_POINT:
+                    dto.setType("체중 달성");
+                    break;
+            }
+        }
+
         return PointHistoryResponse.builder()
                 .list(pointHistoryDtoList)
                 .build();
