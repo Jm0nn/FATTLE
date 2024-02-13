@@ -34,7 +34,7 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
   const HandleFormSubmit = (e) => {
     console.log('실행됨');
     axios
-      .post('http://localhost:8000/api/food/upload', {
+      .post(`${API.FOOD_UPLOAD}`, {
         userCode: userCode,
         type: location.state.type,
         name: foodRegist[0].name,
