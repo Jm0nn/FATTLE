@@ -107,6 +107,10 @@ const BattleDetail = (props) => {
     alert('결과 보기 버튼 클릭됨');
   };
 
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       배틀 디테일 페이지 <br />
