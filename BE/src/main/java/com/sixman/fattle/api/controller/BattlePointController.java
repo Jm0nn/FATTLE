@@ -47,14 +47,7 @@ public class BattlePointController {
     }
 
     @Operation(summary = "배틀 점수 조회",
-            description = "배틀 점수 내역 조회<br/><br/>" +
-                    "<b>type 코드</b><br/>" +
-                    "1: 라이브 자극자 점수<br/>" +
-                    "2: 식단 자극자 점수<br/>" +
-                    "3: 라이브 기본 점수<br/>" +
-                    "4: 식단 기본 점수<br/>" +
-                    "5: 일일퀘스트 점수<br/>" +
-                    "6: 목표량 달성 점수")
+            description = "배틀 점수 내역 조회")
     @ApiResponse(responseCode = "200", description = "배틀 점수 조회 성공")
     @GetMapping("/history/{battleCode}")
     public ResponseEntity<PointHistoryResponse> getPointHistory(@PathVariable String battleCode) {
