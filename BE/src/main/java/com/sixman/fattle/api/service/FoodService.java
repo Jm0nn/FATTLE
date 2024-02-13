@@ -88,10 +88,8 @@ public class FoodService {
     }
 
     public FoodInfoDto getFoodInfo(String imgPath) {
-        String folderPath = imgPath.substring(0, imgPath.lastIndexOf("/"));
-
         FoodImageDto body = FoodImageDto.builder()
-                .source(folderPath)
+                .source(UPLOAD_PATH + "/" + imgPath)
                 .build();
 
         return WebClient.create()
