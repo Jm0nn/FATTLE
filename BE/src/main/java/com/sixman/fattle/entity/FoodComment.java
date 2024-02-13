@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class FoodComment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "food_comment_cd")
     private int foodCommentCd;
 

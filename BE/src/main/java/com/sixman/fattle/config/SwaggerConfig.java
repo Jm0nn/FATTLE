@@ -9,6 +9,7 @@ import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -27,12 +28,18 @@ public class SwaggerConfig {
                         .scheme(BEARER_TOKEN_PREFIX)
                         .bearerFormat(securityJwtName));
 
+        Server localhost = new Server();
+        localhost.setUrl("http://localhost:8000/api");
         Server server = new Server();
         server.setUrl("https://i10e106.p.ssafy.io/api");
 
+        List<Server> servers = new ArrayList<>();
+        servers.add(localhost);
+        servers.add(server);
+
         return new OpenAPI()
                 .info(apiInfo())
-                .servers(List.of(server))
+                .servers(servers)
                 .addSecurityItem(securityRequirement)
                 .components(components);
     }
