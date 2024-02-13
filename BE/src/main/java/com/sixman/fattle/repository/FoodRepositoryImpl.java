@@ -50,6 +50,7 @@ public class FoodRepositoryImpl implements FoodRepositoryCustom {
         queryFactory.insert(qfood)
                 .columns(
                         qfood.userCd,
+                        qfood.name,
                         qfood.type,
                         qfood.calory,
                         qfood.carbo,
@@ -58,6 +59,7 @@ public class FoodRepositoryImpl implements FoodRepositoryCustom {
                         qfood.imgPath)
                 .values(
                         request.getUserCode(),
+                        request.getName(),
                         request.getType(),
                         request.getCalory(),
                         request.getCarbo(),
