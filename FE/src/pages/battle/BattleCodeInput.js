@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getBattleInfo } from '../../services/battle/api.js';
-
+import styles from '../../styles/battle/BattleInvite.module.css';
+import X from '../../assets/svg/battle/X.png';
+import Footer from '../../commons/Footer';
+import Invite from '../../assets/svg/battle/battleInvite.svg';
 function BattleCodeInput() {
   const { state } = useLocation();
   const [password, setPassword] = useState('');
@@ -35,14 +38,38 @@ function BattleCodeInput() {
 
   return (
     <div>
-      <h2>방 비밀번호 입력</h2>
-      <input
-        type="password"
-        placeholder="비밀번호를 입력하세요"
-        value={password}
-        onChange={handleInputChange}
-      />
-      <button onClick={handleJoinRoom}>방 입장하기</button>
+      <header className={styles.header}>
+        <p className={styles.headerTitle}>배틀 목록</p>
+      </header>
+      <div className={styles.wrapper}>
+        <div className={styles.invite}>
+          <p className={styles.inviteCode}>초대 코드 입력</p>
+          <img className={styles.closeImage} src={X} alt="X" />
+        </div>
+
+        <div className={styles.battleCodeContainer}>
+          <input
+            type="password"
+            value={password}
+            onChange={handleInputChange}
+            className={styles.battleCode}
+          />
+          {/* <div className={styles.battleCode}></div>
+          <div className={styles.battleCode}></div>
+          <div className={styles.battleCode}></div>
+          <div className={styles.battleCode}></div>
+          <div className={styles.battleCode}></div>
+          <div className={styles.battleCode}></div> */}
+        </div>
+        <p className={styles.message}>
+          친구에게 받은 초대 코드를 입력해주세요!
+        </p>
+        {/* <button onClick={handleJoinRoom}>방 입장하기</button> */}
+        <div onClick={handleJoinRoom} className={styles.joinBattleRoom}>
+          방 입장하기
+        </div>
+        <Footer />
+      </div>
     </div>
   );
 }

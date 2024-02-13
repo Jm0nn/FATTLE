@@ -49,6 +49,11 @@ const BattleDetail = (props) => {
           setBattleEnded(true);
           alert('배틀이 종료되었습니다.');
           const finalWeight = calculateFinalWeight();
+          console.log(
+            data.playerList[0].userCode,
+            state.battleCode,
+            finalWeight,
+          );
           await finishBattleWeight(
             state.battleCode,
             data.playerList[0].userCode,
@@ -69,10 +74,14 @@ const BattleDetail = (props) => {
   }, [state, navigate]);
 
   const calculateFinalWeight = () => {
-    // 여기에 실제로 몸무게 계산
-    const finalWeight =
-      data.playerList[0].beforeWeight - data.playerList[0].afterWeight;
-    return finalWeight;
+    // data가 존재하고 data.playerList도 존재하며 data.playerList[0]도 존재할 때에만 계산 수행
+    if (data && data.playerList && data.playerList.length > 0) {
+      // 여기에 실제로 몸무게 계산
+      const finalWeight =
+        data.playerList[0].beforeWeight - data.playerList[0].afterWeight;
+      return finalWeight;
+    }
+    return 0; // 위의 조건 중 하나라도 해당되지 않으면 0을 반환
   };
 
   const handleToggleCodeView = () => {
@@ -154,20 +163,20 @@ const BattleDetail = (props) => {
       </Link>
       <p>vs</p>
       {/* 플레이리스트 1로? */}
-      <p>내 닉네임: {data.playerList[1].nickname}</p>
-      <img src={data.playerList[1].profileImgPath} alt="프로필 이미지" />
+      <p>내 닉네임: {data.playerList[0].nickname}</p>
+      <img src={data.playerList[0].profileImgPath} alt="프로필 이미지" />
       <p>
         내 포인트:{' '}
-        {data.playerList[1].livePoint +
-          data.playerList[1].foodPoint +
-          data.playerList[1].liveUserPoint +
-          data.playerList[1].foodUserPoint +
-          data.playerList[1].questPoint +
-          data.playerList[1].goalPoint}
+        {data.playerList[0].livePoint +
+          data.playerList[0].foodPoint +
+          data.playerList[0].liveUserPoint +
+          data.playerList[0].foodUserPoint +
+          data.playerList[0].questPoint +
+          data.playerList[0].goalPoint}
       </p>
       <p>
         목표까지:
-        {data.playerList[1].beforeWeight - data.playerList[1].goalWeight}
+        {data.playerList[0].beforeWeight - data.playerList[0].goalWeight}
       </p>
       {battleEnded ? ( // 추가: 배틀 종료 여부에 따라 결과 보기 버튼 렌더링
         <button onClick={handleViewResult}>결과 보기</button>
@@ -177,10 +186,10 @@ const BattleDetail = (props) => {
         <button onClick={handleJoinBattle}>참여하기</button>
       )}
       <div>
-        <h3>열량 비교</h3>
+        {/* <h3>열량 비교</h3> */}
         <BattleDetailCal
           userCode={data.playerList[0].userCode}
-          secondPlayeruserCode={data.playerList[1].userCode}
+          secondPlayeruserCode={data.playerList[0].userCode}
           //1로 바꿔야 함
         />
       </div>
@@ -188,7 +197,7 @@ const BattleDetail = (props) => {
         <h3>식단 앨범</h3>
         <BattleDetailFood
           userCode={data.playerList[0].userCode}
-          secondPlayeruserCode={data.playerList[1].userCode}
+          secondPlayeruserCode={data.playerList[0].userCode}
           //1로 바꿔야 함
         />
       </div>

@@ -99,7 +99,11 @@ export const BattleFood = async (battleCode) => {
   return res;
 };
 
-export const finishBattleWeight = async () => {
-  const res = await axios.patch(BATTLE_WEIGHT_PATCH);
+export const finishBattleWeight = async (battleCode, userCode, finalweight) => {
+  const res = await axios.patch(BATTLE_WEIGHT_PATCH, {
+    battleCode,
+    userCode,
+    finalweight,
+  });
   return res;
 };
