@@ -21,6 +21,7 @@ const {
   BATTLE_FOOD_COMMENT_LIST_GET,
   FOOD_TODAY_GET,
   BATTLE_FOOD_COMMENT_REGIST_POST,
+  BATTLE_BOARD_LIST_GET,
 } = API;
 
 export const getBattleInfo = async (battleCode) => {
@@ -96,15 +97,23 @@ export const getFoodToday = async (userCode) => {
 };
 //배틀 식단 댓글 리스트
 export const getBattleFoodCommentList = async (commentCode) => {
-  const res = await axios.patch(BATTLE_FOOD_COMMENT_LIST_GET + commentCode);
+  const res = await axios.get(BATTLE_FOOD_COMMENT_LIST_GET + commentCode);
 
   return res;
 };
+
+// 배틀 식단 점수 주기
 export const giveFoodPoint = async (parameter) => {
   const res = await axios.patch(BATTLE_GIVE_POINT_PATCH, parameter);
   return res;
 };
+// 식단 댓글 달기
 export const registFoodComment = async (parameter) => {
-  const res = await axios.patch(BATTLE_FOOD_COMMENT_REGIST_POST, parameter);
+  const res = await axios.post(BATTLE_FOOD_COMMENT_REGIST_POST, parameter);
+  return res;
+};
+// 배틀 식단 리스트 얻기
+export const getBattleBoardList = async (battleCode) => {
+  const res = await axios.get(BATTLE_BOARD_LIST_GET + battleCode);
   return res;
 };

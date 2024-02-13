@@ -23,6 +23,7 @@ const API = {
 
   BATTLE_FOOD_COMMENT_LIST_GET: `${BASE_URL}/battle/comment/list/`,
   BATTLE_FOOD_COMMENT_REGIST_POST: `${BASE_URL}/battle/comment/regist`,
+  BATTLE_BOARD_LIST_GET: `${BASE_URL}/battle/board/list/`,
 
   // 배틀 관련아닌것들
   FOOD_TODAY_GET: `${BASE_URL}/food/todays/`,
