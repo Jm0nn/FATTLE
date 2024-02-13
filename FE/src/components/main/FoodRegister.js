@@ -6,6 +6,7 @@ import camera from '../../assets/images/main/camera.svg';
 import cameratext from '../../assets/images/main/cameratext.svg';
 import API from '../../services/main/URL';
 import FoodRegist from './FoodRegist';
+// import { useLocation } from 'react-router-dom';
 
 function FoodRegister({ type }) {
   const [foodList, setFoodList] = useState([]);
@@ -17,6 +18,10 @@ function FoodRegister({ type }) {
   const [isCameraOn, setIsCameraOn] = useState(false);
   const [uploadImgUrl, setUploadImgUrl] = useState('');
   const [file, setFile] = useState(null);
+
+  // const location = useLocation();
+
+  // console.log(location);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -31,6 +36,7 @@ function FoodRegister({ type }) {
         formData,
       )
       .then((res) => {
+        console.log(res);
         let copy = [...foodRegist];
         copy.push(res.data);
         setFoodRegist(copy);
@@ -154,13 +160,6 @@ function FoodRegister({ type }) {
 
         <button className={styles.searchButton} onClick={handleSearchClick}>
           검색
-        </button>
-        <button
-          onClick={() => {
-            console.log(type);
-          }}
-        >
-          하이
         </button>
         <FoodRegist
           foodRegist={foodRegist}

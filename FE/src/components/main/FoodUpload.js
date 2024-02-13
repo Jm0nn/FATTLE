@@ -11,7 +11,7 @@ function FoodUpload() {
       <div className={styles.container}>
         <div className={styles.box}>
           <span className={styles.label1}>아침</span>
-          <Link to="/foodupload">
+          <Link to="/foodupload" state={{ type: 1 }}>
             <img
               src={uploadbutton}
               alt=""
@@ -21,7 +21,7 @@ function FoodUpload() {
         </div>
         <div className={styles.box}>
           <span className={styles.label2}>점심</span>
-          <Link to="/foodupload">
+          <Link to="/foodupload" state={{ type: 2 }}>
             <img
               src={uploadbutton}
               alt=""
@@ -31,7 +31,7 @@ function FoodUpload() {
         </div>
         <div className={styles.box}>
           <span className={styles.label3}>저녁</span>
-          <Link to="/foodupload">
+          <Link to="/foodupload" state={{ type: 3 }}>
             <img
               src={uploadbutton}
               alt=""

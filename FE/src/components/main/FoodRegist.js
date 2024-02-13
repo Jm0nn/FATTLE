@@ -4,12 +4,25 @@ import Frame2 from '../../assets/images/main/Frame2.svg';
 import API from '../../services/main/URL';
 import styles from '../../styles/main/BodyinfoModify.module.css';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 const FoodRegist = ({ foodRegist, setFoodRegist }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const userCode = useSelector((state) => {
     return state.userCode;
   });
 
+  const location = useLocation();
+
+  console.log('------------------------');
+  // console.log(userCode);
+  // console.log(location.state.type);
+  // console.log(foodRegist[0].name);
+  // console.log(foodRegist[0].calory);
+  // console.log(foodRegist[0].carbo);
+  // console.log(foodRegist[0].protein);
+  // console.log(foodRegist[0].fat);
+  // console.log(foodRegist[0].imgName);
+  console.log('------------------------');
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -18,7 +31,27 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
     setIsModalOpen(false);
   };
 
-  const HandleFormSubmit = (e) => {};
+  const HandleFormSubmit = (e) => {
+    console.log('실행됨');
+    axios
+      .post('http://localhost:8000/api/food/upload', {
+        userCode: userCode,
+        type: 1,
+        name: '돌솥비빔밥',
+        calory: 100,
+        carbo: 5,
+        protein: 15,
+        fat: 2,
+        imgName: 'test',
+      })
+      .then((res) => {
+        alert('저장되었습니다.');
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div>
