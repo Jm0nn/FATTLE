@@ -64,21 +64,19 @@ public class FoodService {
             throw new NoImageExceptoin("이미지 파일이 아닙니다.");
         }
 
-        String uploadPath = UPLOAD_PATH + "/" + userCode;
         String originalName = file.getOriginalFilename();
 
         String fileName = originalName.substring(originalName.lastIndexOf("/") + 1);
 
-        // 날짜 폴더 생성
-        String folderPath = makeFolder(uploadPath, type);
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd"));
 
         // UUID
         String uuid = UUID.randomUUID().toString();
 
         // 저장할 파일 이름 중간에 "_"를 이용해서 구현
-        String saveName = uploadPath + "/" + folderPath + "/" + uuid + "_" + fileName;
+        String saveName = uuid + "_" + userCode + "_" + date + "_" + type + "_" + fileName;
 
-        Path savePath = Paths.get(saveName);
+        Path savePath = Paths.get(UPLOAD_PATH + "/" + saveName);
 
         try {
             file.transferTo(savePath); // 실제 이미지 저장
@@ -87,38 +85,6 @@ public class FoodService {
         }
 
         return saveName;
-    }
-
-    /*날짜 폴더 생성*/
-    private String makeFolder(String uploadPath, int type) {
-        String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-
-        String folderPath = str + "/" + type;
-
-        // make folder --------
-        File uploadPathFolder = new File(uploadPath, folderPath);
-
-        if (uploadPathFolder.exists()) {
-            deleteDirectory(uploadPathFolder);
-        }
-
-        uploadPathFolder.mkdirs();
-
-        return folderPath;
-    }
-
-    private void deleteDirectory(File directory) {
-        File[] files = directory.listFiles();
-
-        for (File file: Objects.requireNonNull(files)) {
-            if (file.isDirectory()) {
-                deleteDirectory(file);
-            } else {
-                file.delete();
-            }
-        }
-
-        directory.delete();
     }
 
     public FoodInfoDto getFoodInfo(String imgPath) {
