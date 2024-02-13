@@ -19,6 +19,6 @@ public class FoodUploadRequest {
 
     private int fat;
 
-    private String imgPath;
+    private String imgName;
 
 }

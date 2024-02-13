@@ -25,6 +25,6 @@ public class BoardDto {
 
     private LocalDateTime recDt;
 
-    private String imgPath;
+    private String imgName;
 
 }

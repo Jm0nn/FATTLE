@@ -31,7 +31,11 @@ public class FoodController {
     private final FoodService foodService;
 
     @Operation(summary = "오늘의 식단",
-            description = "오늘의 식단 조회")
+            description = "오늘의 식단 조회<br/><br/>" +
+                    "<b>type 코드</b><br/>" +
+                    "1: 아침<br/>" +
+                    "2: 점심<br/>" +
+                    "3: 저녁")
     @ApiResponse(responseCode = "200", description = "식단 정보 응답")
     @GetMapping("/todays/{userCode}")
     public ResponseEntity<TodaysFoodResponse> todaysFood(@PathVariable long userCode) {

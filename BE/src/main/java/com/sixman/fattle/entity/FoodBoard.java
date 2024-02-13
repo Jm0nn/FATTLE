@@ -30,7 +30,7 @@ public class FoodBoard {
     @Column(name = "rec_dt")
     private LocalDateTime recDt;
 
-    @Column(name = "img_path")
-    private String imgPath;
+    @Column(name = "img_name")
+    private String imgName;
 
 }
