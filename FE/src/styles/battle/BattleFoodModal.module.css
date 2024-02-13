@@ -1,0 +1,43 @@
+.modal {
+  width: 300px;
+}
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.modalTitle {
+  font-size: 1rem;
+}
+
+.listGroup {
+  height: 10rem;
+  overflow-y: auto;
+}
+.subject {
+  font-size: 0.6rem;
+}
+.content {
+  font-size: 0.8rem;
+}
+.badge {
+  background-color: #63647d !important;
+  font-weight: 100;
+  /* font-size: 1rem; */
+}
+.foodImg {
+  width: 10rem;
+}
+.foodImgContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.date {
+  position: absolute;
+  font-size: 0.7rem;
+  color: rgba(114, 116, 117, 0.76);
+  left: 1rem;
+  top: 3rem;
+}

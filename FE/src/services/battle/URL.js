@@ -15,6 +15,20 @@ const API = {
   BATTLE_WEIGHT_PATCH: `${BASE_URL}/battle/weight`,
   BATTLE_FOOD_GET: `${BASE_URL}/battle/board/list/`,
 
+  // 점수관련
+  BATTLE_LEFT_LIVE_POINT_GET: `${BASE_URL}/battle/point/`,
+  BATTLE_GIVE_POINT_PATCH: `${BASE_URL}/battle/point/give`,
+  BATTLE_HISTORY_POINT_GET: `${BASE_URL}/battle/point/history/`,
+  BATTLE_LIVE_POINT_BASIC_GET: `${BASE_URL}/battle/point/live-on/`,
+
+  // 식단 관련
+
+  BATTLE_FOOD_COMMENT_LIST_GET: `${BASE_URL}/battle/comment/list/`,
+  BATTLE_FOOD_COMMENT_REGIST_POST: `${BASE_URL}/battle/comment/regist`,
+  BATTLE_BOARD_LIST_GET: `${BASE_URL}/battle/board/list/`,
+
+  // 배틀 관련아닌것들
+  FOOD_TODAY_GET: `${BASE_URL}/food/todays/`,
   USER_INFO_GET: `${BASE_URL}/user/userinfo/`,
 };
 export default API;

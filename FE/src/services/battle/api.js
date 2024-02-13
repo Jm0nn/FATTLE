@@ -15,7 +15,15 @@ const {
   BATTLE_START_GET,
   BATTLE_WEIGHT_PATCH,
   BATTLE_FOOD_GET,
+  BATTLE_GIVE_POINT_PATCH,
+  BATTLE_HISTORY_POINT_GET,
+  BATTLE_LEFT_LIVE_POINT_GET,
+  BATTLE_LIVE_POINT_BASIC_GET,
   USER_INFO_GET,
+  BATTLE_FOOD_COMMENT_LIST_GET,
+  FOOD_TODAY_GET,
+  BATTLE_FOOD_COMMENT_REGIST_POST,
+  BATTLE_BOARD_LIST_GET,
 } = API;
 
 export const getBattleInfo = async (battleCode) => {
@@ -105,5 +113,41 @@ export const finishBattleWeight = async (battleCode, userCode, finalweight) => {
     userCode,
     finalweight,
   });
+};
+export const getLeftLivePoint = async (battleCode, userCode) => {
+  const res = await axios.get(
+    BATTLE_LEFT_LIVE_POINT_GET + battleCode + '/' + userCode,
+  );
+  return res;
+};
+export const giveLivePoint = async (parameter) => {
+  const res = await axios.patch(BATTLE_GIVE_POINT_PATCH, parameter);
+  return res;
+};
+
+export const getFoodToday = async (userCode) => {
+  const res = await axios.patch(FOOD_TODAY_GET + userCode);
+  return res;
+};
+//배틀 식단 댓글 리스트
+export const getBattleFoodCommentList = async (commentCode) => {
+  const res = await axios.get(BATTLE_FOOD_COMMENT_LIST_GET + commentCode);
+
+  return res;
+};
+
+// 배틀 식단 점수 주기
+export const giveFoodPoint = async (parameter) => {
+  const res = await axios.patch(BATTLE_GIVE_POINT_PATCH, parameter);
+  return res;
+};
+// 식단 댓글 달기
+export const registFoodComment = async (parameter) => {
+  const res = await axios.post(BATTLE_FOOD_COMMENT_REGIST_POST, parameter);
+  return res;
+};
+// 배틀 식단 리스트 얻기
+export const getBattleBoardList = async (battleCode) => {
+  const res = await axios.get(BATTLE_BOARD_LIST_GET + battleCode);
   return res;
 };
