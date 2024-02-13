@@ -5,8 +5,11 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 public class SwaggerConfig {
@@ -24,8 +27,12 @@ public class SwaggerConfig {
                         .scheme(BEARER_TOKEN_PREFIX)
                         .bearerFormat(securityJwtName));
 
+        Server server = new Server();
+        server.setUrl("https://i10e106.p.ssafy.io/api");
+
         return new OpenAPI()
                 .info(apiInfo())
+                .servers(List.of(server))
                 .addSecurityItem(securityRequirement)
                 .components(components);
     }
