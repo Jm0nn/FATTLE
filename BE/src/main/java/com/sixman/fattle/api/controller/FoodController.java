@@ -53,8 +53,8 @@ public class FoodController {
     @PostMapping("/img-upload/{userCode}/{type}")
     public ResponseEntity<FoodInfoResponse> imgUpload(@PathVariable long userCode, @PathVariable int type, MultipartFile uploadFile)
             throws FileSaveFailedException, NoImageExceptoin, NoFileException {
-        String imgPath = foodService.saveImage(userCode, type, uploadFile);
-        FoodInfoDto info = foodService.getFoodInfo(imgPath);
+        String imgName = foodService.saveImage(userCode, type, uploadFile);
+        FoodInfoDto info = foodService.getFoodInfo(imgName);
 
         FoodInfoResponse response = FoodInfoResponse.builder()
                 .name(info.getName())
@@ -62,7 +62,7 @@ public class FoodController {
                 .calory(info.getCalory())
                 .protein(info.getProtein())
                 .fat(info.getFat())
-                .imgPath(imgPath)
+                .imgName(imgName)
                 .build();
 
         return ResponseEntity.ok(response);
