@@ -34,7 +34,7 @@ public class BattleBoardRepositoryImpl implements BattleBoardRepositoryCustom {
                                 quser.nickname,
                                 qavatar.profileImgPath,
                                 qboard.recDt,
-                                qboard.imgPath))
+                                qboard.imgName))
                 .from(qboard)
                 .join(quser)
                 .on(qboard.playerCd.eq(quser.userCd))
@@ -52,11 +52,11 @@ public class BattleBoardRepositoryImpl implements BattleBoardRepositoryCustom {
                     .columns(
                             qboard.battleCd,
                             qboard.playerCd,
-                            qboard.imgPath)
+                            qboard.imgName)
                     .values(
                             code,
                             request.getUserCode(),
-                            request.getImgPath())
+                            request.getImgName())
                     .execute();
         }
     }

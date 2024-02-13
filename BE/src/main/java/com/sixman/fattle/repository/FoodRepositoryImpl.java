@@ -56,7 +56,7 @@ public class FoodRepositoryImpl implements FoodRepositoryCustom {
                         qfood.carbo,
                         qfood.protein,
                         qfood.fat,
-                        qfood.imgPath)
+                        qfood.imgName)
                 .values(
                         request.getUserCode(),
                         request.getName(),
@@ -65,7 +65,7 @@ public class FoodRepositoryImpl implements FoodRepositoryCustom {
                         request.getCarbo(),
                         request.getProtein(),
                         request.getFat(),
-                        request.getImgPath())
+                        request.getImgName())
                 .execute();
     }
 
