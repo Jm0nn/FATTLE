@@ -49,28 +49,29 @@ public class FoodController {
                     "1: 아침<br/>" +
                     "2: 점심<br/>" +
                     "3: 저녁")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "음식 정보 응답"),
-            @ApiResponse(responseCode = "404", description = "음식 인식 실패")
-    })
+    @ApiResponse(responseCode = "200", description = "음식 정보 응답")
     @PostMapping("/img-upload/{userCode}/{type}")
     public ResponseEntity<FoodInfoResponse> imgUpload(@PathVariable long userCode, @PathVariable int type, MultipartFile uploadFile)
             throws FileSaveFailedException, NoImageExceptoin, NoFileException {
         String imgName = foodService.saveImage(userCode, type, uploadFile);
         FoodInfoDto info = foodService.getFoodInfo(imgName);
 
-        if (info == null) {
-            return ResponseEntity.notFound().build();
-        }
+        FoodInfoResponse response;
 
-        FoodInfoResponse response = FoodInfoResponse.builder()
-                .name(info.getName())
-                .gram(info.getGram())
-                .calory(info.getCalory())
-                .protein(info.getProtein())
-                .fat(info.getFat())
-                .imgName(imgName)
-                .build();
+        if (info == null) {
+            response = FoodInfoResponse.builder()
+                    .imgName(imgName)
+                    .build();
+        } else {
+            response = FoodInfoResponse.builder()
+                    .name(info.getName())
+                    .gram(info.getGram())
+                    .calory(info.getCalory())
+                    .protein(info.getProtein())
+                    .fat(info.getFat())
+                    .imgName(imgName)
+                    .build();
+        }
 
         return ResponseEntity.ok(response);
     }
