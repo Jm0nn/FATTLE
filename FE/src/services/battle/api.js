@@ -18,6 +18,9 @@ const {
   BATTLE_LEFT_LIVE_POINT_GET,
   BATTLE_LIVE_POINT_BASIC_GET,
   USER_INFO_GET,
+  BATTLE_FOOD_COMMENT_LIST_GET,
+  FOOD_TODAY_GET,
+  BATTLE_FOOD_COMMENT_REGIST_POST,
 } = API;
 
 export const getBattleInfo = async (battleCode) => {
@@ -84,5 +87,24 @@ export const getLeftLivePoint = async (battleCode, userCode) => {
 };
 export const giveLivePoint = async (parameter) => {
   const res = await axios.patch(BATTLE_GIVE_POINT_PATCH, parameter);
+  return res;
+};
+
+export const getFoodToday = async (userCode) => {
+  const res = await axios.patch(FOOD_TODAY_GET + userCode);
+  return res;
+};
+//배틀 식단 댓글 리스트
+export const getBattleFoodCommentList = async (commentCode) => {
+  const res = await axios.patch(BATTLE_FOOD_COMMENT_LIST_GET + commentCode);
+
+  return res;
+};
+export const giveFoodPoint = async (parameter) => {
+  const res = await axios.patch(BATTLE_GIVE_POINT_PATCH, parameter);
+  return res;
+};
+export const registFoodComment = async (parameter) => {
+  const res = await axios.patch(BATTLE_FOOD_COMMENT_REGIST_POST, parameter);
   return res;
 };
