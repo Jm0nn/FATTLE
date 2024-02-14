@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 
 // styles
 
-import BattleStyles from '../../styles/battle/Battle.module.css';
+import styles from '../../styles/battle/ModifyBetting.module.css';
 // SVG
 import bettingPlus from '../../assets/svg/battle/bettingPlus.svg';
 import bettingMinus from '../../assets/svg/battle/bettingMinus.svg';
 import { useLocation, useNavigate } from 'react-router';
 import { modifySetting } from '../../services/battle/api.js';
+import BackHeader from './../../components/commons/BackHeader';
 const ModifyBetting = (props) => {
   const { state } = useLocation();
   const bettingEle = useRef(null);
@@ -43,39 +44,88 @@ const ModifyBetting = (props) => {
     setBettingText(e.target.value);
   };
   return (
-    <div>
-      <h3>벌칙을 정해주세요</h3>
-      <input
-        ref={bettingEle}
-        onChange={onChangeHandler}
-        value={bettingText}
-        type="text"
-        placeholder="벌칙을 입력해주세요."
-      />
-      <div>
-        <img
-          onClick={onBettingPlusClick}
-          src={bettingPlus}
-          alt="bettingPlust"
-        />
-      </div>
+    <>
+      <div className={styles.main}>
+        <BackHeader navigate={navigate} />
+        <h3 className={styles.header}>벌칙을 정해주세요</h3>
 
-      <ul>
-        {bettingList.map((item, index) => (
-          <li key={index}>
-            {item}
-            <img
-              onClick={() => onBettingMinusClick(index)}
-              src={bettingMinus}
-              alt="bettingMinus"
-            />
-          </li>
-        ))}
-      </ul>
-      <button className={BattleStyles.btn} onClick={onModifyComplete}>
-        완료
-      </button>
-    </div>
+        <div className={styles.inputBox}>
+          <div className={styles.inputHeader}>벌칙 추가</div>
+          <div className={styles.inputPenalty}>
+            <input
+              ref={bettingEle}
+              onChange={onChangeHandler}
+              value={bettingText}
+              type="text"
+              className={styles.input}
+              placeholder="벌칙을 입력해주세요"
+            ></input>
+            {/* <div className={styles.addPenalty} onClick={onBettingPlusClick} /> */}
+            <div>
+              <img
+                style={{ cursor: 'pointer' }}
+                onClick={onBettingPlusClick}
+                src={bettingPlus}
+                alt="bettingPlust"
+              />
+            </div>
+          </div>
+        </div>
+        <ul className={styles.penaltyBox}>
+          {bettingList.map((item, index) => (
+            <li className={styles.penaltyBoxItem} key={index}>
+              <div>{item}</div>
+              <div>
+                <img
+                  onClick={() => onBettingMinusClick(index)}
+                  src={bettingMinus}
+                  alt="bettingMinus"
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <div className={styles.nextBtn}>
+          <button onClick={onModifyComplete}>완료</button>
+        </div>
+      </div>
+      {/*  */}
+
+      {/* <div>
+        <h3>벌칙을 정해주세요</h3>
+        <input
+          ref={bettingEle}
+          onChange={onChangeHandler}
+          value={bettingText}
+          type="text"
+          placeholder="벌칙을 입력해주세요."
+        />
+        <div>
+          <img
+            onClick={onBettingPlusClick}
+            src={bettingPlus}
+            alt="bettingPlust"
+          />
+        </div>
+
+        <ul>
+          {bettingList.map((item, index) => (
+            <li key={index}>
+              {item}
+              <img
+                onClick={() => onBettingMinusClick(index)}
+                src={bettingMinus}
+                alt="bettingMinus"
+              />
+            </li>
+          ))}
+        </ul>
+        <button className={BattleStyles.btn} onClick={onModifyComplete}>
+          완료
+        </button>
+      </div> */}
+    </>
   );
 };
 

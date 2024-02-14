@@ -24,7 +24,7 @@ function App() {
   const dispatch = useDispatch();
   return (
     <div className={styles.wrapper}>
-      <button onClick={() => dispatch(changeCode(1))}>임시 로그인</button>
+      {/* <button onClick={() => dispatch(changeCode(1))}>임시 로그인</button> */}
       <Routes>
         <Route path="/mypage" element={<Mypage />}>
           {mypageRoutes}
