@@ -32,7 +32,7 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
   };
 
   const HandleFormSubmit = (e) => {
-    console.log('실행됨');
+    console.log(foodRegist[0]);
     e.preventDefault();
     axios
       .post(`${API.FOOD_UPLOAD}`, {

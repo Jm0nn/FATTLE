@@ -1,2 +1,4 @@
-const BASE_URL = 'https://i10e106.p.ssafy.io/api';
+// const BASE_URL = 'http://localhost:8000';
+const BASE_URL = 'http://localhost:8000/api';
+// const BASE_URL = 'http://i10e106.p.ssafy.io:8000';
 export default BASE_URL;
