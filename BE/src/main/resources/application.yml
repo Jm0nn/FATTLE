@@ -1,0 +1,82 @@
+
+server:
+  port: 8000
+  servlet:
+    context-path: /api
+
+
+spring:
+  profiles:
+    include: oauth
+  # DataBase Settings : hikariCP : https://github.com/brettwooldridge/HikariCP
+  datasource:
+    url: ENC(Nj/xBb1ejgKaPfHMUt7EX81KW60JcaC75Vj3d7Q1yd2e6oc8lr3OiGQcE2oVS1qGTVNvZ3Tfy4/WjChZD4VUaS6zf7DegpslCGzqa/4cZsA6UyrfYw4eXLELkH1h889y+hLdG5mJTZ+gTK62L9X6/w==)
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: ENC(eD9miX6VqvbRGoop6MAGsw==)
+      password: ENC(eD9miX6VqvbRGoop6MAGsw==)
+      pool-name: Hikari Connection Pool
+      # hikariCP property setting
+      maximum-pool-size: 50
+      minimum-idle: 50
+      connection-timeout: 5000
+      connection-init-sql: SELECT 1
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      auto-commit: true
+
+
+# Multipart File Upload Setting
+file:
+  multipart:
+    maxUploadSize: 100
+    maxUploadSizePerFile: 100
+
+
+## Swagger setting
+springdoc:
+  packages-to-scan: com.sixman.fattle.api.controller
+  swagger-ui:
+    path: /api-docs
+    groups-order: DESC
+    tags-sorter: alpha
+    operations-sorter: alpha
+    disabled-swagger-default-url: true
+    display-request-duration: true
+  api-docs:
+    path: /api-docs/json
+    groups:
+      enabled: true
+  show-actuator: true
+  cache:
+    disabled: true
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+
+
+# log level Setting
+logging:
+  level:
+    root: info
+    org:
+      springframework:
+        root: debug
+        web: debug
+    com:
+      fattle: debug
+    zaxxer:
+      hikari:
+        pool:
+          HikariPool: debug
+
+
+# OpenVidu Setting
+openvidu:
+  public-ip: ENC(8p+JO8/jgjUr3d9IX9/mYz1EIJH2+516QmLK99BoH56EzXfJnqS2/w==)
+  secret: ENC(eD9miX6VqvbRGoop6MAGsw==)
+
+
+# Flask connection
+flask:
+  img-path: /home/ubuntu/resources/food_image
+  connection-uri: ENC(xcr8NdpeevWb7hjc52uBUfuQfnAXHrIm3iB4+kneh7DkxU5aRYMyBUVueYkK+oZS)

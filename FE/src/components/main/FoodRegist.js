@@ -32,11 +32,8 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
   };
 
   const HandleFormSubmit = (e) => {
-<<<<<<< HEAD
     console.log('실행됨');
-=======
     console.log(foodRegist[0]);
->>>>>>> origin/feature/FE/battle_modify
     e.preventDefault();
     axios
       .post(`${API.FOOD_UPLOAD}`, {
