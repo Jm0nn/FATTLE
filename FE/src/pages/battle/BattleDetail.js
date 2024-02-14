@@ -150,7 +150,11 @@ const BattleDetail = (props) => {
   };
 
   const handleViewResult = () => {
-    navigate('/battle/result');
+    navigate('/battle/result', {
+      state: {
+        battleCode: data.battleCode,
+      },
+    });
     // alert('결과 보기 버튼 클릭됨');
   };
 
