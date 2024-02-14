@@ -1,0 +1,138 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type='date']::before {
+    content: attr(data-placeholder);
+    width: 100%;
+    color: #444444;
+  }
+input[type=date]::-webkit-datetime-edit-text {
+    /* -webkit-appearance: none; */
+    /* display: none; */
+}
+input[type=date]::-webkit-datetime-edit-month-field{
+    -webkit-appearance: none;
+    display: none;
+}
+input[type=date]::-webkit-datetime-edit-day-field {
+    -webkit-appearance: none;
+    display: none;
+}
+input[type=date]::-webkit-datetime-edit-year-field {
+    -webkit-appearance: none;
+    display: none;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: rgba(0, 0, 0, 0);
+    opacity: 1;
+    display: block;
+    /* background: url('../img/day.png') no-repeat 98% 50%; */
+    width: 30px;
+    height: 25px;
+    border-width: thin;
+ }
+.backBtn{
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+    font-weight: 700;
+}
+.header{
+    font-weight: 600;
+    margin-top: 50px;
+    margin-left: 20px;
+}
+.headerInfo{
+    font-size: 15px;
+    color : #0057ff;
+
+    margin-top: 10px;
+    margin-left: 20px;
+}
+.goal{
+    font-size: 18px;
+    font-weight: 600;
+    color:#666666;
+    
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    margin-top: 120px;
+
+}
+.startKg{
+    width: 170px;
+    height: 60px;
+
+    border-radius: 10px;
+    border:0;
+    
+    background-color: #f0f0f0;
+    /* text-align: right; */
+    
+    padding-left: 20px;
+    padding-right: 10px;
+
+    font-size: 21px;
+    font-weight: 600;
+    color: #828282;
+}
+.goalKg{
+    width: 170px;
+    height: 60px;
+
+    border-radius: 10px;
+    border:0;
+    
+    background-color: #f0f0f0;
+    /* text-align: right; */
+    
+    padding-left: 20px;
+    padding-right: 10px;
+
+    font-size: 21px;
+    font-weight: 600;
+    color: #828282;
+}
+.calcResult{
+    font-weight: 600;
+    font-size: 22px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 50px;
+    margin-left : 25px;
+    margin-right : 25px;
+}
+.nextBtn{ 
+    width: 350px;
+    height: 50px;
+
+    margin-top : 300px;
+    margin-bottom: 30px;
+
+    align-self: center;
+}
+.nextBtn button{
+    width: inherit;
+    height: inherit;
+
+    border-radius: 10px;
+    border:0;
+    
+    background-color: #444444;
+    color:white;
+
+    font-size: 20px;
+    font-weight: 600;
+}
