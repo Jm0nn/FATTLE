@@ -7,25 +7,33 @@ li {
   margin: 0;
   padding: 0;
 }
-
+.container {
+  margin-top: 150px;
+  background-color: white;
+}
 /* 그래프 */
 .graphWrap {
   position: relative;
-  width: 300px;
+  background-color: #ffffff;
+  width: 320px;
   height: 400px;
   margin: 20px auto 0;
-  border: 1px solid #aaa;
+  /* border: 1px solid #aaa; */
   border-radius: 20px;
 }
 .graph {
   position: absolute;
   bottom: 50px;
-  width: 30px;
+  width: 25px;
 }
 
 .compareTitle {
-  text-align: center; /* 열량 비교 글자를 중앙으로 정렬 */
+  /* text-align: center;  */
   margin: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f4efef;
+  font-weight: bold;
+  font-size: 25px;
 }
 
 .graph .label1 {
@@ -60,9 +68,10 @@ li {
   background: #00a911;
 }
 
-.container {
+.bar {
   display: flex;
   align-items: center;
+  margin-left: 10px;
 }
 
 .circle1 {
