@@ -8,16 +8,23 @@ li {
   padding: 0;
 }
 .container {
-  margin-top: 150px;
-  background-color: white;
+  margin-top: 100px;
+  background-color: #fffc9b;
+  width: 388px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  height: 487px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 /* 그래프 */
 .graphWrap {
   position: relative;
   background-color: #ffffff;
-  width: 320px;
+  width: 334px;
   height: 400px;
-  margin: 20px auto 0;
+  margin: 20px;
   /* border: 1px solid #aaa; */
   border-radius: 20px;
 }

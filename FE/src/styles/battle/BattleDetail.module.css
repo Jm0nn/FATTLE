@@ -5,6 +5,9 @@
   align-items: center;
 }
 
+.container {
+  width: 412px;
+}
 .battleCode {
   position: absolute;
   width: 100px;
@@ -59,7 +62,7 @@
 }
 
 .btnRed {
-  width: 280px;
+  width: 180px;
   height: 40px;
   margin-top: 20px;
   /* margin-bottom: 100px; */
@@ -69,6 +72,7 @@
   background-color: #ff4545;
   border-radius: 20px;
   color: white;
+  margin: 20px;
   /* font-size: 20px; */
 }
 
@@ -86,7 +90,7 @@
 .content {
   position: relative;
   width: 412px;
-  height: 427px;
+  height: 487px;
   background: #ff9a23;
 }
 
@@ -130,6 +134,11 @@
 
 .now {
   font-size: 12px;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .score {
@@ -275,10 +284,12 @@
 .dietAlbum {
   width: 334px;
   height: 403px;
-  border-radius: 10px;
+  border-radius: 20px;
   margin: auto;
   background-color: #ffffff;
   flex-wrap: wrap;
+  margin-top: 50px;
+  margin-bottom: 200px;
 }
 
 .foodImage {
@@ -360,4 +371,10 @@
 .graphElements > p {
   font-size: 10px;
   font-weight: bold;
+}
+
+.foodAlbum {
+  background: #b7e5b4;
+  padding-top: 30px;
+  padding-bottom: 20px;
 }
