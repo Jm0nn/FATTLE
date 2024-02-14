@@ -9,3 +9,5 @@
 ### [Convention](./Convention.md)
 
 ### [Branch](./Branch.md)
+
+### [Architecture](./Architecture.md)
