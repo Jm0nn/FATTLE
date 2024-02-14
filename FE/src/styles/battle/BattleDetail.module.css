@@ -1,0 +1,363 @@
+.header {
+  height: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.battleCode {
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  background-color: #ff4545;
+  box-shadow: 0 0 5px #9d2525;
+  color: white;
+  top: 50px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.dDay {
+  margin-top: 40px;
+  font-size: 14px;
+  color: white;
+}
+
+.headerTitle {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.battleTitle {
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.broadcast {
+  width: 240px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ff4545;
+  box-shadow: 0 0 5px #9d2525;
+  color: white;
+  border-radius: 20px;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+.livebutton {
+  display: flex;
+  justify-content: center;
+}
+
+.btnRed {
+  width: 280px;
+  height: 40px;
+  margin-top: 20px;
+  /* margin-bottom: 100px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ff4545;
+  border-radius: 20px;
+  color: white;
+  /* font-size: 20px; */
+}
+
+.calorie {
+  position: absolute;
+  width: 334px;
+  height: 403px;
+  left: 39px;
+  top: 432px;
+
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+.content {
+  position: relative;
+  width: 412px;
+  height: 427px;
+  background: #ff9a23;
+}
+
+.battleInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.profileImages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.battleInfo img {
+  margin: 0 10px;
+}
+
+.columns {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  margin-right: 50px;
+  margin-left: 50px;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.now {
+  font-size: 12px;
+}
+
+.score {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.goal {
+  font-size: 12px;
+}
+
+.versus {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 45px;
+  margin-right: 45px;
+}
+
+.goResult {
+  width: 280px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #444444;
+  color: white;
+  border-radius: 20px;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.goResult:hover {
+  cursor: pointer;
+}
+
+.liveImage {
+  top: 120px;
+  position: absolute;
+}
+
+.botContent {
+  height: 1545px;
+  background-color: #f3f3f3;
+}
+
+.calorieComparison {
+  width: 334px;
+  height: 403px;
+  border-radius: 10px;
+  margin: auto;
+  margin-top: 10px;
+  background-color: #ffffff;
+  transform: translateY(-14%);
+}
+
+.bTitle {
+  height: 70px;
+  margin-left: 25px;
+  font-size: 25px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.line {
+  margin: auto;
+  background-color: rgb(237, 237, 237);
+  width: 280px;
+  height: 1px;
+}
+
+.vertical {
+  margin: auto;
+  margin-top: 40px;
+  background-color: rgb(237, 237, 237);
+  width: 1px;
+  height: 224px;
+}
+
+.spans {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 120px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.firstSpan,
+.secondSpan,
+.thirdSpan {
+  display: flex;
+  justify-content: space-between;
+  width: 33%;
+}
+
+.myCalory {
+  width: 21px;
+  height: 100px;
+  border-radius: 10px;
+  margin-left: 30px;
+  margin-top: auto;
+  background-color: #00a6da;
+}
+
+.myCalory p {
+  font-size: 10px;
+  transform: translateY(-120%);
+  color: #00a6da;
+  font-weight: bold;
+}
+
+.friendCalory {
+  width: 21px;
+  height: 100px;
+  border-radius: 10px;
+  margin-right: 30px;
+  margin-top: auto;
+  background-color: #00a911;
+}
+
+.friendCalory p {
+  font-size: 10px;
+  transform: translateY(-120%);
+  color: #00a911;
+  font-weight: bold;
+}
+
+.todayCalory {
+  width: 35px;
+  height: 19px;
+  border-radius: 10px;
+  background-color: #d9d9d9;
+  font-size: 9px;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin-top: 10px;
+  margin-left: 250px;
+}
+
+.dietAlbum {
+  width: 334px;
+  height: 403px;
+  border-radius: 10px;
+  margin: auto;
+  background-color: #ffffff;
+  flex-wrap: wrap;
+}
+
+.foodImage {
+  display: flex;
+  width: 50%;
+  list-style-type: none;
+}
+
+.exerciseChk {
+  width: 334px;
+  height: 237px;
+  border-radius: 10px;
+  margin: auto;
+  margin-top: 50px;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.exerciseChk ul {
+  margin-top: 10px;
+  margin-left: 40px;
+  margin-right: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.exerciseChk li {
+  margin-top: 10px;
+  width: 20%;
+  list-style-type: none;
+}
+
+.exerciseChk li p {
+  font-size: 9px;
+  font-family: 'Noto Sans KR', sans-serif;
+  margin-bottom: 5px;
+}
+
+.chkBox {
+  width: 34px;
+  height: 34px;
+  margin: auto;
+  border-radius: 20px;
+  background-color: #cbffb9;
+}
+
+.chk {
+  margin-top: 5px;
+}
+
+.weekday {
+  color: #7b7b7b;
+}
+
+.graphElements {
+  display: flex;
+  margin-top: 40px;
+}
+
+.graphMe,
+.graphFriend {
+  width: 8px;
+  height: 8px;
+  border-radius: 20px;
+  margin-top: 4px;
+  margin-left: 30px;
+  margin-right: 5px;
+}
+
+.graphMe {
+  background-color: #00a6da;
+}
+
+.graphFriend {
+  background-color: #00a911;
+}
+
+.graphElements > p {
+  font-size: 10px;
+  font-weight: bold;
+}

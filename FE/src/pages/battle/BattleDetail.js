@@ -15,6 +15,13 @@ import BattleStyles from '../../styles/battle/Battle.module.css';
 import { Fragment } from 'react';
 import BattleFoodModal from './BattleFoodModal.js';
 import Loading from '../../components/commons/Loading.js';
+import styles from '../../styles/battle/BattleDetail.module.css';
+import temp from '../../assets/svg/mypage/ProfileImg.svg';
+import liveImg from '../../assets/svg/battle/battleLive.svg';
+import exChk from '../../assets/svg/battle/exerciseChk.svg';
+import nullImage from '../../assets/svg/battle/battleProfileNull.svg';
+import Footer from '../../commons/Footer';
+import getDday from '../../utils/battle/calculateDday.js';
 
 const BattleDetail = (props) => {
   // 전역 상태 변수
@@ -64,7 +71,6 @@ const BattleDetail = (props) => {
         // 남은 시간이 0이 되면 배틀 종료
         if (difference <= 0) {
           setBattleEnded(true);
-          alert('배틀이 종료되었습니다.');
           const finalWeight = calculateFinalWeight();
           console.log(
             data.playerList[0].userCode,
@@ -144,9 +150,8 @@ const BattleDetail = (props) => {
   };
 
   const handleViewResult = () => {
-    // 여기에 결과 보기 페이지로 이동하는 코드 추가
-    // 예: navigate('/battle/result');
-    alert('결과 보기 버튼 클릭됨');
+    navigate('/battle/result');
+    // alert('결과 보기 버튼 클릭됨');
   };
 
   if (!data) {
@@ -175,94 +180,166 @@ const BattleDetail = (props) => {
   };
   return (
     <div>
-      배틀 디테일 페이지 <br />
-      <p>
-        {battleEnded ? (
-          <p>종료된 배틀</p>
-        ) : timeRemaining ? (
-          <p>
-            남은 시간: {timeRemaining.days}일 {timeRemaining.hours}시간{' '}
-            {timeRemaining.minutes}분
-          </p>
-        ) : null}
-      </p>
-      <p>배틀 네임: {data.battleName}</p>
-      <p style={{ border: '2px solid black' }}>
-        {showBattleCode ? (
-          <>배틀 코드: {data.battleCode}</>
-        ) : (
-          <button onClick={handleToggleCodeView}>코드 보기</button>
-        )}
-      </p>
-      <p>내기 목록: {data.betting}</p>
-      <br />
-      <p>내 닉네임: {data.playerList[0].nickname}</p>
-      <img src={data.playerList[0].profileImgPath} alt="프로필 이미지" />
-      <p>
-        내 포인트:{' '}
-        {data.playerList[0].livePoint +
-          data.playerList[0].foodPoint +
-          data.playerList[0].liveUserPoint +
-          data.playerList[0].foodUserPoint +
-          data.playerList[0].questPoint +
-          data.playerList[0].goalPoint}
-      </p>
-      <p>
-        목표까지:
-        {data.playerList[0].beforeWeight - data.playerList[0].goalWeight}
-      </p>
-      <Link to="/battle/live" state={{}}>
-        라이브 방송 하기
-      </Link>
-      <p>vs</p>
-      {/* 플레이리스트 1로? */}
-      <p>내 닉네임: {data.playerList[0].nickname}</p>
-      <img src={data.playerList[0].profileImgPath} alt="프로필 이미지" />
-      <p>
-        내 포인트:{' '}
-        {data.playerList[0].livePoint +
-          data.playerList[0].foodPoint +
-          data.playerList[0].liveUserPoint +
-          data.playerList[0].foodUserPoint +
-          data.playerList[0].questPoint +
-          data.playerList[0].goalPoint}
-      </p>
-      <p>
-        목표까지:
-        {data.playerList[0].beforeWeight - data.playerList[0].goalWeight}
-      </p>
-      {battleEnded ? ( // 추가: 배틀 종료 여부에 따라 결과 보기 버튼 렌더링
-        <button onClick={handleViewResult}>결과 보기</button>
-      ) : joined ? (
-        <button onClick={handleLeaveBattle}>나가기</button>
-      ) : (
-        <button onClick={handleJoinBattle}>참여하기</button>
-      )}
-      <div>
-        {/* <h3>열량 비교</h3> */}
-        <BattleDetailCal
-          userCode={data.playerList[0].userCode}
-          secondPlayeruserCode={data.playerList[0].userCode}
-          //1로 바꿔야 함
-        />
-      </div>
-      {initLoading ? (
-        <Loading />
-      ) : (
-        <>
-          배틀 디테일 페이지 <br />
+      <header className={styles.header}>
+        <p className={styles.headerTitle}>배틀 정보</p>
+      </header>
+
+      <div className={styles.content}>
+        <div className={styles.battleCode}>
+          {showBattleCode ? (
+            <>{data.battleCode}</>
+          ) : (
+            <div onClick={handleToggleCodeView}>코드 보기</div>
+          )}
+        </div>
+
+        <div>
+          {data && (
+            <div className={styles.battleInfo}>
+              <div className={styles.dDay}>
+                D-
+                {getDday(new Date(data.startDate), new Date(data.endDate))}
+              </div>
+              <div className={styles.battleTitle}>{data.battleName}</div>
+              {!data.playerList[0] && (
+                <>
+                  <div className={styles.profileImages}>
+                    {!data.playerList[0] && (
+                      <>
+                        <img src={nullImage} alt="빈 프로필" />
+                      </>
+                    )}
+                    <span className={styles.versus}>vs</span>
+                    {!data.playerList[1] && (
+                      <>
+                        <img src={nullImage} alt="빈 프로필" />
+                      </>
+                    )}
+                  </div>
+                  <div style={{ color: 'white' }}>내기자를 설정해주세요!!</div>
+                </>
+              )}
+              {data.playerList[1] &&
+                data.playerList[1].userCode === userCode && (
+                  <>
+                    <div className={styles.profileImages}>
+                      <img
+                        src={data.playerList[1].profileImages}
+                        alt="나의 프로필 이미지"
+                      />
+                      <span className={styles.versus}>vs</span>
+                      <img
+                        src={data.playerList[0].profileImages}
+                        alt="상대방 프로필 이미지"
+                      />
+                    </div>
+                    <div className={styles.columns}>
+                      <div className={styles.rows}>
+                        <img
+                          className={styles.liveImage}
+                          src={liveImg}
+                          alt="라이브 표시 이미지"
+                        />
+                        <div className={styles.now}>지금까지</div>
+                        <div className={styles.score}>
+                          {data.playerList[1].foodPoint +
+                            data.playerList[1].foodUserPoint +
+                            data.playerList[1].goalPoint +
+                            data.playerList[1].livePoint +
+                            data.playerList[1].liveUserPoint +
+                            data.playerList[1].questPoint}
+                          점
+                        </div>
+                        <divv className={styles.goal}>
+                          목표 : {data.playerList[1].goalWeight}
+                          kg
+                        </divv>
+                      </div>
+                      <div className={styles.rows}>
+                        <div className={styles.now}>지금까지</div>
+                        <div className={styles.score}>
+                          {data.playerList[0].foodPoint +
+                            data.playerList[0].foodUserPoint +
+                            data.playerList[0].goalPoint +
+                            data.playerList[0].livePoint +
+                            data.playerList[0].liveUserPoint +
+                            data.playerList[0].questPoint}
+                          점
+                        </div>
+                        <div className={styles.goal}>
+                          목표 : {data.playerList[0].goalWeight}
+                          kg
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              {/* {data.playerList[0] &&
+                data.playerList[0].userCode === userCode && (
+                  <>
+                    <div className={styles.profileImages}>
+                      <img
+                        src={data.playerList[0].profileImages}
+                        alt="나의 프로필 이미지"
+                      />
+                      <span className={styles.versus}>vs</span>
+                      <img
+                        src={data.playerList[0].profileImages}
+                        alt="상대방 프로필 이미지"
+                      />
+                    </div>
+                    <div className={styles.columns}>
+                      <div className={styles.rows}>
+                        {data.playerList[0].liveStatus === 1 ||
+                        data.playerList[0].liveStatus === 1 ? (
+                          <img
+                            className={BattleStyles.liveImg}
+                            src={liveImg}
+                            alt={'라이브 표시 이미지'}
+                          />
+                        ) : null}
+                        <div className={styles.now}>지금까지</div>
+                        <div className={styles.score}>
+                          {data.playerList[0].foodPoint +
+                            data.playerList[0].foodUserPoint +
+                            data.playerList[0].goalPoint +
+                            data.playerList[0].livePoint +
+                            data.playerList[0].liveUserPoint +
+                            data.playerList[0].questPoint}
+                          점
+                        </div>
+                        <div className={styles.goal}>
+                          목표 : {data.playerList[0].goalWeight}
+                          kg
+                        </div>
+                        <div className={styles.now}>지금까지</div>
+                        <div className={styles.score}>
+                          {data.playerList[0].foodPoint +
+                            data.playerList[0].foodUserPoint +
+                            data.playerList[0].goalPoint +
+                            data.playerList[0].livePoint +
+                            data.playerList[0].liveUserPoint +
+                            data.playerList[0].questPoint}
+                          점
+                        </div>
+                        <div className={styles.goal}>
+                          목표 : {data.playerList[0].goalWeight}
+                          kg
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )} */}
+            </div>
+          )}
+        </div>
+        <div className={styles.livebutton}>
           {playerList &&
             playerList.map((item, index) => (
               <Fragment key={index}>
-                <div>
-                  <img src={item.imgPath} alt="profile" />
-                </div>
-                <div>{item.nickname}</div>
-                <div>{item.userCode}</div>
-                <div>{item.liveUserPoint}</div>
                 {item.userCode === userCode ? (
                   <Link
-                    className={BattleStyles.btnRed}
+                    className={styles.btnRed}
                     to="/battle/live"
                     state={{
                       sessionId: battleInfo.battleCode + '_' + userCode,
@@ -274,7 +351,7 @@ const BattleDetail = (props) => {
                   </Link>
                 ) : (
                   <Link
-                    className={BattleStyles.btnRed}
+                    className={styles.btnRed}
                     to="/battle/attend"
                     state={{
                       sessionId: battleInfo.battleCode + '_' + item.userCode,
@@ -288,42 +365,71 @@ const BattleDetail = (props) => {
                 )}
               </Fragment>
             ))}
-          {/* 식단 앨범 */}
-          <h3>식단앨범</h3>
-          <div>
-            <ul>
-              {foodBoardList.map((item, index) => (
-                <>
-                  <span>{item.nickname}</span>
-                  <img
-                    style={{ cursor: 'pointer' }}
-                    src={item.imgPath}
-                    alt="foodImg"
-                    onClick={() =>
-                      showFoodBoard(
-                        item.boardCode,
-                        item.battleCode,
-                        item.playerCode,
-                        item.nickname,
-                        item.imgName,
-                        item.recDt,
-                      )
-                    }
-                  />
-                  {foodModalShow ? (
-                    <BattleFoodModal
-                      show={foodModalShow}
-                      handleClose={handleClose}
-                      handleShow={handleShow}
-                      data={modalData}
+        </div>
+
+        <div className={styles.goResult}>
+          {battleEnded ? ( // 배틀 종료 여부에 따라 결과 보기 버튼 또는 참여하기/나가기 버튼 렌더링
+            <div onClick={handleViewResult}>결과 보기</div>
+          ) : joined ? (
+            <div onClick={handleLeaveBattle}>나가기</div>
+          ) : (
+            <div onClick={handleJoinBattle}>자극자 참여하기</div>
+          )}
+        </div>
+
+        <div>
+          {/* <h3>열량 비교</h3> */}
+          <BattleDetailCal
+            userCode={data.playerList[0].userCode}
+            secondPlayeruserCode={data.playerList[0].userCode}
+            //1로 바꿔야 함
+          />
+        </div>
+
+        {initLoading ? (
+          <Loading />
+        ) : (
+          <>
+            {/* 식단 앨범 */}
+            <div className={styles.dietAlbum}>
+              <div className={styles.bTitle}>식단 앨범</div>
+              <div className={styles.line}></div>
+              <div className={styles.vertical}></div>
+              <ul>
+                {foodBoardList.map((item, index) => (
+                  <Fragment key={index}>
+                    <span>{item.nickname}</span>
+                    <img
+                      style={{ cursor: 'pointer' }}
+                      src={item.imgPath}
+                      alt="foodImg"
+                      onClick={() =>
+                        showFoodBoard(
+                          item.boardCode,
+                          item.battleCode,
+                          item.playerCode,
+                          item.nickname,
+                          item.imgName,
+                          item.recDt,
+                        )
+                      }
                     />
-                  ) : null}
-                </>
-              ))}
-            </ul>
-          </div>
-        </>
-      )}
+                    {foodModalShow ? (
+                      <BattleFoodModal
+                        show={foodModalShow}
+                        handleClose={handleClose}
+                        handleShow={handleShow}
+                        data={modalData}
+                      />
+                    ) : null}
+                  </Fragment>
+                ))}
+              </ul>
+            </div>
+          </>
+        )}
+      </div>
+      <Footer />
     </div>
   );
 };
