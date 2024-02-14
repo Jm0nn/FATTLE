@@ -15,5 +15,5 @@ public interface QuestRepositoryCustom {
     void setFinish(long userCode);
 
     void foodRecord(FoodUploadRequest request);
-
+    
 }
