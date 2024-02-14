@@ -24,6 +24,8 @@ const {
   FOOD_TODAY_GET,
   BATTLE_FOOD_COMMENT_REGIST_POST,
   BATTLE_BOARD_LIST_GET,
+  BATTLE_LIVE_STATUS_START_GET,
+  BATTLE_LIVE_STATUS_STOP_GET,
 } = API;
 
 export const getBattleInfo = async (battleCode) => {
@@ -149,5 +151,20 @@ export const registFoodComment = async (parameter) => {
 // 배틀 식단 리스트 얻기
 export const getBattleBoardList = async (battleCode) => {
   const res = await axios.get(BATTLE_BOARD_LIST_GET + battleCode);
+  return res;
+};
+
+// 내기자 라이브상태 켜기
+export const setStatusLiveOn = async (battleCode, userCode) => {
+  const res = await axios.get(
+    BATTLE_LIVE_STATUS_START_GET + battleCode + '/' + userCode,
+  );
+  return res;
+};
+// 내기자 라이브상태 끄기
+export const setStatusLiveOff = async (battleCode, userCode) => {
+  const res = await axios.get(
+    BATTLE_LIVE_STATUS_STOP_GET + battleCode + '/' + userCode,
+  );
   return res;
 };

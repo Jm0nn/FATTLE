@@ -14,6 +14,10 @@ import styles from '../../styles/battle/BattleLive.module.css';
 import ProfileImg from '../../assets/svg/mypage/ProfileImg.svg';
 import Loading from '../../components/commons/Loading.js';
 import { useSelector } from 'react-redux';
+import {
+  setStatusLiveOff,
+  setStatusLiveOn,
+} from '../../services/battle/api.js';
 
 const APPLICATION_SERVER_URL = BASE_URL;
 
@@ -81,6 +85,9 @@ const BattleLive = () => {
     nickname = state.nickname;
     setMyUserName(nickname);
     joinSession();
+    (async () => {
+      await setStatusLiveOn(state.battleCode, userCode);
+    })();
   }, []);
 
   useEffect(() => {
@@ -133,6 +140,10 @@ const BattleLive = () => {
   }, [session]);
 
   const leaveSession = useCallback(() => {
+    console.log('leaveSession');
+    (async () => {
+      await setStatusLiveOff(state.battleCode, userCode);
+    })();
     // Leave the session
     if (session) {
       session
