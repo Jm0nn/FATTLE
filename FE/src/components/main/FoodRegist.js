@@ -33,6 +33,7 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
 
   const HandleFormSubmit = (e) => {
     console.log('실행됨');
+    e.preventDefault();
     axios
       .post(`${API.FOOD_UPLOAD}`, {
         userCode: userCode,
@@ -46,6 +47,7 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
       })
       .then((res) => {
         alert('저장되었습니다.');
+        closeModal();
         console.log(res);
       })
       .catch((err) => {
