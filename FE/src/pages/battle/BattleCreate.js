@@ -182,7 +182,9 @@ const BattleCreate = (props) => {
                         battleCode: battleSetting.battleCode,
                       }}
                     >
-                      <div className={styles.profileImg}></div>
+                      <div className={styles.profileImg}>
+                        <img src={profileImg} alt="" />
+                      </div>
                     </Link>
                     <div className={styles.goalBox}>
                       <div className={styles.goalHeader}>목표</div>
@@ -198,7 +200,9 @@ const BattleCreate = (props) => {
                         battleCode: battleSetting.battleCode,
                       }}
                     >
-                      <div className={styles.profileImg}></div>
+                      <div className={styles.profileImg}>
+                        <img src={profileImg} alt="" />
+                      </div>
                     </Link>
                     <div className={styles.goalBox}>
                       <div className={styles.goalHeader}>목표</div>

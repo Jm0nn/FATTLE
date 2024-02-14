@@ -109,7 +109,7 @@
 .profileImg {
   width: 75px;
   height: 75px;
-  background-color: red;
+  /* background-color: red; */
   border-radius: 100px;
   /* background-color: yellowgreen; */
   /* background-image: url('../../assets/images/battle/player-profile.svg'); */
