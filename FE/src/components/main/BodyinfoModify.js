@@ -12,15 +12,12 @@ const BodyinfoModify = ({ setWeight1, setHeight1 }) => {
   const userCode = useSelector((state) => {
     return state.userCode;
   });
-
   const openModal = () => {
     setIsModalOpen(true);
   };
-
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
   const HandleFormSubmit = (e) => {
     axios
       .patch(`${API.USER_MODIFY_PATCH}`, {
@@ -48,23 +45,23 @@ const BodyinfoModify = ({ setWeight1, setHeight1 }) => {
     e.preventDefault();
     closeModal();
   };
-
   return (
     <div>
-      <img
-        src={Frame2}
-        alt="Click to open modal"
-        onClick={() => {
-          axios.get(`${API.USER_GET}${userCode}`).then((res) => {
-            setHeight(res.data.height);
-            setWeight(res.data.weight);
-            console.log(res);
-          });
-          openModal();
-        }}
-        className={styles.imgStyle}
-      />
-
+      <span className={styles.imgSpan}>
+        <img
+          src={Frame2}
+          alt="Click to open modal"
+          onClick={() => {
+            axios.get(`${API.USER_GET}${userCode}`).then((res) => {
+              setHeight(res.data.height);
+              setWeight(res.data.weight);
+              console.log(res);
+            });
+            openModal();
+          }}
+          className={styles.imgStyle}
+        />
+      </span>
       {isModalOpen && (
         <div className={styles.modaloverlay} onClick={closeModal}>
           <div
@@ -114,5 +111,4 @@ const BodyinfoModify = ({ setWeight1, setHeight1 }) => {
     </div>
   );
 };
-
 export default BodyinfoModify;
