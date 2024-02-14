@@ -6,6 +6,8 @@ import camera from '../../assets/images/main/camera.svg';
 import cameratext from '../../assets/images/main/cameratext.svg';
 import API from '../../services/main/URL';
 import FoodRegist from './FoodRegist';
+import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // import { useLocation } from 'react-router-dom';
 
 function FoodRegister({ type }) {
@@ -18,37 +20,33 @@ function FoodRegister({ type }) {
   const [isCameraOn, setIsCameraOn] = useState(false);
   const [uploadImgUrl, setUploadImgUrl] = useState('');
   const [file, setFile] = useState(null);
-
-  // const location = useLocation();
-
-  // console.log(location);
+  const location = useLocation();
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
+
+  const userCode = useSelector((state) => {
+    return state.userCode;
+  });
 
   const handleSubmit = () => {
     const formData = new FormData();
     formData.append('uploadFile', file);
     axios
       .post(
-        'https://i10e106.p.ssafy.io/api/food/img-upload/3319955502/1',
+        `https://i10e106.p.ssafy.io/api/food/img-upload/${userCode}/${location.state.type}`,
         formData,
       )
       .then((res) => {
-        console.log(res);
         let copy = [...foodRegist];
         copy.push(res.data);
         setFoodRegist(copy);
         alert(`${res.data.name}이 등록되었습니다.`);
-        // setFoodRegist(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-
-    // 여기에서 axios.post로 formData를 서버에 전송
   };
 
   useEffect(() => {
