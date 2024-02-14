@@ -3,6 +3,7 @@ package com.sixman.fattle.repository;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sixman.fattle.dto.dto.DailyQuestCheckDto;
+import com.sixman.fattle.dto.request.FoodUploadRequest;
 import com.sixman.fattle.entity.QQuest;
 import com.sixman.fattle.entity.Quest;
 import lombok.RequiredArgsConstructor;
@@ -58,6 +59,23 @@ public class QuestRepositoryImpl implements QuestRepositoryCustom {
                 .update(qquest)
                 .set(qquest.isFinish, 1)
                 .where(qquest.userCd.eq(userCode),
+                        qquest.recDt.after(LocalDate.now().atStartOfDay()))
+                .execute();
+    }
+
+    @Override
+    public void foodRecord(FoodUploadRequest request) {
+        int foodCnt = queryFactory
+                .select(qquest.foodCnt)
+                .from(qquest)
+                .where(qquest.userCd.eq(request.getUserCode()),
+                        qquest.recDt.after(LocalDate.now().atStartOfDay()))
+                .fetchFirst();
+
+        queryFactory
+                .update(qquest)
+                .set(qquest.foodCnt, foodCnt + 1)
+                .where(qquest.userCd.eq(request.getUserCode()),
                         qquest.recDt.after(LocalDate.now().atStartOfDay()))
                 .execute();
     }

@@ -89,6 +89,8 @@ public class QuestServiceImpl implements QuestService {
 
     @Override
     public void foodRecord(FoodUploadRequest request) {
+        questRepository.foodRecord(request);
+
         String expType = "";
 
         switch (request.getType()) {
