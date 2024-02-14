@@ -67,6 +67,7 @@ public class FoodController {
                     .name(info.getName())
                     .gram(info.getGram())
                     .calory(info.getCalory())
+                    .carbo(info.getCarbo())
                     .protein(info.getProtein())
                     .fat(info.getFat())
                     .imgName(imgName)
