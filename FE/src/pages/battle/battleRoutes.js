@@ -9,6 +9,7 @@ import BattleLive from './BattleLive.js';
 import BattleCodeInput from './BattleCodeInput.js';
 import BattleLiveAttend from './BattleLiveAttend.js';
 import BattleResult from './BattleResult.js';
+import SeeCode from './SeeCode.js';
 
 export default [
   <Route path="" element={<BattleList />} key="main" />,
@@ -21,4 +22,5 @@ export default [
   <Route path="code" element={<BattleCodeInput />} key="code" />,
   <Route path="attend" element={<BattleLiveAttend />} key="attend" />,
   <Route path="result" element={<BattleResult />} key="result" />,
+  <Route path="code/see" element={<SeeCode />} key="seeCode" />,
 ];

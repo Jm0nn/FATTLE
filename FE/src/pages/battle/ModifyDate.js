@@ -19,9 +19,9 @@ const ModifyDate = () => {
       navigate('/main');
     } else {
       setName(state.battleSetting.battleName || '');
-      const initDate = new Date().toISOString().split('T')[0];
-      setStartDate(initDate);
-      setEndDate(initDate);
+      // const initDate = new Date().toISOString().split('T')[0];
+      setStartDate(state.battleSetting.startDate.split('T')[0]);
+      setEndDate(state.battleSetting.endDate.split('T')[0]);
     }
     dateLimit();
   }, []);
