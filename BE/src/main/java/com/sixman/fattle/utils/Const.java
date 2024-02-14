@@ -92,7 +92,7 @@ public class Const {
 
     public static final String EXERCISE_CODE_PULLUP = "PUL";
 
-    public static final int DAILY_QUEST_EXP = 2;
+    public static final int DAILY_QUEST_EXP = 750;
 
     public static final int DAILY_QUEST_FINISH_EXP = 10;
 
