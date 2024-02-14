@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getBattleInfo } from '../../services/battle/api.js';
+import { getBattleInfo, registTrigger } from '../../services/battle/api.js';
 import styles from '../../styles/battle/BattleInvite.module.css';
 import X from '../../assets/svg/battle/X.png';
 import Footer from '../../commons/Footer';
 import Invite from '../../assets/svg/battle/battleInvite.svg';
+import { useSelector } from 'react-redux';
 
 function BattleCodeInput() {
   const { state } = useLocation();
@@ -12,6 +13,7 @@ function BattleCodeInput() {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const inputs = useRef([]);
+  const userCode = useSelector((state) => state.userCode);
 
   const handleInputChange = (e, index) => {
     const newValue = e.target.value;
@@ -34,23 +36,19 @@ function BattleCodeInput() {
   const handleJoinRoom = async () => {
     try {
       // 배틀 정보 가져오기
-      const res = await getBattleInfo(state.battleCode);
+      const res = await getBattleInfo(password.join(''));
       setData(res.data);
-
-      // 가져온 배틀 정보를 사용하여 비밀번호 설정
-      const correctPassword = res.data.battleCode;
-
-      if (password.join('') === correctPassword) {
-        navigate('/battle/detail', {
-          state: { battleCode: state.battleCode, battleInfo: res.data },
-        });
-        console.log('방 입장 완료');
-      } else {
-        alert('코드번호가 일치하지 않습니다.');
+      if (res.status == 200) {
+        await registTrigger(userCode, res.data.battleCode);
+        navigate('/battle');
       }
     } catch (error) {
-      console.error('Error fetching battle info:', error);
-      alert('배틀 정보를 가져오는 데 실패했습니다.');
+      // console.error('Error fetching battle info:', error);
+      if (error.response.status === 500) {
+        alert('존재하지 않는 코드입니다 다시입력해주세요.');
+      }
+      console.log('error : ', error);
+      console.error(error);
     }
   };
 
