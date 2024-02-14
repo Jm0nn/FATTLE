@@ -74,7 +74,7 @@ public class QuestRepositoryImpl implements QuestRepositoryCustom {
 
         queryFactory
                 .update(qquest)
-                .set(qquest.foodCnt, foodCnt + 1)
+                .set(qquest.foodCnt, Math.min(foodCnt + 1, 3))
                 .where(qquest.userCd.eq(request.getUserCode()),
                         qquest.recDt.after(LocalDate.now().atStartOfDay()))
                 .execute();
