@@ -3,10 +3,10 @@ import { API } from '../../services/login/URL';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import styles from '../../styles/join/JoinPage1.module.css';
 // 닉네임 중복 체크 컴포넌트
 const JoinPage1 = () => {
   const location = useLocation();
-
   const navigate = useNavigate();
   const [joinInfo, setJoinInfo] = useState({
     userCode: location.state.userCode,
@@ -21,10 +21,29 @@ const JoinPage1 = () => {
     goalFat: '',
   });
   const [dupli, setDupli] = useState(true);
+  const handleGoBack = () => {
+    navigate(-1);
+  };
   return (
-    <div>
-      <div className="nameCheck">
+    <div className={styles.main}>
+      <div>
+        <button
+          className={styles.backBtn}
+          onClick={() => {
+            handleGoBack();
+          }}
+        >
+          ←
+        </button>
+      </div>
+      <h3 className={styles.header}>
+        나만의 다이어트 설정,
+        <br />
+        1분이면 끝나요
+      </h3>
+      <div className={styles.nameCheck}>
         <input
+          className={styles.nameCheckInput}
           placeholder="닉네임 입력"
           onChange={(e) => {
             setDupli(true);
@@ -35,6 +54,7 @@ const JoinPage1 = () => {
           }}
         ></input>
         <button
+          className={styles.nameCheckBtn}
           onClick={() => {
             axios // NICKNAME_GET
               .get(`${API.NICKNAME_GET}${joinInfo.nickname}`)
@@ -55,12 +75,13 @@ const JoinPage1 = () => {
           중복 확인
         </button>
       </div>
-
-      <div className="genderCheck">
-        <label>
+      <div className={styles.genderCheck}>
+        <div>
           <input
             type="radio"
             name="gender"
+            id="maleBtn"
+            className={[styles.genderBtn, styles.maleBtn].join(' ')}
             onClick={() => {
               setJoinInfo({
                 ...joinInfo,
@@ -68,12 +89,18 @@ const JoinPage1 = () => {
               });
             }}
           />
+          <label
+            for="maleBtn"
+            className={[styles.genderLabel, styles.genderMale].join(' ')}
+          ></label>
           남자
-        </label>
-        <label>
+        </div>
+        <div>
           <input
             type="radio"
             name="gender"
+            id="femaleBtn"
+            className={styles.genderBtn}
             onClick={() => {
               setJoinInfo({
                 ...joinInfo,
@@ -81,12 +108,17 @@ const JoinPage1 = () => {
               });
             }}
           />
+          <label
+            for="femaleBtn"
+            className={[styles.genderLabel, styles.genderFemale].join(' ')}
+          ></label>
           여자
-        </label>
+        </div>
       </div>
-
-      <div className="myInfo">
+      <div className={styles.myInfo}>
+        <div>키</div>
         <input
+          className={styles.myInfoInput}
           placeholder="CM"
           onChange={(e) => {
             setJoinInfo({
@@ -96,28 +128,35 @@ const JoinPage1 = () => {
           }}
         ></input>
       </div>
-      <div className="goal">
-        <input
-          placeholder="Kg"
-          onChange={(e) => {
-            setJoinInfo({
-              ...joinInfo,
-              weight: e.target.value,
-            });
-          }}
-        ></input>
-        <input
-          placeholder="goalKg"
-          onChange={(e) => {
-            setJoinInfo({
-              ...joinInfo,
-              goalWeight: e.target.value,
-            });
-          }}
-        ></input>
+      <div className={styles.goal}>
+        <div>
+          <div>시작 체중</div>
+          <input
+            placeholder="Kg"
+            className={styles.startKg}
+            onChange={(e) => {
+              setJoinInfo({
+                ...joinInfo,
+                weight: e.target.value,
+              });
+            }}
+          ></input>
+        </div>
+        <div>
+          <div>목표 체중</div>
+          <input
+            placeholder="Kg"
+            className={styles.goalKg}
+            onChange={(e) => {
+              setJoinInfo({
+                ...joinInfo,
+                goalWeight: e.target.value,
+              });
+            }}
+          ></input>
+        </div>
       </div>
-
-      <div className="next">
+      <div className={styles.nextBtn}>
         <button
           disabled={dupli}
           onClick={() => {
@@ -143,5 +182,4 @@ const JoinPage1 = () => {
     </div>
   );
 };
-
 export default JoinPage1;
