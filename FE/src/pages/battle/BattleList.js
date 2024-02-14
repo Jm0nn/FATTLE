@@ -153,7 +153,7 @@ const BattleList = (props) => {
                         </span>
                       </div>
                       {item.playerList[0].liveStatus === 1 ||
-                      item.playerList[1].liveStatus === 1 ? (
+                      item.playerList[0].liveStatus === 1 ? (
                         <img
                           className={BattleStyles.liveImg}
                           src={liveImg}
@@ -164,16 +164,16 @@ const BattleList = (props) => {
                     <div className={BattleStyles.partner}>
                       {item.playerList[0].nickname}
                       &nbsp; vs &nbsp;
-                      {item.playerList[1].nickname}
+                      {item.playerList[0].nickname}
                     </div>
                     <div className={BattleStyles.triggerCnt}>
                       자극자 {item.triggerCnt}명
                     </div>
-                    {item.userCode === userCode && (
+                    {/* {item.userCode === userCode && (
                       <button onClick={() => onDeleteBattle(item.battleCode)}>
                         배틀 삭제
                       </button>
-                    )}
+                    )} */}
                   </li>
                 </div>
               ))}
