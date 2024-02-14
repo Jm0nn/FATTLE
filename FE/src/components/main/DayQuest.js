@@ -32,6 +32,9 @@ function DayQuest() {
       .get(`${API.QUEST_LIST_GET}${userCode}`)
       .then((response) => {
         setQuestList(response.data);
+        const key = Object.keys(response.data.exercise);
+        setType(key);
+        // console.log(response.data.exercise);
       })
       .catch((error) => {
         console.error('데이터를 불러오는 데 실패했습니다:', error.message);

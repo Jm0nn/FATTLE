@@ -32,10 +32,14 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
   };
 
   const HandleFormSubmit = (e) => {
+<<<<<<< HEAD
     console.log('실행됨');
+=======
+    console.log(foodRegist[0]);
+>>>>>>> origin/feature/FE/battle_modify
     e.preventDefault();
     axios
-      .post('http://localhost:8000/api/food/upload', {
+      .post(`${API.FOOD_UPLOAD}`, {
         userCode: userCode,
         type: location.state.type,
         name: foodRegist[0].name,
@@ -47,6 +51,7 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
       })
       .then((res) => {
         alert('저장되었습니다.');
+        closeModal();
         console.log(res);
       })
       .catch((err) => {

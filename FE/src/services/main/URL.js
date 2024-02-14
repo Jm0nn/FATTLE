@@ -8,6 +8,7 @@ export const API = {
   USER_MODIFY_PATCH: `${BASE_URL}/user/userinfo/modify`,
   UPDATE_QUEST_POST: `${BASE_URL}/quest/record`,
   FOOD_SEARCH: `${BASE_URL}/food/search?word=`,
+  FOOD_UPLOAD: `${BASE_URL}/food/upload`,
 };
 
 export default API;

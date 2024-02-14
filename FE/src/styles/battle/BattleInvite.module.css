@@ -1,77 +1,89 @@
 .header {
-    height: 75px;
-    display: flex;
-    align-items: center;
+  height: 75px;
+  display: flex;
+  align-items: center;
 }
 
 .headerTitle {
-    margin-left: 24px;
-    font-size: 24px;
-    font-weight: bold;
+  margin-left: 24px;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .wrapper {
-    background-color: #ffbfbf;
-    width: 412px;
-    height: 840px;
-    margin: auto;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
+  background-color: #ffbfbf;
+  width: 412px;
+  height: 840px;
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 }
 
 .invite {
-    width: 100%;
-    height: 80px;
-    display: flex;
-    justify-content: space-between;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .inviteCode {
-    display: flex;
-    margin-left: 30px;
-    align-items: center;
-    color: white;
-    font-size: 30px;
+  display: flex;
+  margin-left: 30px;
+  align-items: center;
+  color: white;
+  font-size: 30px;
 }
 
 .closeImage {
-    width: 40px;
-    height: 40px;
-    margin: 20px;
+  width: 40px;
+  height: 40px;
+  margin: 20px;
 }
 
 .battleCodeContainer {
-    display: flex;
-    justify-content: space-between; /* 각 아이템을 컨테이너의 양 끝에 배치 */
-    margin-top: 300px;
+  display: flex;
+  justify-content: space-between; /* 각 아이템을 컨테이너의 양 끝에 배치 */
+  margin-top: 300px;
 }
 
 .battleCode {
-    width: 50px; /* 흰 박스의 너비 설정 */
-    height: 50px; /* 흰 박스의 높이 설정 */
-    background-color: white; /* 흰색 배경색 설정 */
-    border-radius: 10px;
-    margin: 5px;
+  width: 50px; /* 흰 박스의 너비 설정 */
+  height: 50px; /* 흰 박스의 높이 설정 */
+  background-color: white; /* 흰색 배경색 설정 */
+  border-radius: 10px;
+  margin: 5px;
+  text-align: center;
+  font-size: 1.5rem;
 }
 
 .message {
-    font-size: 18px;
-    margin-top: 5px;
+  font-size: 18px;
+  margin-top: 5px;
 }
 
 .joinBattleRoom {
-    width: 250px;
-    height: 50px;
-    margin-top: 240px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #ff4545;
-    border-radius: 20px;
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
+  width: 250px;
+  height: 50px;
+  margin-top: 240px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ff4545;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.closeImage:hover {
+  cursor: pointer;
+}
+
+.joinBattleRoom:hover {
+  cursor: pointer;
+  color: white; /* 마우스를 올렸을 때 텍스트 색상 조정 */
+  border: 1px solid #ff4545;
 }
