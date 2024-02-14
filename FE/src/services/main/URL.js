@@ -9,6 +9,7 @@ export const API = {
   UPDATE_QUEST_POST: `${BASE_URL}/quest/record`,
   FOOD_SEARCH: `${BASE_URL}/food/search?word=`,
   FOOD_UPLOAD: `${BASE_URL}/food/upload`,
+  FOOD_TODAYS_GET: `${BASE_URL}/food/todays/`,
 };
 
 export default API;

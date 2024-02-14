@@ -1,11 +1,9 @@
 /* Character.css */
-
 .wrapper {
-  background-color: #93C5FF;
+  background-color: #93c5ff;
   width: 412px;
-  height: 915px;
+  height: 855px;
   margin: auto;
-  margin-top: 30px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -13,174 +11,162 @@
   align-items: center;
   position: relative;
 }
-
 .nicknameText {
   position: absolute;
-  right: 10px; 
-  top: 10px; 
-  margin: 10px; 
+  right: 10px;
+  top: 10px;
+  margin: 10px;
   font-size: 24px;
-  font-weight: bold; 
-  border-radius: 10px; 
-  padding: 5px 10px; 
-  background-color: rgba(92, 142, 201, 0.2);
-  color: #FFFFFF;
-}
-
-
-.shineImage {
-  filter: brightness(1.2) drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5)); /* 필요한대로 밝기 값을 조정하세요 */
-}
-
-.caloryinfo {
-  font-size: 20px;
-  margin-top: 20px;
-}
-
-.boldText {
   font-weight: bold;
-  color: #F0BD01; 
-}
-
-.progressbar {
-  height: 20px;
-  background: linear-gradient(to left,  #FFA800, #FFF500, #80FF00);
-  width: 100%;
   border-radius: 10px;
-  border: 2px solid #555;
-  overflow: hidden;
-  position: relative;
-  
+  padding: 5px 10px;
+  background-color: rgba(92, 142, 201, 0.2);
+  color: #ffffff;
 }
-
+.shineImage {
+  filter: brightness(1.2) drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.2)); /* 필요한대로 밝기 값을 조정하세요 */
+}
+.caloryinfo {
+  font-size: 17px;
+  margin-top: 20px;
+  color: #357ac9;
+  font-weight: bold;
+}
+/* 현재 섭취 칼로리 반영하여 연두-노랑-주황-빨강으로 변화하는 것 추가 */
+.boldText {
+  font-weight: bolder;
+  font-size: 21px;
+  color: #f0bd01;
+}
 .remainingbar {
-  height: 20px;
-  background: linear-gradient(to left, #fff, #fff);
-  width: 100%;
-  /* border-radius: 10px; */
   position: absolute;
-  top: 0;
-  right: 0;
+  margin-top: 5px;
+  width: 300px;
+  height: 25px;
+  left: 61px;
+  background: #e5f1ff;
+  border-radius: 15px;
   transition: width 0.5s ease-in-out;
+  position: relative;
 }
-
+.progressbar {
+  position: absolute;
+  width: 294px;
+  height: 19px;
+  left: 3px;
+  top: 3px;
+  border-radius: 8px;
+  background: linear-gradient(to left, #ff2727, #ffa800, #fff500, #80ff00);
+}
 .centeredContainer {
   display: flex;
-  justify-content: center; 
-}
-
-
-.infobar {
-  width: 300px;
-  height: 50px; 
-  background: rgba(255, 255, 255, 0.6); 
-  border-radius: 10px;
-  border: 2px solid #555;
-  position: relative; 
-  margin-top: 20px; 
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-}
-
-.infobar p {
-  display: flex;
-  align-items: center;
   justify-content: center;
 }
-
-.infobar img {
-  height: 20px;
-  margin: 0 5px;
+.infobar {
+  width: 300px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  position: relative;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  color: #679ad6;
+  font-weight: bold;
+  font-size: 15px;
+  white-space: pre;
 }
-
+.infobar img {
+  height: 24px;
+  margin: 0 5px;
+  z-index: 1;
+}
+.infobar p {
+  margin-left: 5px;
+  font-size: 15px;
+}
+.infobar div {
+  width: 25px;
+  height: 25px;
+  border-radius: 20px;
+  position: absolute;
+  background-color: #a4c5ed;
+  right: 18.5px;
+  z-index: 0;
+}
+.textSpan {
+  width: 100px;
+  display: flex;
+  text-align: center;
+}
 .progressbar2 {
   margin-top: 150px;
   margin-bottom: 20px;
   overflow: visible;
 }
-
 .circle {
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
+  filter: brightness(1.2) drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.35)); /* 필요한대로 밝기 값을 조정하세요 */
 }
-
 .filledcircle {
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
-  stroke-linecap: round; 
-  transition: stroke-dashoffset 0.3s ease, stroke 0.3s ease; 
+  stroke-linecap: round;
+  transition:
+      stroke-dashoffset 0.3s ease,
+      stroke 0.3s ease;
 }
-
-
-
-
-
 .nutrienticons {
   display: flex;
   margin-top: 30px;
-  justify-content: space-around; 
+  justify-content: space-around;
 }
-
 .nutrienticon {
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
   align-items: center;
 }
-
 .nutrienticons img {
   width: 35px;
   height: 35px;
 }
-
 .nutrientbar {
-  width: 60px;
-  height: 15px;
+  width: 80px;
+  height: 20px;
   margin-top: 8px;
   margin-right: 10px;
   margin-left: 10px;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 4px;
+  background: #679ad6;
+  border-radius: 7px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 .nutrientContainer {
   display: flex;
-  justify-content: space-around; 
+  justify-content: space-around;
   margin-left: 15px;
   font-size: 15px;
-  color: #6779D6;
+  color: #6779d6;
+  font-weight: bold;
 }
-
-
-
 .remainingbar2 {
   height: 100%;
-  background: #5FFF52;
   border-radius: 4px;
   transition: width 0.3s ease;
 }
 .remainingbar3 {
   height: 100%;
-  background: #FAFF00;
   border-radius: 4px;
   transition: width 0.3s ease;
 }
 .remainingbar4 {
   height: 100%;
-  background: #FF2727;
   border-radius: 4px;
   transition: width 0.3s ease;
 }
-
 .foodRecommendIconWrapper {
   position: absolute;
-  bottom: 60px; 
+  bottom: 60px;
   right: 30px;
 }
-
-
-

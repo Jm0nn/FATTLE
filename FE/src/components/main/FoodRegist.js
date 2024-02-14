@@ -10,9 +10,7 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
   const userCode = useSelector((state) => {
     return state.userCode;
   });
-
   const location = useLocation();
-
   // console.log('------------------------');
   // console.log(userCode);
   // console.log(location.state.type);
@@ -26,13 +24,11 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
   const openModal = () => {
     setIsModalOpen(true);
   };
-
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
   const HandleFormSubmit = (e) => {
-    console.log(foodRegist[0]);
+    console.log('실행됨');
     e.preventDefault();
     axios
       .post(`${API.FOOD_UPLOAD}`, {
@@ -54,18 +50,16 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
         console.log(err);
       });
   };
-
   return (
     <div>
-      <img
-        src={Frame2}
-        alt="Click to open modal"
+      <div
         onClick={() => {
           openModal();
         }}
-        className={styles.imgStyle}
-      />
-
+        className={styles.registerStyle}
+      >
+        등록
+      </div>
       {isModalOpen && (
         <div className={styles.modaloverlay} onClick={closeModal}>
           <div
@@ -108,5 +102,4 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
     </div>
   );
 };
-
 export default FoodRegist;
