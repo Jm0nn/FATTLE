@@ -75,6 +75,8 @@ public class QuestServiceImpl implements QuestService {
 
     @Override
     public void exerciseRecord(QuestRequest request) {
+        questRepository.exerciseRecord(request);
+
         Exercise exercise = Exercise.builder()
                 .userCd(request.getUserCode())
                 .typeCd(request.getExercise().toUpperCase())
@@ -90,7 +92,7 @@ public class QuestServiceImpl implements QuestService {
     @Override
     public void foodRecord(FoodUploadRequest request) {
         questRepository.foodRecord(request);
-
+        
         String expType = "";
 
         switch (request.getType()) {

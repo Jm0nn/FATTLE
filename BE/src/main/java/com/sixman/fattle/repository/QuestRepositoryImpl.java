@@ -4,6 +4,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sixman.fattle.dto.dto.DailyQuestCheckDto;
 import com.sixman.fattle.dto.request.FoodUploadRequest;
+import com.sixman.fattle.dto.request.QuestRequest;
 import com.sixman.fattle.entity.QQuest;
 import com.sixman.fattle.entity.Quest;
 import lombok.RequiredArgsConstructor;
@@ -75,6 +76,23 @@ public class QuestRepositoryImpl implements QuestRepositoryCustom {
         queryFactory
                 .update(qquest)
                 .set(qquest.foodCnt, Math.min(foodCnt + 1, 3))
+                .where(qquest.userCd.eq(request.getUserCode()),
+                        qquest.recDt.after(LocalDate.now().atStartOfDay()))
+                .execute();
+    }
+
+    @Override
+    public void exerciseRecord(QuestRequest request) {
+        int exerciseCnt = queryFactory
+                .select(qquest.exerciseCnt)
+                .from(qquest)
+                .where(qquest.userCd.eq(request.getUserCode()),
+                        qquest.recDt.after(LocalDate.now().atStartOfDay()))
+                .fetchFirst();
+
+        queryFactory
+                .update(qquest)
+                .set(qquest.exerciseCnt, Math.min(exerciseCnt + 1, 3))
                 .where(qquest.userCd.eq(request.getUserCode()),
                         qquest.recDt.after(LocalDate.now().atStartOfDay()))
                 .execute();
