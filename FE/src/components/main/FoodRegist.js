@@ -10,7 +10,9 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
   const userCode = useSelector((state) => {
     return state.userCode;
   });
+
   const location = useLocation();
+
   // console.log('------------------------');
   // console.log(userCode);
   // console.log(location.state.type);
@@ -24,9 +26,11 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
   const openModal = () => {
     setIsModalOpen(true);
   };
+
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
   const HandleFormSubmit = (e) => {
     console.log('실행됨');
     console.log(foodRegist[0]);
@@ -70,14 +74,14 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
             <button className={styles.closebutton} onClick={closeModal}>
               &times;
             </button>
-            <form onSubmit={HandleFormSubmit}>
+            <form onSubmit={HandleFormSubmit} className={styles.registForm}>
               {foodRegist.map((a, i) => (
-                <div key={i}>
-                  <span>{a.name}</span>
-                  <span> {a.gram}</span>
-                  <span> {a.calory}</span>
-                  <span> {a.carbo}</span>
-                  <span> {a.protein}</span>
+                <div key={i} className={styles.foodRow}>
+                  <span className={styles.foodName}>ㆍ{a.name}</span>
+                  {/* <span> {a.gram}</span>
+                                    <span> {a.calory}</span>
+                                    <span> {a.carbo}</span>
+                                    <span> {a.protein}</span> */}
                   <span
                     onClick={() => {
                       const updatedFoodRegist = foodRegist.filter(
@@ -85,15 +89,13 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
                       );
                       setFoodRegist(updatedFoodRegist);
                     }}
+                    className={styles.removeBtn}
                   >
-                    없애기
+                    {/* 없애기 */}
                   </span>
                 </div>
               ))}
-              <button
-                type="submit"
-                // className={styles.buttonstyle}
-              >
+              <button type="submit" className={styles.buttonstyle}>
                 최종등록
               </button>
             </form>
@@ -103,4 +105,5 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
     </div>
   );
 };
+
 export default FoodRegist;
