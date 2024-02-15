@@ -22,6 +22,7 @@ import exChk from '../../assets/svg/battle/exerciseChk.svg';
 import nullImage from '../../assets/svg/battle/battleProfileNull.svg';
 import Footer from '../../commons/Footer';
 import getDday from '../../utils/battle/calculateDday.js';
+import BASE_URL from '../../config.js';
 
 const BattleDetail = (props) => {
   // 전역 상태 변수
@@ -399,9 +400,11 @@ const BattleDetail = (props) => {
                 {foodBoardList.map((item, index) => (
                   <Fragment key={index}>
                     <span>{item.nickname}</span>
+                    {console.log(item)}
                     <img
                       style={{ cursor: 'pointer' }}
-                      src={item.imgPath}
+                      // src={item.imgPath}
+                      src={`${BASE_URL}/food/img/${item.imgName}`}
                       alt="foodImg"
                       onClick={() =>
                         showFoodBoard(
