@@ -73,26 +73,29 @@ public class BattleRepositoryImpl implements BattleRepositoryCustom {
     public List<BattleInfoDto> getBattleList(List<String> battleCodeList) {
         List<BattleInfoDto> battleList = new ArrayList<>();
 
-        for (String code: battleCodeList) {
+        for (String code : battleCodeList) {
+            Tuple tuple
+                    = queryFactory.select(
+                            qbattle.battleCd,
+                            qbattle.name,
+                            qbattle.status,
+                            qbattle.startDt,
+                            qbattle.endDt,
+                            quser.userCd,
+                            quser.nickname,
+                            qavatar.imgPath,
+                            qavatar.profileImgPath)
+                    .from(qbattle)
+                    .where(qbattle.battleCd.eq(code))
+                    .join(quser)
+                    .on(qbattle.creatorCd.eq(quser.userCd))
+                    .join(qavatar)
+                    .on(quser.avatarCd.eq(qavatar.avatarCd))
+                    .fetchFirst();
 
-        Tuple tuple
-                = queryFactory.select(
-                        qbattle.battleCd,
-                        qbattle.name,
-                        qbattle.status,
-                        qbattle.startDt,
-                        qbattle.endDt,
-                        quser.userCd,
-                        quser.nickname,
-                        qavatar.imgPath,
-                        qavatar.profileImgPath)
-                .from(qbattle)
-                .where(qbattle.battleCd.eq(code))
-                .join(quser)
-                .on(qbattle.creatorCd.eq(quser.userCd))
-                .join(qavatar)
-                .on(quser.avatarCd.eq(qavatar.avatarCd))
-                .fetchFirst();
+            if (tuple == null) {
+                continue;
+            }
 
             List<SimpleBattlePlayerInfoDto> playerList
                     = queryFactory.select(
@@ -105,7 +108,7 @@ public class BattleRepositoryImpl implements BattleRepositoryCustom {
                     .join(qplayer)
                     .on(quser.userCd.eq(qplayer.userCd))
                     .join(qbattle)
-                    .on(qplayer.battleCd.eq(qbattle.battleCd))
+                    .on(qplayer.battleCd.eq(code))
                     .fetch();
 
             int triggerCnt
@@ -432,7 +435,7 @@ public class BattleRepositoryImpl implements BattleRepositoryCustom {
     @Override
     public int getCurrentPoint(String battleCode, long userCode) {
         Integer point
-                =  queryFactory
+                = queryFactory
                 .select(qpoint.point.sum())
                 .from(qpoint)
                 .where(qpoint.battleCd.eq(battleCode),
