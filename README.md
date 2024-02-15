@@ -81,13 +81,14 @@ FATTLE은 다이어트 현황을 공유하고, 이를 통해 지인들에게 자
   - React 18.2.0
   - Redux 9.1.0
   - Node.js 20.10.0
-  - OpenVidu-browser 2.29.1
+  - OpenVidu 2.29.1
 
 - Back-End
   - IntelliJ IDEA 2023.3.3 (Community Edition)
   - Java 17 (Azul Zulu version 17.0.9)
   - Spring boot 3.2.2
   - Python 3.8.10
+  - Pytorch 1.8.0
   - MySQL 8.0.36
 
 - Server
