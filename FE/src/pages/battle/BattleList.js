@@ -66,12 +66,15 @@ const BattleList = (props) => {
       item.triggerList &&
       item.triggerList.some((player) => player.userCode === userCode);
 
-    let destination = '/battle/code';
-    if (isUserInPlaylist || isUserInTriggerList) {
-      destination = '/battle/detail';
-    }
+    // let destination = '/battle/code';
+    // if (isUserInPlaylist || isUserInTriggerList) {
+    //   destination = '/battle/detail';
+    // }
+    let destination = '/battle/detail';
 
-    navigate(destination, { state: { battleCode: item.battleCode } });
+    navigate(destination, {
+      state: { battleCode: item.battleCode, status: item.status },
+    });
   };
 
   return (
@@ -112,20 +115,9 @@ const BattleList = (props) => {
 
         <ul>
           {data &&
+            activeTab === 'progress' &&
             data
-              .filter(
-                (item) =>
-                  (activeTab === 'progress' &&
-                    item.status === 1 &&
-                    getDday(new Date(item.startDate), new Date(item.endDate)) >
-                      0) ||
-                  (activeTab === 'end' &&
-                    item.status === 1 &&
-                    getDday(
-                      new Date(item.startDate),
-                      new Date(item.endDate),
-                    ) === 0),
-              )
+              .filter((item) => item.status === 1)
               .map((item, index) => (
                 <div onClick={() => handleBattleItemClick(item)}>
                   <li key={item.battleCode} className={BattleStyles.container}>
@@ -181,8 +173,9 @@ const BattleList = (props) => {
 
         <ul>
           {data &&
+            activeTab === 'progress' &&
             data
-              .filter((item) => item.status === 0 && activeTab === 'progress')
+              .filter((item) => item.status === 0)
               .map((item, index) => (
                 <Link
                   to="/battle/create"
@@ -217,6 +210,64 @@ const BattleList = (props) => {
                     )}
                   </li>
                 </Link>
+              ))}
+        </ul>
+        {/*  */}
+        <ul>
+          {data &&
+            activeTab === 'end' &&
+            data
+              .filter((item) => item.status === 2)
+              .map((item, index) => (
+                <div onClick={() => handleBattleItemClick(item)}>
+                  <li key={item.battleCode} className={BattleStyles.container}>
+                    <img
+                      className={BattleStyles.profileImg}
+                      src={profileImg}
+                      alt={'아바타 이미지'}
+                    />
+                    <div className={BattleStyles.content}>
+                      <div className={BattleStyles.battleTitle}>
+                        {item.name}
+                      </div>
+                      <div className={BattleStyles.dDay}>
+                        <span>
+                          {' '}
+                          {getDday(
+                            new Date(item.startDate),
+                            new Date(item.endDate),
+                          ) === 0
+                            ? '종료'
+                            : `D-${getDday(
+                                new Date(item.startDate),
+                                new Date(item.endDate),
+                              )}`}
+                        </span>
+                      </div>
+                      {item.playerList[0].liveStatus === 1 ||
+                      item.playerList[1].liveStatus === 1 ? (
+                        <img
+                          className={BattleStyles.liveImg}
+                          src={liveImg}
+                          alt={'라이브 표시 이미지'}
+                        />
+                      ) : null}
+                    </div>
+                    <div className={BattleStyles.partner}>
+                      {item.playerList[1].nickname}
+                      &nbsp; vs &nbsp;
+                      {item.playerList[0].nickname}
+                    </div>
+                    <div className={BattleStyles.triggerCnt}>
+                      자극자 {item.triggerCnt}명
+                    </div>
+                    {/* {item.userCode === userCode && (
+                      <button onClick={() => onDeleteBattle(item.battleCode)}>
+                        배틀 삭제
+                      </button>
+                    )} */}
+                  </li>
+                </div>
               ))}
         </ul>
         <div className={BattleStyles.btnRed} onClick={onCreateBattle}>
