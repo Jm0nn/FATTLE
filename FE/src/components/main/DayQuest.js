@@ -93,7 +93,7 @@ function DayQuest({ check, setCheck }) {
           }`}
           onClick={() => handleQuestClick(-1, questList.foodCnt)}
         >
-          <p>건강한 식단 먹기: {questList.foodCnt}</p>
+          <p>건강한 식단 먹기</p>
           <img
             src={questList.foodCnt > 0 ? checkImg : notCheckImg}
             alt="Check icon"
@@ -108,7 +108,7 @@ function DayQuest({ check, setCheck }) {
           }`}
           onClick={() => handleQuestClick(-2, questList.dayCheck)}
         >
-          <p>출석 체크: {questList.dayCheck}</p>
+          <p>출석 체크</p>
           <img
             src={questList.dayCheck === 1 ? checkImg : notCheckImg}
             alt="Check icon"
@@ -129,9 +129,7 @@ function DayQuest({ check, setCheck }) {
                 handleQuestClick(index, value, type[index]);
               }}
             >
-              <p>
-                {exerciseDescriptions[key]}: {value}
-              </p>
+              <p>{exerciseDescriptions[key]}</p>
               <img
                 src={value === 1 ? checkImg : notCheckImg}
                 alt="Check icon"
@@ -142,11 +140,11 @@ function DayQuest({ check, setCheck }) {
       </div>
 
       {/* 완료된 퀘스트 개수가 7개까지만 표시 */}
-      {completedCount < 7 ? (
+      {/* {completedCount < 7 ? (
         <p>{`${completedCount}/7`}</p>
       ) : (
         <p>오늘 퀘스트 완료</p>
-      )}
+      )} */}
     </div>
   );
 }

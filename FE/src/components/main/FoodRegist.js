@@ -4,8 +4,9 @@ import Frame2 from '../../assets/images/main/Frame2.svg';
 import API from '../../services/main/URL';
 import styles from '../../styles/main/BodyinfoModify.module.css';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 const FoodRegist = ({ foodRegist, setFoodRegist }) => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const userCode = useSelector((state) => {
     return state.userCode;
@@ -48,7 +49,8 @@ const FoodRegist = ({ foodRegist, setFoodRegist }) => {
       .then((res) => {
         alert('저장되었습니다.');
         closeModal();
-        console.log(res);
+        navigate('/');
+        // console.log(res);
       })
       .catch((err) => {
         console.log(err);
