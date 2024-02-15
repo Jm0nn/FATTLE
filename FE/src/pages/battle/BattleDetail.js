@@ -335,6 +335,18 @@ const BattleDetail = (props) => {
               playerList.map((item, index) => (
                 <Fragment key={index}>
                   {item.userCode === userCode ? (
+                    <Link
+                      className={styles.btnRed}
+                      to="/battle/live"
+                      state={{
+                        sessionId: battleInfo.battleCode + '_' + userCode,
+                        nickname: item.nickname,
+                        battleCode: state.battleCode,
+                      }}
+                    >
+                      라이브 방송하기
+                    </Link>
+                  ) : (
                     <div>
                       {data.playerList[0].liveStatus === 1 ||
                       data.playerList[1].liveStatus === 1 ? (
@@ -353,18 +365,6 @@ const BattleDetail = (props) => {
                         </Link>
                       ) : null}
                     </div>
-                  ) : (
-                    <Link
-                      className={styles.btnRed}
-                      to="/battle/live"
-                      state={{
-                        sessionId: battleInfo.battleCode + '_' + userCode,
-                        nickname: item.nickname,
-                        battleCode: state.battleCode,
-                      }}
-                    >
-                      라이브 방송하기
-                    </Link>
                   )}
                 </Fragment>
               ))}
