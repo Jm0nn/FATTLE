@@ -1,7 +1,7 @@
 # FATTLE
 
 <br/>
-<div align="center"><img src ="./images/panda.png" alt="FATTLE"></div>
+<div align="center"><img src ="./images/fattle.png" alt="FATTLE"></div>
 <br/>
 <div align="center">친구와의 배틀을 통해 캐릭터와 함께 성장하는 다이어트, <b>FATTLE</b></div>
 <br/>
@@ -16,7 +16,7 @@
   - [배경](#배경)
   - [개요](#개요)
   - [주요 기능](#주요-기능)
-  - [주요 기술](#주요-기술)
+  - [개발 환경](#개발-환경)
   - [파일 구조](#파일-구조)
   - [협업 툴](#협업-툴)
 - [팀원 소개](#팀원-소개)
@@ -181,13 +181,15 @@ FATTLE은 다이어트 현황을 공유하고, 이를 통해 지인들에게 자
 
 | 이름 | 직책 | 역할 | 담당 |
 | ---- | ---- | ---- | ---- |
-| 강주원 | 팀장 | 백엔드 | API 설계, 디자인, Git 관리, 최종 발표 |
-| 김정민 | 백엔드리더 | 백엔드 | API 설계, API 키 관리, EC2 서버 관리, CI/CD |
-| 박찬영 | 팀원 | 백엔드 | API 설계, AI 모델 적용, 디자인, 중간 발표 |
-| 양윤모 | 프론트엔드리더 | 프론트엔드 | UI/UX 설계, OpenVidu 서버 관리, Git 관리 |
-| 정창휘 | 팀원 | 프론트엔드 | UI/UX 설계, UCC 제작 |
-| 진성민 | 팀원 | 프론트엔드 | UI/UX 설계, 협업 툴 관리 |
+| [강주원](https://github.com/kjw0821) | 팀장 | 백엔드 | DB 설계, API 설계, Git 관리, 최종 발표 |
+| [김정민](https://github.com/Jm0nn) | 백엔드리더 | 백엔드 | DB 설계, API 설계, API 키 관리, EC2 서버 관리, CI/CD |
+| [박찬영](https://github.com/Park-chan-00) | 팀원 | 백엔드 | DB 설계, API 설계, AI 모델 적용, 중간 발표 |
+| [양윤모](https://github.com/momo-abcd) | 프론트엔드리더 | 프론트엔드 | UI/UX 설계, OpenVidu 서버 관리, Git 관리 |
+| [정창휘](https://github.com/JungChnagHwi/TIL) | 팀원 | 프론트엔드 | UI/UX 설계, 디자인, UCC 제작 |
+| [진성민](https://github.com/sengmin14) | 팀원 | 프론트엔드 | UI/UX 설계, 디자인, 협업 툴 관리 |
 
 ## 서비스 화면
 
+- 첫 화면<br/>
+  ![메인](./images/서비스화면/메인.png)
 
