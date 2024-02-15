@@ -1,7 +1,7 @@
 # FATTLE
 
 <br/>
-<div align="center"><img src ="./images/fattle.png" alt="FATTLE"></div>
+<div align="center"><img src ="./images/FATTLE.png" alt="FATTLE"></div>
 <br/>
 <div align="center">친구와의 배틀을 통해 캐릭터와 함께 성장하는 다이어트, <b>FATTLE</b></div>
 <br/>

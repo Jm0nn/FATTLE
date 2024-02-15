@@ -53,19 +53,19 @@
 
 ### 환경변수 설정
 
-- .env
+- FE/.env
   - ChatGPT
     ```env
     API_KEY={ChatGpt API key}
     ```
 
-- config.js
+- FE/src/config.js
   - API 통신 주소
     ```js
     const BASE_URL = {URL}/api
     ```
 
-- application.yml
+- BE/src/main/resources/application.yml
   - MySQL
     ```yml
     datasource:
@@ -85,7 +85,7 @@
       connection-uri: Flask 주소
     ```
 
-- application-oauth.yml
+- BE/src/main/resources/application-oauth.yml
   - Kakao OAuth
     ```yml
     spring:
