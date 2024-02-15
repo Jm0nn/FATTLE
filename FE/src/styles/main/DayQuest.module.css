@@ -22,7 +22,7 @@
   align-items: center;
   overflow-y: auto; /* 세로 스크롤 유지 */
   overflow-x: hidden;
-  height: 300px;
+  height: 450px;
 }
 .exerciseListContainer::-webkit-scrollbar {
   width: 0; /* 세로 스크롤 바 숨김 */
