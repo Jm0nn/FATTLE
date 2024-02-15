@@ -30,5 +30,9 @@ const API = {
   // 배틀 관련아닌것들
   FOOD_TODAY_GET: `${BASE_URL}/food/todays/`,
   USER_INFO_GET: `${BASE_URL}/user/userinfo/`,
+
+  // 라이브 상태 업데이트
+  BATTLE_LIVE_STATUS_START_GET: `${BASE_URL}/battle/live-on/`,
+  BATTLE_LIVE_STATUS_STOP_GET: `${BASE_URL}/battle/live-off/`,
 };
 export default API;

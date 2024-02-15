@@ -132,6 +132,11 @@ const Chatting = ({
       navigate('/main');
     }
   };
+  const enterKey = (e) => {
+    if (e.keyCode === 13) {
+      sendChatting();
+    }
+  };
   return (
     <div className={styles['chatContainer']}>
       <ul ref={scrollRef} className={styles['instagram-live-chat']}>
@@ -153,7 +158,12 @@ const Chatting = ({
         ))}
       </ul>
       <div className={styles.chatFooter}>
-        <input className={styles['input']} type="text" ref={chatInputEle} />
+        <input
+          onKeyUp={enterKey}
+          className={styles['input']}
+          type="text"
+          ref={chatInputEle}
+        />
         <button className={styles.sendBtn} onClick={sendChatting}>
           <svg
             xmlns="http://www.w3.org/2000/svg"

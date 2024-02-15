@@ -1,0 +1,243 @@
+.btn {
+  background-color: #444444;
+  border-radius: 20px;
+  color: white;
+  font-weight: 600;
+  font-size: 25px;
+}
+.btnRed {
+  background-color: #ff4545;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+.nextBtn {
+  width: 350px;
+  height: 50px;
+
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+
+  /* align-self: center; */
+}
+.nextBtn button {
+  width: inherit;
+  height: inherit;
+
+  border-radius: 10px;
+  border: 0;
+
+  background-color: #444444;
+  color: white;
+}
+.main {
+  /* width: 400px; */
+  height: 100%;
+  background-color: #ff9a23;
+  padding-top: 80px;
+  padding-bottom: 60px;
+  color: white;
+}
+.mainContainer {
+  width: 330px;
+  height: 356px;
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 0 auto;
+}
+.showCodeRow {
+  width: inherit;
+  height: 50px;
+  /* background-color: violet; */
+  display: flex;
+  flex-direction: row-reverse;
+}
+.showCode {
+  width: 50px;
+  height: 50px;
+  /* background-color: rgb(130, 238, 236); */
+  background-image: url('../../assets/images/battle/show-code.svg');
+  background-size: cover;
+  cursor: pointer;
+}
+.titleBox {
+  height: 75px;
+  width: 140px;
+  /* background-color: #ff4545; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.titleHeader {
+  font-size: 15px;
+}
+.battleTitle {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.playersBox {
+  width: 280px;
+  height: 230px;
+  /* background-color: aquamarine; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-weight: 600;
+  font-size: 30px;
+}
+.playerNickname {
+  font-size: 1rem;
+}
+.playerBox {
+  width: 90px;
+  height: 220px;
+  /* background-color: burlywood; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.profileImg {
+  width: 75px;
+  height: 75px;
+  /* background-color: red; */
+  border-radius: 100px;
+  /* background-color: yellowgreen; */
+  /* background-image: url('../../assets/images/battle/player-profile.svg'); */
+  /* background-size: cover; */
+}
+.img {
+  width: 75px;
+  height: 75px;
+}
+.goalBox {
+  height: 50px;
+  width: inherit;
+  /* background-color: yellow; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.goalHeader {
+  font-size: 10px;
+}
+.goal {
+  font-size: 20px;
+}
+.playerStamp {
+  width: 50px;
+  height: 50px;
+  /* background-color: chocolate; */
+  background-image: url('../../assets/images/battle/player-stamp.svg');
+  background-size: cover;
+}
+.playerStampHidden {
+  visibility: hidden;
+}
+.sideContainer {
+  width: 340px;
+  /* height: 100px; */
+  /* background-color: blue; */
+  margin-top: 130px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.battleDateBox {
+  width: inherit;
+  height: 40px;
+  font-size: 15px;
+  font-weight: 600;
+  /* background-color: violet; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dateHeader {
+  width: 100px;
+  height: inherit;
+  /* background-color: yellow; */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.dateIcon {
+  width: 30px;
+  height: 30px;
+  background-image: url('../../assets/images/battle/date.svg');
+  background-size: cover;
+}
+.dateContents {
+  width: 180px;
+  height: inherit;
+  /* background-color: yellow; */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.dateRange {
+  width: 90px;
+  /* height: inherit; */
+}
+.dateDays {
+  width: 60px;
+}
+
+.battlePenaltyBox {
+  width: inherit;
+  /* height: 40px; */
+  font-size: 15px;
+  font-weight: 600;
+  /* background-color: violet; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+.penaltyHeader {
+  width: 100px;
+  height: inherit;
+  /* background-color: yellow; */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.penaltyIcon {
+  width: 30px;
+  height: 30px;
+  background-image: url('../../assets/images/battle/penalty.svg');
+  background-size: cover;
+}
+.penaltyContents {
+  width: 180px;
+  height: inherit;
+  /* background-color: yellow; */
+  display: flex;
+  justify-content: flex-end;
+  /* align-items: center; */
+}
+.penaltyList {
+  width: 90px;
+  /* height: inherit; */
+  margin-right: 10px;
+}
+.penaltyText {
+  margin-bottom: 5px;
+}
+
+.editBtn {
+  width: 20px;
+  height: 20px;
+  background-image: url('../../assets/images/battle/edit.svg');
+  background-size: cover;
+  cursor: pointer;
+}

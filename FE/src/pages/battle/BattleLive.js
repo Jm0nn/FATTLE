@@ -14,6 +14,10 @@ import styles from '../../styles/battle/BattleLive.module.css';
 import ProfileImg from '../../assets/svg/mypage/ProfileImg.svg';
 import Loading from '../../components/commons/Loading.js';
 import { useSelector } from 'react-redux';
+import {
+  setStatusLiveOff,
+  setStatusLiveOn,
+} from '../../services/battle/api.js';
 
 const APPLICATION_SERVER_URL = BASE_URL;
 
@@ -81,6 +85,9 @@ const BattleLive = () => {
     nickname = state.nickname;
     setMyUserName(nickname);
     joinSession();
+    (async () => {
+      await setStatusLiveOn(state.battleCode, userCode);
+    })();
   }, []);
 
   useEffect(() => {
@@ -133,6 +140,10 @@ const BattleLive = () => {
   }, [session]);
 
   const leaveSession = useCallback(() => {
+    console.log('leaveSession');
+    (async () => {
+      await setStatusLiveOff(state.battleCode, userCode);
+    })();
     // Leave the session
     if (session) {
       session
@@ -262,8 +273,7 @@ const BattleLive = () => {
                   <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
                   <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                 </svg>
-                {/* &nbsp;{subscribers.length - 1 < 1 ? 0 : subscribers.length} */}
-                &nbsp;{subscribers.length === 1 ? 0 : subscribers.length - 1}
+                &nbsp;{subscribers.length}
               </div>
               <button
                 onClick={leaveSession}
