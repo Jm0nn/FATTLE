@@ -46,7 +46,7 @@ function Ranking() {
           className={styles.rankingcontainer}
           style={{ backgroundImage: `url(${rankingbg})` }}
         >
-          <img src={rankingbar} alt="" className={styles.rankingbar} />
+          {/* <img src={rankingbar} alt="" className={styles.rankingbar} /> */}
           {/* <div className={styles.rankimagescontainer}>
             <div className={styles.rankimagesrow}>
               <p className={styles.rankimagescolumn}>

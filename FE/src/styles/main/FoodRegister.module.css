@@ -8,12 +8,18 @@
   height: 915px;
   background-color: #ffc38c;
 }
+
 .searchContainer {
   display: flex;
+  justify-content: center;
   align-items: center;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   margin-bottom: 10px;
+  width: 100%;
+  height: 80px;
+  background-color: wheat;
 }
+
 .searchInput {
   padding: 10px;
   padding-left: 40px;
@@ -23,9 +29,10 @@
   width: 200px;
   height: 40px;
 }
+
 .searchIcon {
   position: absolute;
-  top: 30px;
+  top: 40px;
   left: 45px; /* 돋보기 아이콘을 우측에 위치시킵니다. */
   transform: translateY(-50%);
   width: 20px; /* 돋보기 아이콘의 너비 */
@@ -33,6 +40,7 @@
   background-image: url('../../assets/svg/Food/searchIcon.svg'); /* 돋보기 아이콘의 경로 */
   background-size: cover; /* 배경 이미지를 커버하도록 설정합니다. */
 }
+
 .searchButton {
   background-color: #4caf50;
   color: white;
@@ -47,9 +55,11 @@
   align-items: center;
   justify-content: center;
 }
+
 .searchButton p {
   font-size: 20px;
 }
+
 .relatedKeywordsContainer {
   position: absolute;
   width: 200px;
@@ -62,11 +72,13 @@
   margin-top: 115px;
   border-radius: 20px;
 }
+
 .relatedKeywords {
   list-style: none;
   padding: 0;
   border-radius: 5px;
 }
+
 .relatedKeywords li {
   background-color: #f8f8f8;
   padding: 5px 10px;
@@ -75,26 +87,31 @@
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
 .relatedKeywords li:hover {
   background-color: #e0e0e0;
 }
+
 /* 선택 식단 리스트 */
 .horizontalListContainer {
   display: flex;
   justify-content: center;
   overflow-x: auto;
 }
+
 .foodlist {
   display: flex;
   width: 340px;
   height: 75px;
   align-items: center;
 }
+
 .horizontalList {
   list-style: none;
   flex-wrap: nowrap;
   padding: 0;
 }
+
 .horizontalList li {
   background-color: #ffffff;
   border-radius: 20px;
@@ -102,9 +119,11 @@
   margin-top: 10px;
   cursor: pointer;
 }
+
 .horizontalList li:hover {
   filter: brightness(95%);
 }
+
 .foodName {
   width: 140px;
   font-size: 18px;
@@ -114,17 +133,20 @@
   justify-content: center;
   align-items: center;
 }
+
 .foodNutrition {
   flex-direction: column;
   margin-right: 20px;
   text-align: center;
   font-weight: bold;
 }
+
 .nutritionGram {
   font-size: 14px;
   font-weight: bold;
   color: red;
 }
+
 .foodCarbo {
   width: 21px;
   height: 21px;
@@ -137,6 +159,7 @@
   align-items: center;
   background-color: #ff7b00;
 }
+
 .foodProtein {
   width: 21px;
   height: 21px;
@@ -149,6 +172,7 @@
   align-items: center;
   background-color: #ff4545;
 }
+
 .foodFat {
   width: 21px;
   height: 21px;
@@ -161,35 +185,50 @@
   align-items: center;
   background-color: #fbd766;
 }
+
 .foodCalory {
   font-size: 18px;
   font-weight: bold;
   margin-right: 5px;
 }
+
 .carboGram {
   color: #ff7b00;
 }
+
 .proteinGram {
   color: #ff4545;
 }
+
 .fatGram {
   color: #fbd766;
 }
+
 .foodCaloryUnit {
   font-size: 14px;
   margin-top: 2px;
 }
+
 .cameraContainer {
   position: absolute;
-  bottom: 300px;
+
+  bottom: 80px;
   right: 30px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-end; */
+  align-items: flex-end;
+
 }
+
 .cameratextImage {
   margin-top: 40px;
 }
+
 .cameraImage {
   cursor: pointer;
 }
+
 .camera {
   position: relative;
   display: flex;
@@ -198,6 +237,7 @@
   justify-content: center;
   margin-top: 20px;
 }
+
 .cameraPreview {
   width: 400px;
   max-width: 100%;

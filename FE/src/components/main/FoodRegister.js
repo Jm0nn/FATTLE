@@ -210,13 +210,15 @@ function FoodRegister({ type }) {
         </div>
       </div>
       <div className={styles.cameraContainer}>
-        <img src={cameratext} alt="" className={styles.cameratextImage} />
-        <img
-          src={camera}
-          alt=""
-          className={styles.cameraImage}
-          onClick={handleCameraClick}
-        />
+        <div>
+          <img src={cameratext} alt="" className={styles.cameratextImage} />
+          <img
+            src={camera}
+            alt=""
+            className={styles.cameraImage}
+            onClick={handleCameraClick}
+          />
+        </div>
         <div className={styles.camera}>
           {cameraStream && (
             <video
