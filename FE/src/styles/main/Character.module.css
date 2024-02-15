@@ -24,7 +24,8 @@
   color: #ffffff;
 }
 .shineImage {
-  filter: brightness(1.2) drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.2)); /* 필요한대로 밝기 값을 조정하세요 */
+  /* filter: brightness(1.2) drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.2));  */
+  /* 필요한대로 밝기 값을 조정하세요 */
 }
 .caloryinfo {
   font-size: 17px;

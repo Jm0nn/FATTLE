@@ -47,7 +47,7 @@ function Ranking() {
           style={{ backgroundImage: `url(${rankingbg})` }}
         >
           <img src={rankingbar} alt="" className={styles.rankingbar} />
-          <div className={styles.rankimagescontainer}>
+          {/* <div className={styles.rankimagescontainer}>
             <div className={styles.rankimagesrow}>
               <p className={styles.rankimagescolumn}>
                 {console.log(rank)}
@@ -64,7 +64,7 @@ function Ranking() {
                   className={styles.rankimages}
                 />
               </p>
-              <p>
+              <p className={styles.rankimagescolumn}>
                 <img
                   src={rank[2].imgPath}
                   alt=""
@@ -79,7 +79,7 @@ function Ranking() {
                 {rank[2].nickName}
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
       )}
 
@@ -88,7 +88,7 @@ function Ranking() {
           <div className={styles.myrankcontainer}>
             {myRank.rank}위
             <img src={myRank.imgPath} alt="" />
-            <span>{myRank.nickName}</span>
+            <span>{myRank.nickName}(나)</span>
             {myRank.growthExp + myRank.stackExp}
           </div>
         )}

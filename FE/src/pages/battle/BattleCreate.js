@@ -231,7 +231,7 @@ const BattleCreate = (props) => {
                       <div className={styles.goal}>
                         -{' '}
                         {Math.abs(
-                          data.palyerList[0].beforeWeight -
+                          data.playerList[0].beforeWeight -
                             data.playerList[0].afterWeight,
                         )}
                       </div>
@@ -255,7 +255,7 @@ const BattleCreate = (props) => {
                       <div className={styles.goal}>
                         -{' '}
                         {Math.abs(
-                          data.palyerList[1].beforeWeight -
+                          data.playerList[1].beforeWeight -
                             data.playerList[1].afterWeight,
                         )}
                       </div>
