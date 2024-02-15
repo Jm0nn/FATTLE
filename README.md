@@ -88,7 +88,7 @@ FATTLE은 다이어트 현황을 공유하고, 이를 통해 지인들에게 자
   - Java 17 (Azul Zulu version 17.0.9)
   - Spring boot 3.2.2
   - Python 3.8.10
-  - Pytorch 1.8.0
+  - PyTorch 1.8.0
   - MySQL 8.0.36
 
 - Server
