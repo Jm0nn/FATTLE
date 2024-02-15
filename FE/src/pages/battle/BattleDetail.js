@@ -291,7 +291,7 @@ const BattleDetail = (props) => {
                         <div className={styles.name}>
                           {data.playerList[0].nickname}
                         </div>
-                        <div className={styles.now}>지금까지</div>
+                        {/* <div className={styles.now}>지금까지</div> */}
                         <div className={styles.score}>
                           {data.playerList[0].foodPoint +
                             data.playerList[0].foodUserPoint +
@@ -308,7 +308,7 @@ const BattleDetail = (props) => {
                         <div className={styles.name}>
                           {data.playerList[1].nickname}
                         </div>
-                        <div className={styles.now}>지금까지</div>
+                        {/* <div className={styles.now}>지금까지</div> */}
                         <div className={styles.score}>
                           {data.playerList[1].foodPoint +
                             data.playerList[1].foodUserPoint +
