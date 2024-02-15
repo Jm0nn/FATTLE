@@ -153,7 +153,7 @@ const BattleList = (props) => {
                         </span>
                       </div>
                       {item.playerList[0].liveStatus === 1 ||
-                      item.playerList[0].liveStatus === 1 ? (
+                      item.playerList[1].liveStatus === 1 ? (
                         <img
                           className={BattleStyles.liveImg}
                           src={liveImg}
