@@ -18,7 +18,7 @@ const exerciseDescriptions = {
   pul: '턱걸이 10개',
 };
 
-function DayQuest() {
+function DayQuest({ check, setCheck }) {
   const [type, setType] = useState(['bur', 'pus', 'squ', 'pul', 'pla', 'run']);
   const [completedCount, setCompletedCount] = useState(1);
   const [questList, setQuestList] = useState([]);
@@ -69,7 +69,7 @@ function DayQuest() {
           copy[excerciseType] = 1;
           let copy2 = { ...questList };
           copy2.exercise = copy;
-          console.log(copy2);
+          setCheck(!check);
           setQuestList(copy2);
         });
         // 성공적으로 업데이트된 경우에만 로컬 상태 업데이트

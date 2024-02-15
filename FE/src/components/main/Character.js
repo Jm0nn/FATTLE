@@ -18,7 +18,7 @@ import fat from '../../assets/images/main/fat.svg';
 import { API } from '../../services/main/URL';
 import { useSelector } from 'react-redux';
 import BodyinfoModify from './BodyinfoModify';
-function Character() {
+function Character({ check, seCheck }) {
   const [height, setHeight] = useState(0);
   const [weight, setWeight] = useState(0);
   const [img, setImage] = useState(pandaImg1);
@@ -63,44 +63,8 @@ function Character() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-  useEffect(() => {
-    axios
-      .get(`${API.USER_GET}${userCode}`)
-      .then((response) => {
-        setHeight(response.data.height);
-        setWeight(response.data.weight);
-        setMainUserData(response.data);
-      })
-      .catch((error) => {
-        console.error('메인 데이터를 불러오는 중 에러 발생:', error);
-      });
+  }, [check]);
 
-    axios
-      .get(`${API.USER_USERINFO}${userCode}`)
-      .then((res) => {
-        // console.log(res.data.imgPath);
-        let name = res.data.imgPath.substring(res.data.imgPath.length - 8);
-        if (name === 'img1.svg') {
-          setImage(pandaImg1);
-        }
-        if (name === 'img2.svg') {
-          setImage(pandaImg2);
-        }
-        if (name === 'img3.svg') {
-          setImage(pandaImg3);
-        }
-        if (name === 'img4.svg') {
-          setImage(pandaImg4);
-        }
-        if (name === 'img5.svg') {
-          setImage(pandaImg5);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [weight, height]);
   const nutrientbarColor = (ratio) => {
     if (ratio < 0.7) {
       return '#faff00';
