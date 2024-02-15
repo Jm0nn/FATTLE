@@ -62,7 +62,7 @@
 - FE/src/config.js
   - API 통신 주소
     ```js
-    const BASE_URL = {URL}/api
+    const BASE_URL = '{URL}/api'
     ```
 
 - BE/src/main/resources/application.yml
