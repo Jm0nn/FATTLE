@@ -107,8 +107,7 @@ public class BattleRepositoryImpl implements BattleRepositoryCustom {
                     .from(quser)
                     .join(qplayer)
                     .on(quser.userCd.eq(qplayer.userCd))
-                    .join(qbattle)
-                    .on(qplayer.battleCd.eq(code))
+                    .where(qplayer.battleCd.eq(code))
                     .fetch();
 
             int triggerCnt
