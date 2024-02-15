@@ -11,8 +11,8 @@ li {
   margin-top: 100px;
   background-color: #fffc9b;
   width: 388px;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   height: 487px;
   display: flex;
   align-items: center;
@@ -22,8 +22,8 @@ li {
 .graphWrap {
   position: relative;
   background-color: #ffffff;
-  width: 334px;
-  height: 400px;
+  width: 360px;
+  height: 450px;
   margin: 20px;
   /* border: 1px solid #aaa; */
   border-radius: 20px;
