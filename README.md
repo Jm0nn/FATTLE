@@ -79,8 +79,9 @@ FATTLE은 다이어트 현황을 공유하고, 이를 통해 지인들에게 자
 - Front-End
   - Visual Studio Code 1.85.1
   - React 18.2.0
+  - Redux 9.1.0
   - Node.js 20.10.0
-  - OpenVidu 2.29.1
+  - OpenVidu-browser 2.29.1
 
 - Back-End
   - IntelliJ IDEA 2023.3.3 (Community Edition)
