@@ -139,6 +139,7 @@
 .name {
   font-size: 20px;
   font-weight: bold;
+  margin-bottom: 8px;
 }
 
 .score {
@@ -147,7 +148,7 @@
 }
 
 .goal {
-  font-size: 12px;
+  font-size: 16px;
 }
 
 .versus {
@@ -186,8 +187,8 @@
 }
 
 .calorieComparison {
-  width: 334px;
-  height: 403px;
+  width: 360px;
+  height: 450px;
   border-radius: 10px;
   margin: auto;
   margin-top: 10px;
@@ -282,14 +283,14 @@
 }
 
 .dietAlbum {
-  width: 334px;
-  height: 403px;
+  width: 360px;
+  height: 450px;
   border-radius: 20px;
   margin: auto;
   background-color: #ffffff;
   flex-wrap: wrap;
-  margin-top: 50px;
-  margin-bottom: 200px;
+  margin-top: 5px;
+  margin-bottom: 150px;
 }
 
 .foodImage {

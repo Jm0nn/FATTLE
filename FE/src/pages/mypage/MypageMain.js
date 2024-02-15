@@ -78,7 +78,7 @@ function MypageMain(props) {
                 state={{
                   nickname: data.nickname,
                   introduction: data.introduction,
-                  profileImg: ProfileImg,
+                  profileImg: data.profileImgPath,
                 }}
               >
                 <img src={Edit} alt="Edit" />
@@ -95,15 +95,18 @@ function MypageMain(props) {
           {/* 프로필 정보 시작 */}
           <div className={styles.profileContainer}>
             <div>
-              <img src={`/images/${data.imgPath}`} alt="프로필사진" />
+              <img
+                className={styles.profileImg}
+                src={`/${data.profileImgPath}`}
+                alt="프로필사진"
+              />
             </div>
             <div className={styles.followContainer}>
               <div className={styles.fDiv}>
                 <div>
-                  <img src={Alarm} alt="alarm" />
-                  새로운 알림
+                  <img src={Alarm} alt="alarm" />새 알림
                 </div>
-                <div className={styles.fText}>250</div>
+                <div className={styles.fText}>0</div>
               </div>
               <div className={styles.fDiv}>
                 <div>팔로워</div>
@@ -179,7 +182,8 @@ function MypageMain(props) {
 
           {/* 캘린더 부분 시작 */}
           <div className={styles.headerText}>
-            <Link to="detail">캘린더&#32;&#62;</Link>
+            {/* <Link to="detail">캘린더&#32;&#62;</Link> */}
+            <Link>스트릭&#32;🔋</Link>
           </div>
           <Calendar>
             {dates.map((day, index) => {

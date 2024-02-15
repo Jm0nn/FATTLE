@@ -162,7 +162,7 @@ const BattleList = (props) => {
                       ) : null}
                     </div>
                     <div className={BattleStyles.partner}>
-                      {item.playerList[0].nickname}
+                      {item.playerList[1].nickname}
                       &nbsp; vs &nbsp;
                       {item.playerList[0].nickname}
                     </div>
