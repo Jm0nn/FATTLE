@@ -5,135 +5,204 @@
   /* justify-content: center; */
   position: relative;
   width: 412px;
-  height: 915px; 
-  background-color: #FFC38C; 
+  height: 915px;
+  background-color: #ffc38c;
 }
-
 .searchContainer {
   display: flex;
   align-items: center;
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
 .searchInput {
   padding: 10px;
+  padding-left: 40px;
   border: none;
   border-radius: 20px;
   outline: none;
   width: 200px;
-  height: 30px;
+  height: 40px;
 }
-
+.searchIcon {
+  position: absolute;
+  top: 30px;
+  left: 45px; /* 돋보기 아이콘을 우측에 위치시킵니다. */
+  transform: translateY(-50%);
+  width: 20px; /* 돋보기 아이콘의 너비 */
+  height: 20px; /* 돋보기 아이콘의 높이 */
+  background-image: url('../../assets/svg/Food/searchIcon.svg'); /* 돋보기 아이콘의 경로 */
+  background-size: cover; /* 배경 이미지를 커버하도록 설정합니다. */
+}
 .searchButton {
   background-color: #4caf50;
   color: white;
   border: none;
-  height: 30px;
+  width: 70px;
+  height: 40px;
   padding: 10px;
   margin-left: 10px;
   border-radius: 20px;
   cursor: pointer;
-  display: flex;  
+  display: flex;
   align-items: center;
+  justify-content: center;
 }
-
-  .relatedKeywordsContainer {
-    position: absolute;
-    width: 200px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-height: 200px;
-    overflow-y: auto;
-    z-index: 1;
-    margin-top: 115px;
-    border-radius: 20px;
-  }
-
-
-
-  .relatedKeywords {
-    list-style: none;
-    padding: 0;
-    /* margin: 10px 0 0; */
-    border-radius: 5px;
-  }
-  
-  .relatedKeywords li {
-    background-color: #f8f8f8;
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin: 5px 0;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .relatedKeywords li:hover {
-    background-color: #e0e0e0;
-  }
-
-  /* 선택 식단 리스트 */
-  .horizontalListContainer {
-    display: flex;
-    justify-content: center;
-    overflow-x: auto; 
-    
-  }
-  
+.searchButton p {
+  font-size: 20px;
+}
+.relatedKeywordsContainer {
+  position: absolute;
+  width: 200px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1;
+  margin-top: 115px;
+  border-radius: 20px;
+}
+.relatedKeywords {
+  list-style: none;
+  padding: 0;
+  border-radius: 5px;
+}
+.relatedKeywords li {
+  background-color: #f8f8f8;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 5px 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.relatedKeywords li:hover {
+  background-color: #e0e0e0;
+}
+/* 선택 식단 리스트 */
+.horizontalListContainer {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+}
 .foodlist {
   display: flex;
+  width: 340px;
+  height: 75px;
+  align-items: center;
 }
-
-  .horizontalList {
-    list-style: none;
-    /* display: flex; */
-    flex-wrap: nowrap; 
-    padding: 0; 
-  }
-  
-  .horizontalList li {
-    margin-right: 30px; 
-    max-width: 412px; 
-    background-color: #ffffff;
-    border-radius: 10px; 
-    border: 1px solid #ccc;
-    margin-top: 10px;
-    /* display: flex; */
-  }
- 
-
-  .cameraContainer {
-    position: absolute;
-
-    bottom: 300px;
-    right: 30px;
-   
-  }
-  
-  .cameratextImage {
-    margin-top: 40px;
-  }
-  
-  .cameraImage {
-    cursor: pointer;
-  }
-
-  .camera {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .cameraPreview {
-    width: 400px;
-    max-width: 100%; 
-    max-height: 100%; 
-    border-radius: 10px; 
-    margin-top: 10px;
-    object-fit: cover;
-    
-  }
+.horizontalList {
+  list-style: none;
+  flex-wrap: nowrap;
+  padding: 0;
+}
+.horizontalList li {
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.horizontalList li:hover {
+  filter: brightness(95%);
+}
+.foodName {
+  width: 140px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.foodNutrition {
+  flex-direction: column;
+  margin-right: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+.nutritionGram {
+  font-size: 14px;
+  font-weight: bold;
+  color: red;
+}
+.foodCarbo {
+  width: 21px;
+  height: 21px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ff7b00;
+}
+.foodProtein {
+  width: 21px;
+  height: 21px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ff4545;
+}
+.foodFat {
+  width: 21px;
+  height: 21px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fbd766;
+}
+.foodCalory {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 5px;
+}
+.carboGram {
+  color: #ff7b00;
+}
+.proteinGram {
+  color: #ff4545;
+}
+.fatGram {
+  color: #fbd766;
+}
+.foodCaloryUnit {
+  font-size: 14px;
+  margin-top: 2px;
+}
+.cameraContainer {
+  position: absolute;
+  bottom: 300px;
+  right: 30px;
+}
+.cameratextImage {
+  margin-top: 40px;
+}
+.cameraImage {
+  cursor: pointer;
+}
+.camera {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+.cameraPreview {
+  width: 400px;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+  object-fit: cover;
+}

@@ -1,13 +1,14 @@
 .chatContainer {
   position: absolute;
-  bottom: 1rem;
+  bottom: 0;
   right: 0;
   left: 0;
 }
 
 /* 인스타 채팅창 */
 .instagram-live-chat {
-  background-color: rgba(4, 4, 4, 0.034); /* 채팅창 배경색 (투명도 추가) */
+  /*background-color: rgba(4, 4, 4, 0.034); /* 채팅창 배경색 (투명도 추가) */
+  background-color: rgba(4, 4, 4, 0.673); /* 채팅창 배경색 (투명도 추가) */
   /* border: 1px solid #e0e0e0; */
   border-radius: 5px; /* 채팅창 테두리 모서리 둥글게 */
   padding: 0.7rem; /* 채팅창 안쪽 여백 */
@@ -15,7 +16,7 @@
   overflow-y: auto; /* 채팅창이 넘칠 경우 스크롤 표시 */
   /* position: absolute; */
   bottom: 0.5rem;
-  margin-bottom: 0.3rem;
+  /* margin-bottom: 0.3rem; */
 }
 
 .instagram-live-chat .message {
@@ -35,10 +36,12 @@
   color: #ffffff; /* 메시지 텍스트 색상 */
 }
 .pointMsg {
-  color: blue;
+  color: rgb(42, 42, 250);
 }
 .chatFooter {
   display: flex;
+  background-color: rgba(4, 4, 4, 0.673); /* 채팅창 배경색 (투명도 추가) */
+  padding-bottom: 15px;
 }
 .input {
   /* width: 100%; */
@@ -46,7 +49,8 @@
   border: 1.5px solid #fff;
   border-radius: 10px;
   color: #fff;
-  flex-grow: 1;
+  /* flex-grow: 1; */
+  width: 250px;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 0.5rem;
@@ -68,7 +72,7 @@
 .sendBtn {
   margin-left: 1.3rem;
   align-self: center;
-  background-color: #0000001a;
+  /* background-color: #0000001a; */
   padding: 0.3rem;
   border-radius: 5px;
 }
@@ -76,13 +80,14 @@
   margin-left: 1.3rem;
   margin-right: 1.3rem;
   align-self: center;
-  background-color: #0000001a;
+  /* background-color: #0000001a; */
   padding: 0.3rem;
   border-radius: 5px;
 }
 
 .modal {
-  width: 150px;
+  width: 250px;
+  margin: 0 auto;
 }
 input[type='number']::-webkit-outer-spin-button,
 input[type='number']::-webkit-inner-spin-button {

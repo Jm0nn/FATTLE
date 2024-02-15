@@ -10,7 +10,7 @@ import notCheckImg from '../../assets/images/main/notcheck.svg';
 
 const exerciseDescriptions = {
   run: '러닝 30분',
-  pus: '팔굽혀 펴기 50회',
+  pus: '랫플 다운 10회',
   bur: '버피 테스트 20회',
   pla: '플랭크 1분',
   squ: '스쿼트 20개',

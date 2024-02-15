@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import API from '../../services/join/URL';
 import axios from 'axios';
 import { changeCode } from '../../store/store';
+import styles from '../../styles/join/JoinPage4.module.css';
 const JoinPage4 = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -44,11 +45,9 @@ const JoinPage4 = () => {
     goalFat: location.state.goalFat,
     menu: location.state.menu,
   };
-
   const handleGoBack = () => {
     navigate(-1);
   };
-
   const handleCarbonChange = (e) => {
     const updateNutrient = [...nutrient];
     updateNutrient[joinInfo.menu].carbon = parseInt(e.target.value, 10) || 0;
@@ -67,11 +66,11 @@ const JoinPage4 = () => {
     setNutrient(updateNutrient);
     // setNutrient
   };
-
   return (
-    <div>
+    <div className={styles.main}>
       <div>
         <button
+          className={styles.backBtn}
           onClick={() => {
             handleGoBack();
           }}
@@ -79,33 +78,73 @@ const JoinPage4 = () => {
           ←
         </button>
       </div>
-      <div>
-        <div>
-          <div>순 탄수</div>
-          <input
-            placeholder="g"
-            value={nutrient[joinInfo.menu].carbon}
-            onChange={handleCarbonChange}
-          ></input>
+      <h3 className={styles.header}>
+        목표 탄단지 정하기,
+        <br />
+        이제 거의 다 왔어요!
+      </h3>
+      <div className={styles.headerInfo}>
+        목표 열량과 식단에 맞는{' '}
+        <span style={{ color: '#6792ff' }}>추천섭취량</span>을 계산했어요
+        <br />
+        다이어트를 위한 목표량을 직접 입력할 수도 있어요
+      </div>
+      <div className={styles.inputBoxes}>
+        <div className={styles.inputBox}>
+          <div className={styles.inputHeader}>순탄수</div>
+          <div className={styles.inputContents}>
+            <input
+              className={styles.input}
+              placeholder="g"
+              value={nutrient[joinInfo.menu].carbon}
+              onChange={handleCarbonChange}
+            ></input>
+            <span className={styles.inputUnit}>x 4</span>
+            <span className={styles.inputCalc}>
+              <div>808Kcal</div>
+              <div>40%</div>
+            </span>
+          </div>
         </div>
-        <div>
-          <div>단백질</div>
-          <input
-            placeholder="g"
-            value={nutrient[joinInfo.menu].protein}
-            onChange={handleProteinChange}
-          ></input>
+        <div className={styles.inputBox}>
+          <div className={styles.inputHeader}>단백질</div>
+          <div className={styles.inputContents}>
+            <input
+              className={styles.input}
+              placeholder="g"
+              value={nutrient[joinInfo.menu].protein}
+              onChange={handleProteinChange}
+            ></input>
+            <span className={styles.inputUnit}>x 4</span>
+            <span className={styles.inputCalc}>
+              <div>808Kcal</div>
+              <div>40%</div>
+            </span>
+          </div>
         </div>
-        <div>
-          <div>지방</div>
-          <input
-            placeholder="g"
-            value={nutrient[joinInfo.menu].fats}
-            onChange={handlefatsChange}
-          ></input>
+        <div className={styles.inputBox}>
+          <div className={styles.inputHeader}>지방</div>
+          <div className={styles.inputContents}>
+            <input
+              className={styles.input}
+              placeholder="g"
+              value={nutrient[joinInfo.menu].fats}
+              onChange={handlefatsChange}
+            ></input>
+            <span className={styles.inputUnit}>x 9</span>
+            <span className={styles.inputCalc}>
+              <div>405Kcal</div>
+              <div>20%</div>
+            </span>
+          </div>
+        </div>
+        <div className={styles.separateLine} />
+        <div className={styles.calcResult}>
+          <div>?? 목표 섭취 열량</div>
+          <div className={styles.resultKcal}>1930 kcal</div>
         </div>
       </div>
-      <div>
+      <div className={styles.nextBtn}>
         <button
           onClick={() => {
             axios
@@ -138,5 +177,4 @@ const JoinPage4 = () => {
     </div>
   );
 };
-
 export default JoinPage4;
