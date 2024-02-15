@@ -624,7 +624,7 @@ public class BattleRepositoryImpl implements BattleRepositoryCustom {
                 float goalDiff = beforeWeight - goalWeight;
                 float finalDiff = beforeWeight - afterWeight;
 
-                point = (int) (finalDiff / goalDiff * MAX_GOAL_POINT * 500);
+                point = (int) (finalDiff / goalDiff * MAX_GOAL_POINT * days);
             }
         } else {
             if (beforeWeight > afterWeight) {
@@ -635,7 +635,7 @@ public class BattleRepositoryImpl implements BattleRepositoryCustom {
                 float goalDiff = goalWeight - beforeWeight;
                 float finalDiff = afterWeight - beforeWeight;
 
-                point = (int) (finalDiff / goalDiff * MAX_GOAL_POINT * 500);
+                point = (int) (finalDiff / goalDiff * MAX_GOAL_POINT * days);
             }
         }
 
