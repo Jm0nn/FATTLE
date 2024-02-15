@@ -67,7 +67,7 @@ const MypageModify = () => {
             <BackHeader title={'프로필 수정'} navigate={navigate} />
             <main className={styles.main}>
               <div className={styles.profile}>
-                <img src={state.profileImg} alt="profileImg" />
+                <img src={`/${state.profileImg}`} alt="profileImg" />
               </div>
               <div className={styles.group}>
                 <div>
@@ -99,7 +99,7 @@ const MypageModify = () => {
                   {' '}
                   <textarea
                     className={styles.textarea}
-                    spellcheck="false"
+                    spellCheck="false"
                     name="introduction"
                     type="text"
                     ref={introductionTextarea}

@@ -17,7 +17,8 @@ button {
 /*#5 */
 .wrapper {
   margin-top: 14px;
-  width: 352px;
+  /* width: 352px; */
+  width: 100%;
   background: #fff;
   border-radius: 10px;
   font-weight: bold;
@@ -29,6 +30,9 @@ button {
   /* display: flex;
   align-items: center;
   justify-content: space-between; */
+  display: flex;
+  margin-left: 1.2rem;
+  margin-bottom: 0.5rem;
 }
 .wrapper .nav .current-date {
   font-size: 20px;
