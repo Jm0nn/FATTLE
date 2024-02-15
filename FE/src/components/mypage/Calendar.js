@@ -15,7 +15,7 @@ const Calendar = ({ children }) => {
               src={CalendarSVG}
               alt="calendarSVG"
             />
-            2024. 01
+            2024. 02
           </p>
           {/* <button className={styles['material-icons']}> chevron_right</button> */}
         </div>

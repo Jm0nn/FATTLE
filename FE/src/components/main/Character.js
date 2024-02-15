@@ -7,15 +7,21 @@ import FoodRecommend from './FoodRecommend';
 import Frame from '../../assets/images/main/Frame.svg';
 import Frame2 from '../../assets/images/main/Frame2.svg';
 import panda from '../../assets/images/main/panda.png';
+import pandaImg1 from '../../assets/svg/avatar/img1.svg';
+import pandaImg2 from '../../assets/svg/avatar/img2.svg';
+import pandaImg3 from '../../assets/svg/avatar/img3.svg';
+import pandaImg4 from '../../assets/svg/avatar/img4.svg';
+import pandaImg5 from '../../assets/svg/avatar/img5.svg';
 import carbon from '../../assets/images/main/carbon.svg';
 import protein from '../../assets/images/main/protein.svg';
 import fat from '../../assets/images/main/fat.svg';
 import { API } from '../../services/main/URL';
 import { useSelector } from 'react-redux';
 import BodyinfoModify from './BodyinfoModify';
-function Character() {
+function Character({ check, seCheck }) {
   const [height, setHeight] = useState(0);
   const [weight, setWeight] = useState(0);
+  const [img, setImage] = useState(pandaImg1);
   const [mainUserData, setMainUserData] = useState(null);
   const userCode = useSelector((state) => {
     return state.userCode;
@@ -32,8 +38,33 @@ function Character() {
       .catch((error) => {
         console.error('메인 데이터를 불러오는 중 에러 발생:', error);
       });
-  }, []);
-  useEffect(() => {}, [weight, height]);
+
+    axios
+      .get(`${API.USER_USERINFO}${userCode}`)
+      .then((res) => {
+        // console.log(res.data.imgPath);
+        let name = res.data.imgPath.substring(res.data.imgPath.length - 8);
+        if (name === 'img1.svg') {
+          setImage(pandaImg1);
+        }
+        if (name === 'img2.svg') {
+          setImage(pandaImg2);
+        }
+        if (name === 'img3.svg') {
+          setImage(pandaImg3);
+        }
+        if (name === 'img4.svg') {
+          setImage(pandaImg4);
+        }
+        if (name === 'img5.svg') {
+          setImage(pandaImg5);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [check]);
+
   const nutrientbarColor = (ratio) => {
     if (ratio < 0.7) {
       return '#faff00';
@@ -43,7 +74,7 @@ function Character() {
       return '#ff2727';
     }
   };
-  const maxGrowthExp = 200;
+  const maxGrowthExp = 4000;
   const calculateCircumference = (radius) => 2 * Math.PI * radius;
   const radius = 150; // 반지름 설정
   const circumference = calculateCircumference(radius);
@@ -88,7 +119,7 @@ function Character() {
               cy={radius}
             />
             <image
-              href={panda}
+              href={img}
               x={radius - 100}
               y={radius - 100}
               width="200"
@@ -106,8 +137,7 @@ function Character() {
               strokeDasharray={circumference}
               strokeDashoffset={
                 circumference -
-                (mainUserData.growthExp / maxGrowthExp) * circumference -
-                700
+                (mainUserData.growthExp / maxGrowthExp) * circumference
               }
               // filter="url(#shadow) url(#glow)"
             />

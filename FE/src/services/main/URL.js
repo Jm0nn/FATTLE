@@ -10,6 +10,7 @@ export const API = {
   FOOD_SEARCH: `${BASE_URL}/food/search?word=`,
   FOOD_UPLOAD: `${BASE_URL}/food/upload`,
   FOOD_TODAYS_GET: `${BASE_URL}/food/todays/`,
+  USER_USERINFO: `${BASE_URL}/user/userinfo/`,
 };
 
 export default API;

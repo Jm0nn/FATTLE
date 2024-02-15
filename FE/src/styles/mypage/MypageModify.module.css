@@ -18,6 +18,10 @@
 .profile {
   margin-bottom: 40px;
 }
+.profile img {
+  width: 75px;
+  height: 75px;
+}
 .group {
   box-sizing: border-box;
   width: 100%;

@@ -92,3 +92,8 @@
 .gText {
   font-weight: 700;
 }
+
+.profileImg {
+  width: 75px;
+  height: 75px;
+}

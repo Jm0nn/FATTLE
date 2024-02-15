@@ -4,6 +4,7 @@ import Frame2 from '../../assets/images/main/Frame2.svg';
 // import API from '../../services/main/URL';
 import API from '../../services/mypage/URL';
 import styles from '../../styles/mypage/MyGoal.module.css';
+import InputStyles from '../../styles/battle/ModifyDate.module.css';
 // import styles from '../../styles/main/BodyinfoModify.module.css';
 import { useSelector } from 'react-redux';
 const MyGoal = ({
@@ -67,7 +68,7 @@ const MyGoal = ({
   };
 
   return (
-    <div>
+    <div className={styles.main}>
       나의 목표
       <img
         src={Frame2}
@@ -94,7 +95,74 @@ const MyGoal = ({
               &times;
             </button>
             <form onSubmit={HandleFormSubmit}>
-              <div>
+              <div className={styles.inputBox}>
+                <div className={styles.inputHeader}>목표 체중</div>
+                <input
+                  type="text"
+                  id="goalWeight"
+                  value={goalWeight}
+                  onChange={(e) => {
+                    setGoalWeight(e.target.value);
+                  }}
+                  placeholder="배틀 이름(최대 15자)"
+                  name="battleName"
+                  className={styles.input}
+                ></input>
+              </div>
+
+              <div className={styles.inputBox}>
+                <div className={styles.inputHeader}>칼로리</div>
+                <input
+                  type="text"
+                  id="goalCalory"
+                  value={goalCalory}
+                  onChange={(e) => {
+                    setGoalCalory(e.target.value);
+                  }}
+                  name="battleName"
+                  className={styles.input}
+                ></input>
+              </div>
+              <div className={styles.inputBox}>
+                <div className={styles.inputHeader}>탄수화물</div>
+                <input
+                  type="text"
+                  id="goalCarbo"
+                  value={goalCarbo}
+                  onChange={(e) => {
+                    setGoalCarbo(e.target.value);
+                  }}
+                  name="battleName"
+                  className={styles.input}
+                ></input>
+              </div>
+              <div className={styles.inputBox}>
+                <div className={styles.inputHeader}>단백질</div>
+                <input
+                  type="text"
+                  id="goalProtein"
+                  value={goalProtein}
+                  onChange={(e) => {
+                    setGoalProtein(e.target.value);
+                  }}
+                  name="battleName"
+                  className={styles.input}
+                ></input>
+              </div>
+              <div className={styles.inputBox}>
+                <div className={styles.inputHeader}>지방</div>
+                <input
+                  type="text"
+                  id="goalFat"
+                  value={goalFat}
+                  onChange={(e) => {
+                    setGoalFat(e.target.value);
+                  }}
+                  name="battleName"
+                  className={styles.input}
+                ></input>
+              </div>
+              {/* <div>
                 <label htmlFor="goalWeight">목표 체중</label>
                 <input
                   type="text"
@@ -158,13 +226,10 @@ const MyGoal = ({
                   className={styles.inputstyle}
                 />
                 g
+              </div> */}
+              <div className={styles.nextBtn} type="submit">
+                <button>완료</button>
               </div>
-              <button
-                type="submit"
-                // className={styles.buttonstyle}
-              >
-                완료
-              </button>
             </form>
           </div>
         </div>

@@ -5,6 +5,7 @@ import API from '../../services/main/URL';
 import { useSelector } from 'react-redux';
 import checkImg from '../../assets/images/main/check.svg';
 import notCheckImg from '../../assets/images/main/notcheck.svg';
+import { useNavigate } from 'react-router-dom';
 
 // 각 운동 코드와 설명을 매핑하는 객체
 
@@ -17,7 +18,7 @@ const exerciseDescriptions = {
   pul: '턱걸이 10개',
 };
 
-function DayQuest() {
+function DayQuest({ check, setCheck }) {
   const [type, setType] = useState(['bur', 'pus', 'squ', 'pul', 'pla', 'run']);
   const [completedCount, setCompletedCount] = useState(1);
   const [questList, setQuestList] = useState([]);
@@ -26,6 +27,8 @@ function DayQuest() {
   const userCode = useSelector((state) => {
     return state.userCode;
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -66,7 +69,7 @@ function DayQuest() {
           copy[excerciseType] = 1;
           let copy2 = { ...questList };
           copy2.exercise = copy;
-          console.log(copy2);
+          setCheck(!check);
           setQuestList(copy2);
         });
         // 성공적으로 업데이트된 경우에만 로컬 상태 업데이트
