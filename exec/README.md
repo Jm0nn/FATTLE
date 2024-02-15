@@ -56,7 +56,7 @@
 - FE/.env
   - ChatGPT
     ```env
-    API_KEY={ChatGpt API key}
+    REACT_APP_GPT_API_KEY={ChatGpt API key}
     ```
 
 - FE/src/config.js
