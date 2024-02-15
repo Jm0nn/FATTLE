@@ -86,11 +86,11 @@ public class BattleRepositoryImpl implements BattleRepositoryCustom {
                             qavatar.imgPath,
                             qavatar.profileImgPath)
                     .from(qbattle)
-                    .where(qbattle.battleCd.eq(code))
                     .join(quser)
                     .on(qbattle.creatorCd.eq(quser.userCd))
                     .join(qavatar)
                     .on(quser.avatarCd.eq(qavatar.avatarCd))
+                    .where(qbattle.battleCd.eq(code))
                     .fetchFirst();
 
             if (tuple == null) {
@@ -289,11 +289,11 @@ public class BattleRepositoryImpl implements BattleRepositoryCustom {
                                 qavatar.imgPath,
                                 qavatar.profileImgPath))
                 .from(qplayer)
-                .where(qplayer.battleCd.eq(battleCode))
                 .join(quser)
                 .on(qplayer.userCd.eq(quser.userCd))
                 .join(qavatar)
                 .on(quser.avatarCd.eq(qavatar.avatarCd))
+                .where(qplayer.battleCd.eq(battleCode))
                 .fetch();
     }
 
