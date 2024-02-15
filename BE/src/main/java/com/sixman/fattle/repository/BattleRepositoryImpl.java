@@ -228,6 +228,7 @@ public class BattleRepositoryImpl implements BattleRepositoryCustom {
         queryFactory
                 .update(qbattle)
                 .set(qbattle.status, status)
+                .where(qbattle.battleCd.eq(battleCode))
                 .execute();
 
         return true;
