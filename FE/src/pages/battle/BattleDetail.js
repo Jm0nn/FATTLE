@@ -205,12 +205,12 @@ const BattleDetail = (props) => {
                   <>
                     <div className={styles.profileImages}>
                       <img
-                        src={data.playerList[0].profileImgPath}
+                        src={`/${data.playerList[0].profileImgPath}`}
                         // alt="나의 프로필 이미지"
                       />
                       <span className={styles.versus}>vs</span>
                       <img
-                        src={data.playerList[1].profileImgPath}
+                        src={`/${data.playerList[1].profileImgPath}`}
                         // alt="상대방 프로필 이미지"
                       />
                     </div>
@@ -269,12 +269,12 @@ const BattleDetail = (props) => {
                   <>
                     <div className={styles.profileImages}>
                       <img
-                        src={data.playerList[0].profileImgPath}
+                        src={`/${data.playerList[0].profileImgPath}`}
                         // alt="나의 프로필 이미지"
                       />
                       <span className={styles.versus}>vs</span>
                       <img
-                        src={data.playerList[1].profileImgPath}
+                        src={`/${data.playerList[1].profileImgPath}`}
                         // alt="상대방 프로필 이미지"
                       />
                     </div>
