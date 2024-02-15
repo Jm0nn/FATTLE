@@ -13,7 +13,8 @@
 .wrapper {
   background-color: #ffbfbf;
   width: 412px;
-  /* height: 840px; */
+  height: auto;
+  min-height: 840px;
   margin: auto;
   text-align: center;
   display: flex;
@@ -22,6 +23,10 @@
   position: relative;
 }
 
+.scroll {
+  overflow-y: auto;
+  max-height: 840px;
+}
 .inviteCodeInput {
   width: 350px;
   height: 70px;
