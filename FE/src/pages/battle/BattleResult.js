@@ -5,12 +5,13 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { getBattleInfo } from '../../services/battle/api.js';
 import { useLocation } from 'react-router-dom';
-
+import ScoreDetail from './ScoreDetail.js';
 const BattleResult = () => {
   const { state } = useLocation();
   const userCode = useSelector((state) => state.userCode);
   const navigate = useNavigate();
   const [data, setData] = useState(null);
+  const [hisotryModalShow, setHistoryModalShow] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,7 +56,11 @@ const BattleResult = () => {
       resultMessage = '무승부!';
     }
   }
-
+  const handleClose = () => setHistoryModalShow(false);
+  const handleShow = () => setHistoryModalShow(true);
+  const showScoreHistory = () => {
+    handleShow();
+  };
   return (
     <>
       <div className={styles.wrapper}>
@@ -72,7 +77,13 @@ const BattleResult = () => {
         </div>
         <div className={styles.resultMessage}>{resultMessage}</div>
         <div className={styles.btn}>
-          <div className={styles.goScoreDetail}>점수 상세 보기</div>
+          <div
+            style={{ cursor: 'pointer' }}
+            onClick={showScoreHistory}
+            className={styles.goScoreDetail}
+          >
+            점수 상세 보기
+          </div>
           <button
             className={styles.goBattleList}
             onClick={handleGoBackToBattle}
@@ -80,6 +91,13 @@ const BattleResult = () => {
             돌아가기
           </button>
         </div>
+        {hisotryModalShow ? (
+          <ScoreDetail
+            show={hisotryModalShow}
+            handleClose={handleClose}
+            handleShow={handleShow}
+          />
+        ) : null}
       </div>
     </>
   );

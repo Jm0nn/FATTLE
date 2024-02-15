@@ -147,13 +147,13 @@ const BattleDetail = (props) => {
   };
   return (
     <div className={styles.container}>
-      <button
+      {/* <button
         onClick={() => {
           setBattleEnded(true);
         }}
       >
         aaaaaaaaaaaaaa 배틀강제 종료
-      </button>
+      </button> */}
       <header className={styles.header}>
         <p className={styles.headerTitle}>배틀 정보</p>
       </header>
@@ -163,7 +163,15 @@ const BattleDetail = (props) => {
           {showBattleCode ? (
             <>{data.battleCode}</>
           ) : (
-            <div onClick={handleToggleCodeView}>코드 보기</div>
+            // <div onClick={handleToggleCodeView}>코드 보기</div>
+            <div
+              onClick={() => {
+                console.log(123);
+                setBattleEnded(true);
+              }}
+            >
+              배틀 끝내기
+            </div>
           )}
         </div>
 
@@ -195,23 +203,22 @@ const BattleDetail = (props) => {
               )} */}
 
               {/* 1번플레이어라면 랜더링 */}
-              {data.playerList[1] &&
-                data.playerList[1].userCode === userCode && (
-                  <>
-                    <div className={styles.profileImages}>
-                      <img
-                        src={`/${data.playerList[1].profileImgPath}`}
-                        alt="proImg"
-                      />
-                      <span className={styles.versus}>vs</span>
-                      <img
-                        src={`/${data.playerList[0].profileImgPath}`}
-                        alt="proImg"
-                      />
-                    </div>
-                    <div className={styles.columns}>
-                      <div className={styles.rows}>
-                        {/* {data.playerList[0].liveStatus === 0 ||
+
+              <>
+                <div className={styles.profileImages}>
+                  <img
+                    src={`/${data.playerList[1].profileImgPath}`}
+                    alt="proImg"
+                  />
+                  <span className={styles.versus}>vs</span>
+                  <img
+                    src={`/${data.playerList[0].profileImgPath}`}
+                    alt="proImg"
+                  />
+                </div>
+                <div className={styles.columns}>
+                  <div className={styles.rows}>
+                    {/* {data.playerList[0].liveStatus === 0 ||
                         data.playerList[1].liveStatus === 1 ? (
                           <img
                             className={BattleStyles.liveImage}
@@ -219,50 +226,91 @@ const BattleDetail = (props) => {
                             alt={'라이브 표시 이미지'}
                           />
                         ) : null} */}
-                        <div className={styles.name}>
-                          {data.playerList[0].nickname}
-                        </div>
-                        <div className={styles.now}>지금까지</div>
-                        <div className={styles.score}>
-                          {data.playerList[0].foodPoint +
+                    <div className={styles.name}>
+                      {data.playerList[0].nickname}
+                    </div>
+                    <div className={styles.now}>라이브 점수</div>
+                    <div className={styles.score}>
+                      {/* {data.playerList[0].foodPoint +
                             data.playerList[0].foodUserPoint +
                             data.playerList[0].goalPoint +
                             data.playerList[0].livePoint +
                             data.playerList[0].liveUserPoint +
-                            data.playerList[0].questPoint}
-                          점
-                        </div>
-                        <div className={styles.goal}>
-                          목표 : {data.playerList[0].goalWeight}
-                          kg
-                        </div>
-                      </div>
-                      <div className={styles.rows}>
-                        <div className={styles.name}>
-                          {data.playerList[1].nickname}
-                        </div>
-                        <div className={styles.now}>지금까지</div>
-                        <div className={styles.score}>
-                          {data.playerList[1].foodPoint +
+                            data.playerList[0].questPoint} */}
+                      {data.playerList[0].liveUserPoint}점
+                    </div>
+                    <div className={styles.goal}>
+                      목표 : {data.playerList[0].goalWeight}
+                      kg
+                    </div>
+                  </div>
+                  <div className={styles.rows}>
+                    <div className={styles.name}>
+                      {data.playerList[1].nickname}
+                    </div>
+                    <div className={styles.now}>라이브 점수</div>
+                    <div className={styles.score}>
+                      {/* {data.playerList[1].foodPoint +
                             data.playerList[1].foodUserPoint +
                             data.playerList[1].goalPoint +
                             data.playerList[1].livePoint +
                             data.playerList[1].liveUserPoint +
-                            data.playerList[1].questPoint}
-                          점
-                        </div>
-                        <div className={styles.goal}>
-                          목표 : {data.playerList[1].goalWeight}
-                          kg
-                        </div>
-                      </div>
+                            data.playerList[1].questPoint} */}
+                      {data.playerList[1].liveUserPoint}점
                     </div>
-                  </>
-                )}
+                    <div className={styles.goal}>
+                      목표 : {data.playerList[1].goalWeight}
+                      kg
+                    </div>
+                  </div>
+                </div>
+              </>
               {/* 0번플레이어라면 렌더링 */}
-              
             </div>
           )}
+          {/* 자극자라면 렌더링 */}
+        </div>
+        {battleStatus !== 2 && !battleEnded && (
+          <div className={styles.livebutton}>
+            {playerList &&
+              playerList.map((item, index) => (
+                <Fragment key={index}>
+                  {item.userCode === userCode ? (
+                    <Link
+                      className={styles.btnRed}
+                      to="/battle/live"
+                      state={{
+                        sessionId: battleInfo.battleCode + '_' + userCode,
+                        nickname: item.nickname,
+                        battleCode: state.battleCode,
+                      }}
+                    >
+                      라이브 방송하기
+                    </Link>
+                  ) : (
+                    <div>
+                      {data.playerList[0].liveStatus === 1 ||
+                      data.playerList[1].liveStatus === 1 ? (
+                        <Link
+                          className={styles.btnRed}
+                          to="/battle/attend"
+                          state={{
+                            sessionId:
+                              battleInfo.battleCode + '_' + item.userCode,
+                            playerUserCode: item.userCode,
+                            streamerName: item.nickname,
+                            battleCode: state.battleCode,
+                          }}
+                        >
+                          라이브 방송보기
+                        </Link>
+                      ) : null}
+                    </div>
+                  )}
+                </Fragment>
+              ))}
+          </div>
+        )}
 
         {/* 배틀의 기간이 지났고 아직 배틀status가 종료 되지 않았으면 내기자에게 최종 체중을 입력 하게 한다. */}
         {/* {playerList &&
@@ -320,40 +368,89 @@ const BattleDetail = (props) => {
             {/* 식단 앨범 */}
             <div className={styles.dietAlbum}>
               <div className={styles.bTitle}>식단 앨범</div>
-              <div className={styles.line}></div>
-              <div className={styles.vertical}></div>
-              <ul>
-                {foodBoardList.map((item, index) => (
-                  <Fragment key={index}>
-                    <span>{item.nickname}</span>
-                    {console.log(item)}
-                    <img
-                      style={{ cursor: 'pointer' }}
-                      // src={item.imgPath}
-                      src={`${BASE_URL}/food/img/${item.imgName}`}
-                      alt="foodImg"
-                      onClick={() =>
-                        showFoodBoard(
-                          item.boardCode,
-                          item.battleCode,
-                          item.playerCode,
-                          item.nickname,
-                          item.imgName,
-                          item.recDt,
-                        )
+              <div className={styles.line}>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div>{playerList[0].nickname}</div>
+                  <div>
+                    {foodBoardList.map((item, index) => {
+                      if (item.playerCode === playerList[0].userCode) {
+                        return (
+                          <img
+                            style={{ cursor: 'pointer', width: '3rem' }}
+                            // src={item.imgPath}
+                            src={`${BASE_URL}/food/img/${item.imgName}`}
+                            alt="foodImg"
+                            onClick={() =>
+                              showFoodBoard(
+                                item.boardCode,
+                                item.battleCode,
+                                item.playerCode,
+                                item.nickname,
+                                item.imgName,
+                                item.recDt,
+                              )
+                            }
+                          />
+                        );
                       }
-                    />
-                    {foodModalShow ? (
-                      <BattleFoodModal
-                        show={foodModalShow}
-                        handleClose={handleClose}
-                        handleShow={handleShow}
-                        data={modalData}
-                      />
-                    ) : null}
-                  </Fragment>
-                ))}
-              </ul>
+                      <div key={index}>
+                        {foodModalShow ? (
+                          <BattleFoodModal
+                            show={foodModalShow}
+                            handleClose={handleClose}
+                            handleShow={handleShow}
+                            data={modalData}
+                          />
+                        ) : null}
+                      </div>;
+                    })}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <div style={{ textAlign: 'center' }}>
+                    {playerList[1].nickname}
+                  </div>
+                  <div>
+                    {foodBoardList.map((item, index) => {
+                      if (item.playerCode === playerList[1].userCode) {
+                        return (
+                          <img
+                            style={{ cursor: 'pointer', width: '3rem' }}
+                            // src={item.imgPath}
+                            src={`${BASE_URL}/food/img/${item.imgName}`}
+                            alt="foodImg"
+                            onClick={() =>
+                              showFoodBoard(
+                                item.boardCode,
+                                item.battleCode,
+                                item.playerCode,
+                                item.nickname,
+                                item.imgName,
+                                item.recDt,
+                              )
+                            }
+                          />
+                        );
+                      }
+                      <div key={index}></div>;
+                    })}
+                  </div>
+                </div>
+              </div>
+              <div className={styles.vertical}></div>
+              {foodModalShow ? (
+                <BattleFoodModal
+                  show={foodModalShow}
+                  handleClose={handleClose}
+                  handleShow={handleShow}
+                  data={modalData}
+                />
+              ) : null}
             </div>
           </div>
         )}

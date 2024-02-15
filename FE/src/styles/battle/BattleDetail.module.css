@@ -210,6 +210,12 @@
   background-color: rgb(237, 237, 237);
   width: 280px;
   height: 1px;
+  display: flex;
+  justify-content: space-around;
+}
+.line div {
+  margin-top: 10px;
+  font-size: 20px;
 }
 
 .vertical {

@@ -33,7 +33,7 @@ function BattleDetailCal({ userCode, secondPlayeruserCode }) {
     <div className="container">
       {userData && secondUserData && (
         <div className="graphWrap">
-          <h2 className="compareTitle">열량 비교</h2>
+          <h2 className="compareTitle">영양소 비교</h2>
           <div className="graph">
             <div
               className="graph-item skyblue"
@@ -74,9 +74,9 @@ function BattleDetailCal({ userCode, secondPlayeruserCode }) {
             <p className="label3">지</p>
           </div>
           <div className="bar">
-            <p>나</p>
+            <p>{userData.nickname}</p>
             <div className="circle1"></div>
-            <p>친구</p>
+            <p>{secondUserData.nickname}</p>
             <div className="circle2"></div>
           </div>
         </div>

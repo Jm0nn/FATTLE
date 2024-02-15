@@ -22,6 +22,9 @@ const BattleFoodModal = ({ data, show, handleClose, handleShow }) => {
   const contentEle = useRef(null);
   const scoreEle = useRef(null);
 
+  const [content, setContent] = useState('');
+  const [score, setScore] = useState(0);
+
   // 렌더링 상태변수
   const [foodList, setFoodList] = useState(null);
 
@@ -29,6 +32,7 @@ const BattleFoodModal = ({ data, show, handleClose, handleShow }) => {
     // 1. 이 식단의 베틀 테이블 데이터 조회
     (async () => {
       const res = await getBattleFoodCommentList(data.boardCode);
+      console.log(res);
       setFoodList(res.data.list);
       setInitLoading(false);
     })();
@@ -41,23 +45,32 @@ const BattleFoodModal = ({ data, show, handleClose, handleShow }) => {
       const commentRes = await registFoodComment({
         boardCode: data.boardCode,
         userCode: userCode,
-        content: contentEle.current.value,
+        content: content,
       });
       const scoreRes = await giveFoodPoint({
         battleCode: data.battleCode,
         playerUserCode: data.playerUserCode,
         triggerUserCode: userCode,
         type: 2,
-        point: scoreEle.current.value,
+        point: score,
       });
-      contentEle.current.value = '';
-      scoreEle.current.value = '';
+      // contentEle.current.value = '';
+      // scoreEle.current.value = '';
+      setContent('');
+      setScore(0);
       setLoading(false);
       console.log(commentRes);
       console.log(scoreRes);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const onContentChangeHandler = (e) => {
+    setContent(e.target.value);
+  };
+  const onScoreChangeHandler = (e) => {
+    setScore(e.target.value);
   };
   return (
     <>
@@ -92,15 +105,17 @@ const BattleFoodModal = ({ data, show, handleClose, handleShow }) => {
                     controlId="exampleForm.ControlInput1"
                   >
                     <Form.Control
-                      ref={contentEle}
+                      inputRef={contentEle}
                       type="text"
                       placeholder="댓글을 입력하세요."
+                      onChange={onContentChangeHandler}
                       autoFocus
                     />
                   </Form.Group>
                   <Form.Control
-                    ref={scoreEle}
+                    inputRef={(ref) => (scoreEle = ref)}
                     type="number"
+                    onChange={onScoreChangeHandler}
                     placeholder="식단 점수를 입력해주세요(0~100)"
                   ></Form.Control>
                   <Button
@@ -122,110 +137,24 @@ const BattleFoodModal = ({ data, show, handleClose, handleShow }) => {
                   // style={{ maxheight: '100px', overflowy: 'scroll' }}
                   className={styles.listGroup}
                 >
-                  <ListGroup.Item
-                    as="li"
-                    className="d-flex justify-content-between align-items-start"
-                  >
-                    <div className="ms-2 me-auto">
-                      <div className={`fw-bold ${styles.subject}`}>
-                        크리스티아누 찬영
-                      </div>
-                      <div className={`${styles.content}`}>적당히좀 먹으라</div>
-                    </div>
-                    <Badge className={styles.badge} bg="secondary" pill>
-                      14
-                    </Badge>
-                  </ListGroup.Item>
-                  <ListGroup.Item
-                    as="li"
-                    className="d-flex justify-content-between align-items-start"
-                  >
-                    <div className="ms-2 me-auto">
-                      <div className={`fw-bold ${styles.subject}`}>
-                        크리스티아누 찬영
-                      </div>
-                      <div className={`${styles.content}`}>적당히좀 먹으라</div>
-                    </div>
-                    <Badge className={styles.badge} bg="secondary" pill>
-                      14
-                    </Badge>
-                  </ListGroup.Item>
-                  <ListGroup.Item
-                    as="li"
-                    className="d-flex justify-content-between align-items-start"
-                  >
-                    <div className="ms-2 me-auto">
-                      <div className={`fw-bold ${styles.subject}`}>
-                        크리스티아누 찬영
-                      </div>
-                      <div className={`${styles.content}`}>적당히좀 먹으라</div>
-                    </div>
-                    <Badge className={styles.badge} bg="secondary" pill>
-                      14
-                    </Badge>
-                  </ListGroup.Item>
-                  <ListGroup.Item
-                    as="li"
-                    className="d-flex justify-content-between align-items-start"
-                  >
-                    <div className="ms-2 me-auto">
-                      <div className={`fw-bold ${styles.subject}`}>
-                        크리스티아누 찬영
-                      </div>
-                      <div className={`${styles.content}`}>적당히좀 먹으라</div>
-                    </div>
-                    <Badge className={styles.badge} bg="secondary" pill>
-                      14
-                    </Badge>
-                  </ListGroup.Item>
-                  <ListGroup.Item
-                    as="li"
-                    className="d-flex justify-content-between align-items-start"
-                  >
-                    <div className="ms-2 me-auto">
-                      <div className={`fw-bold ${styles.subject}`}>
-                        크리스티아누 찬영
-                      </div>
-                      <div className={`${styles.content}`}>적당히좀 먹으라</div>
-                    </div>
-                    <Badge className={styles.badge} bg="secondary" pill>
-                      14
-                    </Badge>
-                  </ListGroup.Item>
                   {foodList.map((item, index) => (
                     <ListGroup.Item
-                      key={index}
                       as="li"
                       className="d-flex justify-content-between align-items-start"
                     >
                       <div className="ms-2 me-auto">
                         <div className={`fw-bold ${styles.subject}`}>
-                          {/* 근데 여기는 안 보여져야함 배틀이 끝나면 nickname으로 교체 */}
-                          {item.nickname}
+                          익명의 자극자 {Math.floor(Math.random() * 100)}
                         </div>
                         <div className={`${styles.content}`}>
                           {item.content}
                         </div>
                       </div>
                       <Badge className={styles.badge} bg="secondary" pill>
-                        14
+                        10
                       </Badge>
                     </ListGroup.Item>
                   ))}
-                  <ListGroup.Item
-                    as="li"
-                    className="d-flex justify-content-between align-items-start"
-                  >
-                    <div className="ms-2 me-auto">
-                      <div className={`fw-bold ${styles.subject}`}>
-                        크리스티아누 찬영
-                      </div>
-                      <div className={`${styles.content}`}>적당히좀 먹으라</div>
-                    </div>
-                    <Badge className={styles.badge} bg="secondary" pill>
-                      14
-                    </Badge>
-                  </ListGroup.Item>
                 </ListGroup>
               </Card>
             </Modal.Footer>

@@ -113,8 +113,9 @@ export const finishBattleWeight = async (battleCode, userCode, finalweight) => {
   const res = await axios.patch(BATTLE_WEIGHT_PATCH, {
     battleCode,
     userCode,
-    finalweight,
+    weight: finalweight,
   });
+  return res;
 };
 export const getLeftLivePoint = async (battleCode, userCode) => {
   const res = await axios.get(
@@ -166,5 +167,17 @@ export const setStatusLiveOff = async (battleCode, userCode) => {
   const res = await axios.get(
     BATTLE_LIVE_STATUS_STOP_GET + battleCode + '/' + userCode,
   );
+  return res;
+};
+
+// 승자 가져오기
+
+export const getWinner = async (battleCode) => {
+  const res = await axios.get(BATTLE_HISTORY_POINT_GET + battleCode);
+  return res;
+};
+
+export const getPointHistory = async (battleCode) => {
+  const res = await axios.get(BATTLE_HISTORY_POINT_GET + battleCode);
   return res;
 };
