@@ -127,35 +127,12 @@ const BattleDetail = (props) => {
     setShowBattleCode(!showBattleCode);
   };
 
-  // const handleJoinBattle = async () => {
-  //   try {
-  //     await registTrigger(userCode, state.battleCode);
-  //     setJoined(true);
-  //     alert('Battle에 성공적으로 참여하셨습니다!');
-  //   } catch (error) {
-  //     console.error('Error joining battle:', error);
-  //     alert('Battle 참여에 실패했습니다. 나중에 다시 시도해주세요.');
-  //   }
-  // };
-
-  // const handleLeaveBattle = async () => {
-  //   try {
-  //     await deleteTrigger(userCode, state.battleCode);
-  //     setJoined(false);
-  //     alert('Battle에서 성공적으로 나가셨습니다!');
-  //   } catch (error) {
-  //     console.error('Error leaving battle:', error);
-  //     alert('Battle 나가기에 실패했습니다. 나중에 다시 시도해주세요.');
-  //   }
-  // };
-
   const handleViewResult = () => {
     navigate('/battle/result', {
       state: {
         battleCode: data.battleCode,
       },
     });
-    // alert('결과 보기 버튼 클릭됨');
   };
 
   if (!data) {
@@ -228,25 +205,25 @@ const BattleDetail = (props) => {
                   <>
                     <div className={styles.profileImages}>
                       <img
-                        src={data.playerList[0].profileImages}
+                        src={data.playerList[0].profileImgPath}
                         // alt="나의 프로필 이미지"
                       />
                       <span className={styles.versus}>vs</span>
                       <img
-                        src={data.playerList[1].profileImages}
+                        src={data.playerList[1].profileImgPath}
                         // alt="상대방 프로필 이미지"
                       />
                     </div>
                     <div className={styles.columns}>
                       <div className={styles.rows}>
-                        {data.playerList[0].liveStatus === 1 ||
+                        {/* {data.playerList[0].liveStatus === 0 ||
                         data.playerList[1].liveStatus === 1 ? (
                           <img
                             className={BattleStyles.liveImage}
                             src={liveImg}
                             alt={'라이브 표시 이미지'}
                           />
-                        ) : null}
+                        ) : null} */}
                         <div className={styles.name}>
                           {data.playerList[1].nickname}
                         </div>
@@ -292,25 +269,25 @@ const BattleDetail = (props) => {
                   <>
                     <div className={styles.profileImages}>
                       <img
-                        src={data.playerList[0].profileImages}
+                        src={data.playerList[0].profileImgPath}
                         // alt="나의 프로필 이미지"
                       />
                       <span className={styles.versus}>vs</span>
                       <img
-                        src={data.playerList[1].profileImages}
+                        src={data.playerList[1].profileImgPath}
                         // alt="상대방 프로필 이미지"
                       />
                     </div>
                     <div className={styles.columns}>
                       <div className={styles.rows}>
-                        {data.playerList[0].liveStatus === 1 ||
+                        {/* {data.playerList[0].liveStatus === 1 ||
                         data.playerList[1].liveStatus === 1 ? (
                           <img
                             className={BattleStyles.liveImage}
                             src={liveImg}
                             alt={'라이브 표시 이미지'}
                           />
-                        ) : null}
+                        ) : null} */}
                         <div className={styles.name}>
                           {data.playerList[0].nickname}
                         </div>
@@ -358,6 +335,25 @@ const BattleDetail = (props) => {
               playerList.map((item, index) => (
                 <Fragment key={index}>
                   {item.userCode === userCode ? (
+                    <div>
+                      {data.playerList[0].liveStatus === 1 ||
+                      data.playerList[1].liveStatus === 1 ? (
+                        <Link
+                          className={styles.btnRed}
+                          to="/battle/attend"
+                          state={{
+                            sessionId:
+                              battleInfo.battleCode + '_' + item.userCode,
+                            playerUserCode: item.userCode,
+                            streamerName: item.nickname,
+                            battleCode: state.battleCode,
+                          }}
+                        >
+                          라이브 방송보기
+                        </Link>
+                      ) : null}
+                    </div>
+                  ) : (
                     <Link
                       className={styles.btnRed}
                       to="/battle/live"
@@ -367,20 +363,7 @@ const BattleDetail = (props) => {
                         battleCode: state.battleCode,
                       }}
                     >
-                      라이브 방송 하기
-                    </Link>
-                  ) : (
-                    <Link
-                      className={styles.btnRed}
-                      to="/battle/attend"
-                      state={{
-                        sessionId: battleInfo.battleCode + '_' + item.userCode,
-                        playerUserCode: item.userCode,
-                        streamerName: item.nickname,
-                        battleCode: state.battleCode,
-                      }}
-                    >
-                      라이브 방송보기
+                      라이브 방송하기
                     </Link>
                   )}
                 </Fragment>
@@ -400,7 +383,6 @@ const BattleDetail = (props) => {
           <BattleDetailCal
             userCode={data.playerList[0].userCode}
             secondPlayeruserCode={data.playerList[1].userCode}
-            //1로 바꿔야 함
           />
         </div>
 
