@@ -29,13 +29,40 @@ const BattleResult = () => {
     navigate('/battle');
   };
 
+  let winnerNickname = '';
+  let resultMessage = '승리를 축하드립니다!';
+  if (data) {
+    const player1Point =
+      data.playerList[0].foodPoint +
+      data.playerList[0].foodUserPoint +
+      data.playerList[0].goalPoint +
+      data.playerList[0].livePoint +
+      data.playerList[0].liveUserPoint +
+      data.playerList[0].questPoint;
+    const player2Point =
+      data.playerList[1].foodPoint +
+      data.playerList[1].foodUserPoint +
+      data.playerList[1].goalPoint +
+      data.playerList[1].livePoint +
+      data.playerList[1].liveUserPoint +
+      data.playerList[1].questPoint;
+    if (player1Point > player2Point) {
+      winnerNickname = data.playerList[0].nickname;
+    } else if (player1Point < player2Point) {
+      winnerNickname = data.playerList[1].nickname;
+    } else {
+      winnerNickname = null;
+      resultMessage = '무승부!';
+    }
+  }
+
   return (
     <>
       <div className={styles.wrapper}>
         <div className={styles.elements}></div>
         <div className={styles.winner}>
           {/* 닉네임 불러오기 실패 */}
-          {data && data.playerList[0].nickname}님
+          {winnerNickname}
         </div>
         <img className={styles.trophy} src={trophy} alt="승리 트로피" />
         <div className={styles.frame}>
@@ -43,7 +70,7 @@ const BattleResult = () => {
             <div className={styles.vector}></div>
           </div>
         </div>
-        <div className={styles.resultMessage}>승리를 축하드립니다!</div>
+        <div className={styles.resultMessage}>{resultMessage}</div>
         <div className={styles.btn}>
           <div className={styles.goScoreDetail}>점수 상세 보기</div>
           <button
