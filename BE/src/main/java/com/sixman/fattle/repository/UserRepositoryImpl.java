@@ -95,7 +95,8 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                         qfood.protein,
                         qfood.fat)
                 .from(qfood)
-                .where(qfood.recDt.after(today.atStartOfDay()))
+                .where(qfood.userCd.eq(userCode),
+                        qfood.recDt.after(today.atStartOfDay()))
                 .fetch();
 
         int calory = 0;
