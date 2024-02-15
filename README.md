@@ -104,20 +104,27 @@ FATTLE은 다이어트 현황을 공유하고, 이를 통해 지인들에게 자
   ```
   FE
   ├── public
-  │   └── images
-  │       └── profiles
+  │   ├── images
+  │   │   └── profiles
+  │   └── src
+  │       └── assets
+  │           └── svg
+  │               └── avatar
   └── src
       ├── assets
       │   ├── fonts
       │   ├── images
       │   │   ├── battle
       │   │   ├── footer
+      │   │   ├── join
       │   │   ├── main
       │   │   └── ranking
       │   ├── login
       │   └── svg
+      │       ├── avatar
       │       ├── battle
       │       ├── commons
+      │       ├── Food
       │       └── mypage
       ├── commons
       ├── components
@@ -144,6 +151,8 @@ FATTLE은 다이어트 현황을 공유하고, 이를 통해 지인들에게 자
       ├── styles
       │   ├── battle
       │   ├── commons
+      │   ├── join
+      │   ├── login
       │   ├── main
       │   ├── mypage
       │   └── ranking
