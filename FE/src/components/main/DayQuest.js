@@ -5,6 +5,7 @@ import API from '../../services/main/URL';
 import { useSelector } from 'react-redux';
 import checkImg from '../../assets/images/main/check.svg';
 import notCheckImg from '../../assets/images/main/notcheck.svg';
+import { useNavigate } from 'react-router-dom';
 
 // 각 운동 코드와 설명을 매핑하는 객체
 
@@ -26,6 +27,8 @@ function DayQuest() {
   const userCode = useSelector((state) => {
     return state.userCode;
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
