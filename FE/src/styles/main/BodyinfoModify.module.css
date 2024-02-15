@@ -79,3 +79,26 @@
   align-items: center;
   justify-content: center;
 }
+
+.registForm{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.foodRow{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 230px;
+}
+.removeBtn{
+  width: 25px;
+  height: 25px;
+  background-image: url("../../assets/images/main/remove-button.svg");
+  background-size: cover;
+  cursor: pointer;
+}
