@@ -54,29 +54,139 @@ FATTLE은 다이어트 현황을 공유하고, 이를 통해 지인들에게 자
   - 내가 얻은 경험치를 다른 유저들과 비교할 수 있습니다.
 
 - 다이어트 배틀
-  - 친구와 함께 1대1 다이어트 배틀을 진행합니다.
+  - 친구와 함께 일대일 다이어트 배틀을 진행합니다.
   - 내기 요소를 걸어서 배틀에 긴장감을 더할 수 있습니다.
-  - 배틀에 참여하지 않는 친구들도 자극을 줄 수 있습니다.
   - 라이브 방송, 식단 공유 등을 통해 다이어트 현황을 공유할 수 있습니다.
+  - 배틀에 참여하지 않는 친구들도 자극을 줄 수 있습니다.
+  - 배틀을 하고 있는 친구들에게 점수를 줄 수 있습니다.
 
 - 일일 퀘스트
-  - 
+  - 매일 수행할 수 있는 퀘스트가 갱신됩니다.
+  - 다이어트 식단, 운동 등의 퀘스트가 준비되어 있습니다.
+  - 매일 일정 개수 이상의 퀘스트를 수행하면 스트릭이 쌓입니다.
 
-### 주요 기술
+- 식단 등록
+  - 오늘 먹은 식단을 등록해서 관리할 수 있습니다.
+  - 식단 사진을 올리면 AI 분석을 통해 열량 및 탄단지 성분 함량을 알려줍니다.
+  - 오늘 섭취한 열량 및 탄단지를 내 기준 수치와 비교할 수 있습니다.
 
+- 다이어트 식단 추천
+  - 나의 오늘 섭취량을 통해 다이어트 식단을 추천받을 수 있습니다.
+  - 지금까지 섭취한 열량, 탄단지를 기준으로 식단을 추천합니다.
 
+### 개발 환경
+
+- Front-End
+  - Visual Studio Code 1.85.1
+  - React 18.2.0
+  - Node.js 20.10.0
+  - OpenVidu 2.29.1
+
+- Back-End
+  - IntelliJ IDEA 2023.3.3 (Community Edition)
+  - Java 17 (Azul Zulu version 17.0.9)
+  - Spring boot 3.2.2
+  - Python 3.8.10
+  - MySQL 8.0.36
+
+- Server
+  - AWS EC2
+  - Ubuntu 20.04.6 LTS
+  - Nginx 1.18.0
+  - OpenSSL 1.1.1f
+  - Jenkins 2.443
 
 ### 파일 구조
 
-
+- Front-End
+  ```
+  FE
+  ├── public
+  │   └── images
+  │       └── profiles
+  └── src
+      ├── assets
+      │   ├── fonts
+      │   ├── images
+      │   │   ├── battle
+      │   │   ├── footer
+      │   │   ├── main
+      │   │   └── ranking
+      │   ├── login
+      │   └── svg
+      │       ├── battle
+      │       ├── commons
+      │       └── mypage
+      ├── commons
+      ├── components
+      │   ├── battle
+      │   ├── commons
+      │   ├── login
+      │   ├── main
+      │   └── mypage
+      ├── pages
+      │   ├── battle
+      │   ├── join
+      │   ├── login
+      │   ├── main
+      │   ├── mypage
+      │   └── ranking
+      ├── services
+      │   ├── auth
+      │   ├── battle
+      │   ├── join
+      │   ├── login
+      │   ├── main
+      │   └── mypage
+      ├── store
+      ├── styles
+      │   ├── battle
+      │   ├── commons
+      │   ├── main
+      │   ├── mypage
+      │   └── ranking
+      └── utils
+          ├── battle
+          ├── commons
+          └── mypage
+  ```
+- Back-End
+  ```
+  fattle
+    ├── api
+    │   ├── controller
+    │   └── service
+    ├── config
+    ├── dto
+    │   ├── dto
+    │   ├── request
+    │   └── response
+    ├── entity
+    ├── exceptions
+    ├── filter
+    ├── repository
+    └── utils
+  ```
 
 ### 협업 툴
 
-
+  - Git
+  - Gerrit
+  - JIRA
+  - Mattermost
+  - Notion
+  - Discord
 
 ## 팀원 소개
 
-
+| 이름 | 직책 | 역할 | 담당 |
+| ---- | ---- | ---- | ---- |
+| 강주원 | 팀장 | 백엔드 | API 설계, 디자인, Git 관리, 최종 발표 |
+| 김정민 | 백엔드리더 | 백엔드 | API 설계, API 키 관리, EC2 서버 관리, CI/CD |
+| 박찬영 | 팀원 | 백엔드 | API 설계, AI 모델 적용, 디자인, 중간 발표 |
+| 양윤모 | 프론트엔드리더 | 프론트엔드 | UI/UX 설계, OpenVidu 서버 관리, Git 관리 |
+| 정창휘 | 팀원 | 프론트엔드 | UI/UX 설계, UCC 제작 |
+| 진성민 | 팀원 | 프론트엔드 | UI/UX 설계, 협업 툴 관리 |
 
 ## 서비스 화면
 
