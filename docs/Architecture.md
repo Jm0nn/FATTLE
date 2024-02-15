@@ -1,3 +1,2 @@
 # Service Architecture
-
-![Architecture](/uploads/a634630b7501be12c411abc2372876f7/Architecture.png)
+![Architecture](/uploads/cc03920bf68942cfb5da0e35b606b22b/Architecture.png)

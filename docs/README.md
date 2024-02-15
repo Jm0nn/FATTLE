@@ -4,10 +4,10 @@
 
 ### [API명세서](./API명세서.md)
 
-### [ERD](./ERD.md)
-
-### [Convention](./Convention.md)
+### [Architecture](./Architecture.md)
 
 ### [Branch](./Branch.md)
 
-### [Architecture](./Architecture.md)
+### [Convention](./Convention.md)
+
+### [ERD](./ERD.md)
