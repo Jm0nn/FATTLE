@@ -73,7 +73,9 @@ public class BattleRepositoryImpl implements BattleRepositoryCustom {
     public List<BattleInfoDto> getBattleList(List<String> battleCodeList) {
         List<BattleInfoDto> battleList = new ArrayList<>();
 
-        List<Tuple> tupleList
+        for (String code: battleCodeList) {
+
+        Tuple tuple
                 = queryFactory.select(
                         qbattle.battleCd,
                         qbattle.name,
@@ -85,14 +87,13 @@ public class BattleRepositoryImpl implements BattleRepositoryCustom {
                         qavatar.imgPath,
                         qavatar.profileImgPath)
                 .from(qbattle)
-                .where(qbattle.battleCd.in(battleCodeList))
+                .where(qbattle.battleCd.eq(code))
                 .join(quser)
                 .on(qbattle.creatorCd.eq(quser.userCd))
                 .join(qavatar)
                 .on(quser.avatarCd.eq(qavatar.avatarCd))
-                .fetch();
+                .fetchFirst();
 
-        for (Tuple tuple : tupleList) {
             List<SimpleBattlePlayerInfoDto> playerList
                     = queryFactory.select(
                             Projections.constructor(
