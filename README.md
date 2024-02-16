@@ -28,6 +28,8 @@
 
 ### 🎞️ 영상
 
+<iframe width="1903" height="750" src="https://www.youtube.com/embed/xSRQeGWih9o" title="FATTLE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 ### 📆 진행 기간
 
 2024.01.08(월) ~ 2024.02.16(금) (39일간 진행)
