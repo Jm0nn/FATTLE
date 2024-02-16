@@ -54,6 +54,8 @@ const BattleFoodModal = ({ data, show, handleClose, handleShow }) => {
         type: 2,
         point: score,
       });
+      const res = await getBattleFoodCommentList(data.boardCode);
+      setFoodList(res.data.list);
       // contentEle.current.value = '';
       // scoreEle.current.value = '';
       setContent('');
