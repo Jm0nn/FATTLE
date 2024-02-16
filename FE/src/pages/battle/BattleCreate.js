@@ -145,7 +145,7 @@ const BattleCreate = (props) => {
                         -{' '}
                         {Math.abs(
                           data.playerList[0].beforeWeight -
-                            data.playerList[0].afterWeight,
+                            data.playerList[0].goalWeight,
                         )}{' '}
                         kg
                       </div>
