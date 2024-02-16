@@ -28,9 +28,7 @@ d# FATTLE
 
 ### 🎞️ 영상
 
-<center>
 [![Panda](./images/panda.png)](https://youtu.be/xSRQeGWih9o)
-</center>
 
 ### 📆 진행 기간
 
