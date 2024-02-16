@@ -1,4 +1,4 @@
-# FATTLE
+d# FATTLE
 
 <br/>
 <div align="center"><img src ="./images/FATTLE.png" alt="FATTLE"></div>
@@ -24,9 +24,11 @@
 
 ## 1️⃣ 프로젝트 소개
 
-💎 SSAFY 10기 2학기 공통프로젝트 - FATTLE
+SSAFY 10기 2학기 공통프로젝트 - FATTLE
 
 ### 🎞️ 영상
+
+[![Panda](./images/panda.png)](https://youtu.be/xSRQeGWih9o)
 
 ### 📆 진행 기간
 
