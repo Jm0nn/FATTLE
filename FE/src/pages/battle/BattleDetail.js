@@ -420,7 +420,7 @@ const BattleDetail = (props) => {
                       if (item.playerCode === playerList[1].userCode) {
                         return (
                           <img
-                            style={{ cursor: 'pointer', width: '3rem' }}
+                            style={{ cursor: 'pointer', width: '6rem' }}
                             // src={item.imgPath}
                             src={`${BASE_URL}/food/img/${item.imgName}`}
                             alt="foodImg"
