@@ -1,4 +1,4 @@
-d# FATTLE
+# FATTLE
 
 <br/>
 <div align="center"><img src ="./images/FATTLE.png" alt="FATTLE"></div>
