@@ -89,9 +89,9 @@ public class FoodService {
         return saveName;
     }
 
-    public String getFoodCode(String imgPath) {
+    public String getFoodCode(String imgName) {
         FoodImageDto body = FoodImageDto.builder()
-                .source(UPLOAD_PATH + "/" + imgPath)
+                .source(UPLOAD_PATH + "/" + imgName)
                 .build();
 
         return WebClient.create()
