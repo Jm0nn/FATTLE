@@ -1,11 +1,11 @@
 package com.sixman.fattle.api.controller;
 
 import com.sixman.fattle.api.service.FoodService;
-import com.sixman.fattle.dto.dto.FoodInfoDto;
 import com.sixman.fattle.dto.request.FoodUploadRequest;
 import com.sixman.fattle.dto.response.FoodInfoResponse;
 import com.sixman.fattle.dto.response.FoodSearchResponse;
 import com.sixman.fattle.dto.response.TodaysFoodResponse;
+import com.sixman.fattle.entity.FoodInfo;
 import com.sixman.fattle.exceptions.FileSaveFailedException;
 import com.sixman.fattle.exceptions.NoFileException;
 import com.sixman.fattle.exceptions.NoImageExceptoin;
@@ -54,15 +54,17 @@ public class FoodController {
     public ResponseEntity<FoodInfoResponse> imgUpload(@PathVariable long userCode, @PathVariable int type, MultipartFile uploadFile)
             throws FileSaveFailedException, NoImageExceptoin, NoFileException {
         String imgName = foodService.saveImage(userCode, type, uploadFile);
-        FoodInfoDto info = foodService.getFoodInfo(imgName);
+        String foodCode = foodService.getFoodCode(imgName);
 
         FoodInfoResponse response;
 
-        if (info == null) {
+        if (foodCode == null) {
             response = FoodInfoResponse.builder()
                     .imgName(imgName)
                     .build();
         } else {
+            FoodInfo info = foodService.getFoodInfo(foodCode);
+
             response = FoodInfoResponse.builder()
                     .name(info.getName())
                     .gram(info.getGram())

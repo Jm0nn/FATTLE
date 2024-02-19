@@ -5,6 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sixman.fattle.dto.dto.FoodSearchDto;
 import com.sixman.fattle.dto.request.FoodUploadRequest;
 import com.sixman.fattle.entity.Food;
+import com.sixman.fattle.entity.FoodInfo;
 import com.sixman.fattle.entity.QFood;
 import com.sixman.fattle.entity.QFoodInfo;
 import lombok.RequiredArgsConstructor;
@@ -84,6 +85,15 @@ public class FoodRepositoryImpl implements FoodRepositoryCustom {
                 .from(qinfo)
                 .where(qinfo.name.contains(word))
                 .fetch();
+    }
+
+    @Override
+    public FoodInfo getFoodInfo(String foodCode) {
+        return queryFactory
+                .select(qinfo)
+                .from(qinfo)
+                .where(qinfo.foodCd.eq(foodCode))
+                .fetchFirst();
     }
 
 }

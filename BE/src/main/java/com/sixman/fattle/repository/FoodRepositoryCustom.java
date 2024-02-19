@@ -3,6 +3,7 @@ package com.sixman.fattle.repository;
 import com.sixman.fattle.dto.dto.FoodSearchDto;
 import com.sixman.fattle.dto.request.FoodUploadRequest;
 import com.sixman.fattle.entity.Food;
+import com.sixman.fattle.entity.FoodInfo;
 
 import java.util.List;
 
@@ -15,5 +16,7 @@ public interface FoodRepositoryCustom {
     void setFood(FoodUploadRequest request);
 
     List<FoodSearchDto> foodSearch(String word);
+
+	FoodInfo getFoodInfo(String foodCode);
 
 }

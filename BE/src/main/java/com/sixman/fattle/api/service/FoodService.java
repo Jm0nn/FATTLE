@@ -1,12 +1,12 @@
 package com.sixman.fattle.api.service;
 
 import com.sixman.fattle.dto.dto.FoodImageDto;
-import com.sixman.fattle.dto.dto.FoodInfoDto;
 import com.sixman.fattle.dto.dto.FoodSearchDto;
 import com.sixman.fattle.dto.request.FoodUploadRequest;
 import com.sixman.fattle.dto.response.FoodSearchResponse;
 import com.sixman.fattle.dto.response.TodaysFoodResponse;
 import com.sixman.fattle.entity.Food;
+import com.sixman.fattle.entity.FoodInfo;
 import com.sixman.fattle.exceptions.FileSaveFailedException;
 import com.sixman.fattle.exceptions.NoFileException;
 import com.sixman.fattle.exceptions.NoImageExceptoin;
@@ -23,7 +23,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -90,7 +89,7 @@ public class FoodService {
         return saveName;
     }
 
-    public FoodInfoDto getFoodInfo(String imgPath) {
+    public String getFoodCode(String imgPath) {
         FoodImageDto body = FoodImageDto.builder()
                 .source(UPLOAD_PATH + "/" + imgPath)
                 .build();
@@ -102,7 +101,7 @@ public class FoodService {
                 .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(body), FoodImageDto.class)
                 .retrieve()
-                .bodyToMono(FoodInfoDto.class)
+                .bodyToMono(String.class)
                 .block();
     }
 
@@ -133,6 +132,10 @@ public class FoodService {
     public byte[] getImage(String name) throws IOException {
         InputStream in = new FileInputStream(UPLOAD_PATH + "/" + name);
         return IOUtils.toByteArray(in);
+    }
+
+    public FoodInfo getFoodInfo(String foodCode) {
+        return foodRepository.getFoodInfo(foodCode);
     }
 
 }
