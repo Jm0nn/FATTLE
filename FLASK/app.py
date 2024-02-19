@@ -22,7 +22,7 @@ def food_detect():
     # cursor = db.cursor()
     # cursor = db.cursor(pymysql.cursors.DictCursor)
 
-    req_json = requset.get_json()
+    req_json = request.get_json()
     source = req_json['source']
 
     detect_result = detect(source, 0.1, 0.7)
