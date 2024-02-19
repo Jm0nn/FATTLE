@@ -44,7 +44,7 @@ def food_detect():
 
     # db.close()
     # return jsonify(response)
-    return source
+    return detect_result
 
 if __name__=='__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
